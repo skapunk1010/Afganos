@@ -28,20 +28,16 @@
         
             require('controllers/validadorCtrl.php');
                         
-            $nombre = validadorCtrl::validarTxt($_REQUEST['nombre']);
-            $apellido = validadorCtrl::validarTxt($_REQUEST['apellido']);
-            $telefono = validadorCtrl::validarNum($_REQUEST['telef']);
-            $email = validadorCtrl::validarEmail($_REQUEST['email']);
+            $nombre     = validadorCtrl::validarTxt($_REQUEST['nombre']);
+            $apellido   = validadorCtrl::validarTxt($_REQUEST['apellido']);
+            $telefono   = validadorCtrl::validarNum($_REQUEST['telef']);
+            $email      = validadorCtrl::validarEmail($_REQUEST['email']);
             
             $resultado = $this -> mdl -> insertarUsuario($nombre, $apellido, $telefono, $email);
             
             if($resultado){
-                
                 require('views/usuarioInsertado.php'); #cambiar a html
-            }
-            
-            else{
-                
+            } else{  
                 require('views/error.php'); #cambiar a html
             }
         
