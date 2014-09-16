@@ -6,7 +6,7 @@ class vehiculoCtrl
 
 	function __construct()
 	{
-		require("controller/vehiculoMdl.php");
+		require("model/vehiculoMdl.php");
 		$this -> modelo = new vehiculoMdl();
 	}
 
