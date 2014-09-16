@@ -5,17 +5,17 @@
     switch($_REQUEST['ctrl']){
         
         case 'usuario':
-            require('controllers/usuarioCtrl.php');
+            require('controller/usuarioCtrl.php');
             $ctrl = new usuarioCtrl();
             break;
         
 		case 'vehiculo':
-			require('controllers/vehiculoCtrl.php');
+			require('controller/vehiculoCtrl.php');
 			$ctrl = new vehiculoCtrl();
 			break;
 
         case 'login':
-            require('controllers/loginCtrl.php');
+            require('controller/loginCtrl.php');
             $ctrl = new loginCtrl();
             break;				
         default:
