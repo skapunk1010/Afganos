@@ -14,12 +14,12 @@
                     $this -> signin();
                     break;
                         
-                case 'autentificar':
-                    $this -> autentificar();
+                case 'iniciarSesion':
+                    $this -> iniciarSesion();
                     break;
 
-                case 'logout':
-                	$this->logout();
+                case 'cerrarSesion':
+                	$this->cerrarSesion();
                 	break;
 
                 default: #accion incorrecta
@@ -41,7 +41,7 @@
             }
         }
 
-        function autentificar(){
+        function iniciarSesion(){
         	require('controllers/validadorCtrl.php');
                         
             $usuario 	= validadorCtrl::validarUsuario($_REQUEST['usuario']);
@@ -56,7 +56,7 @@
             }
         }
 
-        function logout(){
+        function cerrarSesion(){
         	#Destruye la variable de sesión
         	echo 'Sesión terminada!';
         	#Redirecciona al view inicial
