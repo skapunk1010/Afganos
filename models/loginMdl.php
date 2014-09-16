@@ -2,7 +2,7 @@
 
 	class loginMdl{
 		
-		public function autentificar($usuario,$password){
+		public function iniciarSesion($usuario,$password){
 			#Establecer conexión con BD
 			#if(Validar si usuario está registrado en BD){
 			#  iniciar variables de sesión

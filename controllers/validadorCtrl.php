@@ -9,7 +9,6 @@
 		public static function validarNum($num){
 			if(is_numeric($num))
 				return $num;
-			
 			else return 0;
 		}
 	
@@ -24,6 +23,17 @@
 		public static function validarAnho($anho){
 			return $anho;
 		}
+
+		public static function validarUsuario($usuario){
+			#Validacion con expresión regular
+			return $usuario;
+		}
+
+		public static function validarPassword($password){
+			#Validacion con expresión regular
+			return $password;
+		}
+
 	}
 	
 ?>
