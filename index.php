@@ -11,7 +11,7 @@
         
 		case 'vehiculo':
 				require('controllers/vehiculoCtrl.php');
-				$ctrl = new usuarioCtrl();
+				$ctrl = new vehiculoCtrl();
 				break;
 				
         default:

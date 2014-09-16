@@ -14,7 +14,15 @@
 		}
 	
 		public static function validarEmail($email){
-			return email; 
+			return $email; 
+		}
+
+		public static function validarVin($vin){
+			return $vin
+		}
+
+		public static function validarAnho($anho){
+			return $anho;
 		}
 	}
 	
