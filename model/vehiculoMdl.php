@@ -1,6 +1,6 @@
 <?php
 
-	require('models/Vehiculo.php'); 
+	require('model/Vehiculo.php'); 
 	class vehiculoMdl
 	{
 		private $vehiculo;

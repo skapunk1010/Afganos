@@ -6,7 +6,7 @@ class vehiculoCtrl
 
 	function __construct()
 	{
-		require("controllers/vehiculoMdl.php");
+		require("controller/vehiculoMdl.php");
 		$this -> modelo = new vehiculoMdl();
 	}
 
@@ -39,7 +39,7 @@ class vehiculoCtrl
 
 	function insertar()
 	{
-		require('controllers/validadorCtrl.php');
+		require('controller/validadorCtrl.php');
 		$vin = validadorCtrl::validarVin($_REQUEST['vin']);
         $marca = validadorCtrl::validarTxt($_REQUEST['marca']);
         $modelo = validadorCtrl::validarTxt($_REQUEST['modelo']);
@@ -53,12 +53,12 @@ class vehiculoCtrl
             
             if($resultado){
                 
-                require('views/vehiculoInsertado.php'); #cambiar a html
+                require('view/vehiculoInsertado.php'); #cambiar a html
             }
             
             else{
                 
-                require('views/error.php'); #cambiar a html
+                require('view/error.php'); #cambiar a html
             }
             
 	}
@@ -75,11 +75,11 @@ class vehiculoCtrl
 		$resultado = $this -> modelo -> modificar();
             
         	if($resultado){
-                require('views/vehiculoModificado.php'); #cambiar a html
+                require('view/vehiculoModificado.php'); #cambiar a html
             }
             
             else{
-                require('views/error.php'); #cambiar a html
+                require('view/error.php'); #cambiar a html
             }
 	}
 
@@ -89,11 +89,11 @@ class vehiculoCtrl
 		$resultado = $this -> modelo -> eliminar($vin);
             
         	if($resultado){    
-                require('views/vehiculoEliminado.php'); #cambiar a html
+                require('view/vehiculoEliminado.php'); #cambiar a html
             }
             
             else{     
-                require('views/error.php'); #cambiar a html
+                require('view/error.php'); #cambiar a html
             }
 	}
 }

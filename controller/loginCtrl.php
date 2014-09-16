@@ -27,22 +27,23 @@
         }
 
         function signin(){
-        	require('controllers/validadorCtrl.php');
+        	require('controller/validadorCtrl.php');
                         
-            $usuario 	= validadorCtrl::validarUsuario($_REQUEST['usuario']);
-            $password	= validadorCtrl::validarPassword($_REQUEST['password']);
+            $usuario = validadorCtrl::validarUsuario($_REQUEST['usuario']);
+            $password = validadorCtrl::validarPassword($_REQUEST['password']);
             
-            $resultado 	= $this->modelo->signin($usuario,$password);
+            $resultado = $this -> modelo -> signin($usuario,$password);
             
             if($resultado){
-                require('views/index.php'); #cambiar a html
-            } else{  
-                require('views/error.php'); #cambiar a html
+                require('view/index.php'); #cambiar a html
+            } 
+            else{  
+                require('view/error.php'); #cambiar a html
             }
         }
 
         function iniciarSesion(){
-        	require('controllers/validadorCtrl.php');
+        	require('controller/validadorCtrl.php');
                         
             $usuario 	= validadorCtrl::validarUsuario($_REQUEST['usuario']);
             $password	= validadorCtrl::validarPassword($_REQUEST['password']);
@@ -50,15 +51,17 @@
             $resultado = $this->modelo->iniciarSesion($usuario,$password);
             
             if($resultado){
-                require('views/index.php'); #cambiar a html
-            } else{  
-                require('views/error.php'); #cambiar a html
+                require('view/index.php'); #cambiar a html
+            } 
+            else{  
+                require('view/error.php'); #cambiar a html
             }
         }
 
         function cerrarSesion(){
         	#Destruye la variable de sesión
         	echo 'Sesión terminada!';
+            #CAMBIAR ECHO A VISTA 
         	#Redirecciona al view inicial
         }
 

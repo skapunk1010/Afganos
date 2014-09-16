@@ -5,7 +5,7 @@
         private $mdl;
         
         function __construct(){
-            require('models/usuarioMdl.php');
+            require('model/usuarioMdl.php');
             $this -> mdl = new usuarioMdl();
         }
         
@@ -26,7 +26,7 @@
         
         function insertarUsuario(){
         
-            require('controllers/validadorCtrl.php');
+            require('controller/validadorCtrl.php');
                         
             $nombre     = validadorCtrl::validarTxt($_REQUEST['nombre']);
             $apellido   = validadorCtrl::validarTxt($_REQUEST['apellido']);
@@ -36,9 +36,9 @@
             $resultado = $this -> mdl -> insertarUsuario($nombre, $apellido, $telefono, $email);
             
             if($resultado){
-                require('views/usuarioInsertado.php'); #cambiar a html
+                require('view/usuarioInsertado.php'); #cambiar a html
             } else{  
-                require('views/error.php'); #cambiar a html
+                require('view/error.php'); #cambiar a html
             }
         
         }

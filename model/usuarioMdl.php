@@ -1,6 +1,6 @@
 <?php
 
-	require('models/Usuario.php'); 
+	require('model/Usuario.php'); 
 	class usuarioMdl{
 	
 		private $usuario;
