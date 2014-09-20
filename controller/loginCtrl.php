@@ -8,7 +8,7 @@
 		}
 
 		function run(){
-            switch($_REQUEST['action']){
+            switch($_REQUEST['accion']){
                 
                 case 'signin': 
                     $this -> signin();

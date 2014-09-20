@@ -10,7 +10,7 @@
         }
         
         function run(){
-            switch($_REQUEST['act']){
+            switch($_REQUEST['accion']){
                 
                 case 'insertarUsuario': 
                         $this -> insertarUsuario();
