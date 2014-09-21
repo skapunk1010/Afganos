@@ -5,7 +5,7 @@
 ##Integrantes: 
 	García Gonzalez, Argelia Vianey
 	Paz Fernández, Irena
-    	Martinez Castillo, Erick Jesus
+	Martinez Castillo, Erick Jesus
 
 # Inventario vehicular e inspecciones
 
