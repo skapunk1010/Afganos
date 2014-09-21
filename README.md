@@ -1,12 +1,11 @@
-Equipo: Afganos
+#Proyecto de Programación Web [CC419]
 
-Proyecto de Programación Web [CC419]
+#Equipo: Afganos
 
-Integrantes: 
-
+##Integrantes: 
 	García Gonzalez, Argelia Vianey
-    Paz Fernández, Irena
-    Martinez Castillo, Erick Jesus
+	Paz Fernández, Irena
+    	Martinez Castillo, Erick Jesus
 
 # Inventario vehicular e inspecciones
 
