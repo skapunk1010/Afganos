@@ -76,7 +76,9 @@ class vehiculoCtrl
 
 	function modificar()
 	{
-		$resultado = $this -> modelo -> modificar();
+		require('controller/validadorCtrl.php');
+		$vin = validadorCtrl::validarVin($_REQUEST['vin']);
+		$resultado = $this -> modelo -> modificar($vin);
             
         if($resultado){
             require('view/vehiculoModificado.php'); #cambiar a html
