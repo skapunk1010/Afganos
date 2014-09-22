@@ -1,5 +1,5 @@
 <?php
 
-	echo 'Error provocado en el controlador ??', '<br/><br/>';
+	echo 'Error provocado en el controlador', '<br/><br/>';
 
 ?>

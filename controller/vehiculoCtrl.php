@@ -10,7 +10,7 @@ class vehiculoCtrl
 		$this -> modelo = new vehiculoMdl();
 	}
 
-	function run()
+	public function run()
 	{
 		switch($_REQUEST['accion'])
 		{
@@ -31,13 +31,11 @@ class vehiculoCtrl
 				break;
 
 			default: 
-				#vista de error.
-				break;
-
+				require('view/error.php');
 		}
 	}
 
-	function insertar()
+	public function insertar()
 	{
 		require('controller/validadorCtrl.php');
 		$vin = validadorCtrl::validarVin($_REQUEST['vin']);
@@ -56,25 +54,25 @@ class vehiculoCtrl
         }
             
         else{                
-           require('view/error.php'); #cambiar a html, errorInsertar.php
+           require('view/errorVehiculoInsertado.php'); #cambiar a html
         }
             
 	}
 
-	function listar()
+	public function listar()
 	{
 		$lista = $this -> modelo -> listar();
 		
-		if($lista){
-			require('view/vehiculoLista.php');
+		if(isset($lista)){
+			require('view/vehiculoListado.php');
 		}
 		else{
-			require('view/error.php'); #cambiar a vista individual
+			require('view/errorVehiculoListado.php'); #cambiar a html
 		}
 
 	}
 
-	function modificar()
+	public function modificar()
 	{
 		require('controller/validadorCtrl.php');
 		$vin = validadorCtrl::validarVin($_REQUEST['vin']);
@@ -85,11 +83,11 @@ class vehiculoCtrl
         }
             
         else{
-            require('view/error.php'); #cambiar a html
+            require('view/errorVehiculoModificado.php'); #cambiar a html
         }
 	}
 
-	function eliminar()
+	public function eliminar()
 	{
 		require('controller/validadorCtrl.php');
 		$vin = validadorCtrl::validarVin($_REQUEST['vin']);
@@ -100,7 +98,7 @@ class vehiculoCtrl
         }
             
         else{     
-            require('view/error.php'); #cambiar a html
+            require('view/errorVehiculoEliminado.php'); #cambiar a html
         }
 	}
 }
