@@ -3,8 +3,14 @@
 	require('model/Usuario.php'); 
 	class usuarioMdl{
 		
-		//inserta un nuevo usuario en la base de datos 
-		//retorna verdadero son fue exitoso el movimiento
+		/**
+		*@param String $codigo recibe una cadena de código nuevo
+		*@param String $nombre recibe una cadena de nombre nuevo
+		*@param String $apellido recibe una cadena de apellido nuevo
+		*@param String $teléfono recibe una cadena de teléfono nuevo
+		*@param String $email recibe una cadena de email nuevo
+		*@return boolean dependiendo de su validez.
+		*/
 		public function insertar($codigo, $nombre, $apellido, $telefono, $email){
 		
 			$usuario = new Usuario($codigo, $nombre, $apellido, $telefono, $email);
@@ -12,8 +18,10 @@
 			return TRUE;
 		}
 
-		//Modifica información de un usuario por medio del código
-		//retorna verdadero en caso de un movimiento exitoso.
+		/**
+		*@param String $codigo recibe el código del usuario a modificar.
+		*@return boolean según sea su validez.
+		*/
 		public function modificar($codigo)
 		{
 			#modificar usuarios a traves de su codigo

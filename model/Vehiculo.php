@@ -11,7 +11,9 @@
 
 		private $status;
 
-		//Inicializa los valores de un nuevo vehículo.
+		/**
+		*Inicializa los valores de un nuevo vehículo.
+		*/
 		public function __construct($vin,$marca,$modelo,$anho,$color,$cilindraje,$transmision,$combustible){
 			$this->vin 		= $vin;
 			$this->marca 	= $marca;
