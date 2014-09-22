@@ -2,6 +2,7 @@
 
 	class loginMdl{
 		
+		//Función encargada del inicio de sesión de un usuario.
 		public function iniciarSesion($usuario,$password){
 			#Establecer conexión con BD
 			#if(Validar si usuario está registrado en BD){
@@ -16,6 +17,7 @@
 			return TRUE;
 		}
 
+		//Función para registrar a un usuario.
 		public function signin($usuario,$password){
 			#Establecer conexion con BD
 			#Insertar usuario y password a BD

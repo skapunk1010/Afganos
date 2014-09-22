@@ -2,6 +2,7 @@
 
     $ctrl;
     
+    //Recibe la petición y carga el controlador necesario.
     switch($_REQUEST['ctrl']){
         
         case 'usuario':
@@ -22,6 +23,8 @@
                 #no se encontro parametros
     }
     
+    //ejecuta el método del controlador 
+    //encargado de recibir la acción a realizar.
     $ctrl -> run();
 
 ?>

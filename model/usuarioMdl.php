@@ -2,7 +2,9 @@
 
 	require('model/Usuario.php'); 
 	class usuarioMdl{
-			
+		
+		//inserta un nuevo usuario en la base de datos 
+		//retorna verdadero son fue exitoso el movimiento
 		public function insertar($codigo, $nombre, $apellido, $telefono, $email){
 		
 			$usuario = new Usuario($codigo, $nombre, $apellido, $telefono, $email);
@@ -10,6 +12,8 @@
 			return TRUE;
 		}
 
+		//Modifica información de un usuario por medio del código
+		//retorna verdadero en caso de un movimiento exitoso.
 		public function modificar($codigo)
 		{
 			#modificar usuarios a traves de su codigo
