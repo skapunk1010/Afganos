@@ -2,11 +2,14 @@
 	class loginCtrl{
 		private $modelo;
 
+        //Constructor del control login
+        //Carga modelo del mismo.
 		function __construct(){
 			require('model/loginMdl.php');
 			$this->modelo = new loginMdl();
 		}
 
+        //Recibe acción que se desea: registrarse, iniciar o cerrar sesión.
 		function run(){
             switch($_REQUEST['accion']){
                 
@@ -26,6 +29,8 @@
             }
         }
 
+        //Valida el usuario y contraseña otorgados antes de realizar el registro.
+        //Si el registro fue exitoso mostrará el index.
         function signin(){
         	require('controller/validadorCtrl.php');
                         
@@ -42,6 +47,9 @@
             }
         }
 
+        //Valida el usuario y contraseña ortorgados para el inicio de sesión.
+        //Manda llamar el iniciar sesión a través del modelo.
+        //Si el inicio fue correcto mostrará el index.
         function iniciarSesion(){
         	require('controller/validadorCtrl.php');
                         
@@ -58,6 +66,7 @@
             }
         }
 
+        //Destruirpa información de la sesión.
         function cerrarSesion(){
         	#Destruye la variable de sesión
         	echo 'Sesión terminada!';

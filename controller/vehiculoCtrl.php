@@ -4,12 +4,14 @@ class vehiculoCtrl{
 
 	private $modelo;
 
+	//Método constructor donde carga el modelo del vehículo.
 	function __construct(){
 
 		require("model/vehiculoMdl.php");
 		$this -> modelo = new vehiculoMdl();
 	}
 
+	//Método run encargado de actuar conforme a la acción deseada del usuario.
 	public function run(){
 
 		switch($_REQUEST['accion']){
@@ -35,6 +37,8 @@ class vehiculoCtrl{
 		}
 	}
 
+	//Se reciben los datos necesarios para un nuevo vehículo y se validan las cadenas.
+	//Si se insertan correctamente envía mensaje.
 	public function insertar(){
 
 		require('controller/validadorCtrl.php');
@@ -59,6 +63,8 @@ class vehiculoCtrl{
             
 	}
 
+	//A través del modelo se recupera un listado de vehículos.
+	//Si existe la lista la muestra, en caso contrario envía error.
 	public function listar(){
 
 		$lista = $this -> modelo -> listar();
@@ -72,6 +78,8 @@ class vehiculoCtrl{
 
 	}
 
+	//Se modifica información de un vehículo a través de su VIN.
+	//Se valida el VIN y se manda a modificar.
 	public function modificar(){
 
 		require('controller/validadorCtrl.php');
@@ -87,6 +95,7 @@ class vehiculoCtrl{
         }
 	}
 
+	//A través del modelo y del VIN se cambia status del vehículo.
 	public function eliminar(){
 
 		require('controller/validadorCtrl.php');

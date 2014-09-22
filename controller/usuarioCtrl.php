@@ -4,12 +4,15 @@
 
         private $modelo;
         
+        //Al momento de crear el controlador usuario se inicia el modelo de usuario.
         function __construct(){
 
             require('model/usuarioMdl.php');
             $this -> modelo = new usuarioMdl();
         }
         
+        //Recibe la acción que se desea con el usuario 
+        //y manda al método correspondiente.
         function run(){
 
             switch($_REQUEST['accion']){
@@ -27,6 +30,7 @@
             }
         }
         
+        //valida que la información recibida sea correcta.
         function insertar(){
         
             require('controller/validadorCtrl.php');                     
@@ -45,7 +49,8 @@
                 require('view/errorUsuarioInsertado.php'); #cambiar a html
             }  
         }
-    
+        
+        //Modifica información a través del código.
         function modificar(){
         
             require('controller/validadorCtrl.php');

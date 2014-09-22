@@ -8,6 +8,7 @@
 		private $telefono;
 		private $email;
 		
+		//Inicializa los datos de un usuario.
 		public function __construct($codigo, $nombre, $apellido, $telefono, $email){
 		
 			$this -> codigo = $codigo;
