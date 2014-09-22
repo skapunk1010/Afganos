@@ -17,7 +17,7 @@
 		}
 
 		public static function validarVin($vin){
-			return $vin
+			return $vin;
 		}
 
 		public static function validarAnho($anho){
