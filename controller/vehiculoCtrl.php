@@ -51,50 +51,55 @@ class vehiculoCtrl
 
         $resultado = $this -> modelo -> insertar($vin,$marca,$modelo,$anho,$color,$cilindraje,$transmision,$combustible);
             
-            if($resultado){
-                
-                require('view/vehiculoInsertado.php'); #cambiar a html
-            }
+        if($resultado){
+            require('view/vehiculoInsertado.php'); #cambiar a html
+        }
             
-            else{
-                
-                require('view/error.php'); #cambiar a html
-            }
+        else{                
+           require('view/error.php'); #cambiar a html, errorInsertar.php
+        }
             
 	}
 
 	function listar()
 	{
-		#imprimir lo que modelo regrese.
 		$lista = $this -> modelo -> listar();
+		
+		if($lista){
+			require('view/vehiculoLista.php');
+		}
+		else{
+			require('view/error.php'); #cambiar a vista individual
+		}
+
 	}
 
 	function modificar()
 	{
-		#el/los datos a eliminar
 		$resultado = $this -> modelo -> modificar();
             
-        	if($resultado){
-                require('view/vehiculoModificado.php'); #cambiar a html
-            }
+        if($resultado){
+            require('view/vehiculoModificado.php'); #cambiar a html
+        }
             
-            else{
-                require('view/error.php'); #cambiar a html
-            }
+        else{
+            require('view/error.php'); #cambiar a html
+        }
 	}
 
 	function eliminar()
 	{
-		#vin del vehículo a cambiar status
+		require('controller/validadorCtrl.php');
+		$vin = validadorCtrl::validarVin($_REQUEST['vin']);
 		$resultado = $this -> modelo -> eliminar($vin);
             
-        	if($resultado){    
-                require('view/vehiculoEliminado.php'); #cambiar a html
-            }
+        if($resultado){    
+            require('view/vehiculoEliminado.php'); #cambiar a html
+        }
             
-            else{     
-                require('view/error.php'); #cambiar a html
-            }
+        else{     
+            require('view/error.php'); #cambiar a html
+        }
 	}
 }
 
