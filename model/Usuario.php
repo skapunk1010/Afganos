@@ -21,7 +21,7 @@
 		}
 	
 		public function getCodigo(){
-			return this -> codigo;
+			return $this -> codigo;
 		}
 		public function getNombre(){
 		

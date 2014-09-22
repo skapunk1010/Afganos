@@ -47,7 +47,7 @@
             $resultado = $this -> modelo -> signin($usuario,$password);
             
             if($resultado){
-                require('view/index.php'); #cambiar a html
+                require('index.php'); #cambiar a html
             } 
             else{  
                 require('view/error.php'); #cambiar a html
@@ -68,7 +68,7 @@
             $resultado = $this->modelo->iniciarSesion($usuario,$password);
             
             if($resultado){
-                require('view/index.php'); #cambiar a html
+                require('index.php'); #cambiar a html
             } 
             else{  
                 require('view/error.php'); #cambiar a html
