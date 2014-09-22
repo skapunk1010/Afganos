@@ -84,7 +84,7 @@
             $area       = validadorCtrl::validarTxt($_REQUEST['area']);
             $ubicacion  = validadorCtrl::validarTxt($_REQUEST['ubicacion']);
             $encargado  = validadorCtrl::validarTxt($_REQUEST['encargado']);
-            $resultado  = $this -> modelo -> modificar($area);
+            $resultado  = $this -> modelo -> modificar($area,$ubicacion,$encargado);
             
             if($resultado){
                 require('view/areaModificada.php'); #cambiar a html
