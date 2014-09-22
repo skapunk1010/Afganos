@@ -6,7 +6,7 @@
 		*Función encargada del inicio de sesión de un usuario.
 		*@param String $usuario recibe una cadena de usuario
 		*@param String $password recibe una cadena de contraseña
-		*@return boolean dependiendo de su validez. 
+		*@return bool dependiendo de su validez. 
 		*/
 		public function iniciarSesion($usuario,$password){
 			#Establecer conexión con BD
@@ -26,7 +26,7 @@
 		*Función para registrar a un usuario.
 		*@param String $usuario recibe una cadena de usuario
 		*@param String $password recibe una cadena de contraseña
-		*@return boolean dependiendo de su validez. 
+		*@return bool dependiendo de su validez. 
 		*/
 		public function signin($usuario,$password){
 			#Establecer conexion con BD

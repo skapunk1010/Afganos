@@ -24,7 +24,7 @@
 
 		/**
 		*@param String $vin recibe el vin de un auto a modificar
-		*@return boolean según sea su validez.
+		*@return bool según sea su validez.
 		*/
 		public function modificar($vin)
 		{
@@ -36,7 +36,7 @@
 
 		/**
 		*@param String $vin recibe el vin de un auto a modificar
-		*@return boolean según sea su validez.
+		*@return bool según sea su validez.
 		*/
 		public function eliminar($vin)
 		{

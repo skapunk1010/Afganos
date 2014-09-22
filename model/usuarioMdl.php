@@ -9,7 +9,7 @@
 		*@param String $apellido recibe una cadena de apellido nuevo
 		*@param String $teléfono recibe una cadena de teléfono nuevo
 		*@param String $email recibe una cadena de email nuevo
-		*@return boolean dependiendo de su validez.
+		*@return bool dependiendo de su validez.
 		*/
 		public function insertar($codigo, $nombre, $apellido, $telefono, $email){
 		
@@ -20,7 +20,7 @@
 
 		/**
 		*@param String $codigo recibe el código del usuario a modificar.
-		*@return boolean según sea su validez.
+		*@return bool según sea su validez.
 		*/
 		public function modificar($codigo)
 		{
