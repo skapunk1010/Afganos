@@ -3,8 +3,6 @@
 	require('model/Vehiculo.php'); 
 	class vehiculoMdl
 	{
-		private $vehiculo;
-		
 		public function insertar($vin,$marca,$modelo,$anho,$color,$cilindraje,$transmision,$combustible){
 		
 			$vehiculo = new Vehiculo($vin,$marca,$modelo,$anho,$color,$cilindraje,$transmision,$combustible);

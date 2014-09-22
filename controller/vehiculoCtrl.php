@@ -1,19 +1,19 @@
 <?php
 
-class vehiculoCtrl
-{
+class vehiculoCtrl{
+
 	private $modelo;
 
-	function __construct()
-	{
+	function __construct(){
+
 		require("model/vehiculoMdl.php");
 		$this -> modelo = new vehiculoMdl();
 	}
 
-	public function run()
-	{
-		switch($_REQUEST['accion'])
-		{
+	public function run(){
+
+		switch($_REQUEST['accion']){
+			
 			case "insertar":
 				$this -> insertar();
 				break;
@@ -35,8 +35,8 @@ class vehiculoCtrl
 		}
 	}
 
-	public function insertar()
-	{
+	public function insertar(){
+
 		require('controller/validadorCtrl.php');
 		$vin = validadorCtrl::validarVin($_REQUEST['vin']);
         $marca = validadorCtrl::validarTxt($_REQUEST['marca']);
@@ -59,8 +59,8 @@ class vehiculoCtrl
             
 	}
 
-	public function listar()
-	{
+	public function listar(){
+
 		$lista = $this -> modelo -> listar();
 		
 		if(isset($lista)){
@@ -72,8 +72,8 @@ class vehiculoCtrl
 
 	}
 
-	public function modificar()
-	{
+	public function modificar(){
+
 		require('controller/validadorCtrl.php');
 		$vin = validadorCtrl::validarVin($_REQUEST['vin']);
 		$resultado = $this -> modelo -> modificar($vin);
@@ -87,8 +87,8 @@ class vehiculoCtrl
         }
 	}
 
-	public function eliminar()
-	{
+	public function eliminar(){
+
 		require('controller/validadorCtrl.php');
 		$vin = validadorCtrl::validarVin($_REQUEST['vin']);
 		$resultado = $this -> modelo -> eliminar($vin);

@@ -2,54 +2,64 @@
 
     class usuarioCtrl{
 
-        private $mdl;
+        private $modelo;
         
         function __construct(){
+
             require('model/usuarioMdl.php');
-            $this -> mdl = new usuarioMdl();
+            $this -> modelo = new usuarioMdl();
         }
         
         function run(){
+
             switch($_REQUEST['accion']){
                 
-                case 'insertarUsuario': 
-                        $this -> insertarUsuario();
-                        break;
+                case 'insertar': 
+                    $this -> insertar();
+                    break;
                         
-                case 'modificarUsuario':
-                        $this -> modificarUsuario();
-                        break;
+                case 'modificar':
+                    $this -> modificar();
+                    break;
                         
-                default: #accion incorrecta
+                default: 
+                    require('view/error.php');
             }
         }
         
-        function insertarUsuario(){
+        function insertar(){
         
-            require('controller/validadorCtrl.php');
-                        
+            require('controller/validadorCtrl.php');                     
+            $codigo     = validadorCtrl::validarNum($_REQUEST['codigo']);   
             $nombre     = validadorCtrl::validarTxt($_REQUEST['nombre']);
             $apellido   = validadorCtrl::validarTxt($_REQUEST['apellido']);
             $telefono   = validadorCtrl::validarNum($_REQUEST['telef']);
             $email      = validadorCtrl::validarEmail($_REQUEST['email']);
             
-            $resultado = $this -> mdl -> insertarUsuario($nombre, $apellido, $telefono, $email);
+            $resultado = $this -> modelo -> insertar($codigo, $nombre, $apellido, $telefono, $email);
             
             if($resultado){
                 require('view/usuarioInsertado.php'); #cambiar a html
-            } else{  
-                require('view/error.php'); #cambiar a html
+            } 
+            else{  
+                require('view/errorUsuarioInsertado.php'); #cambiar a html
+            }  
+        }
+    
+        function modificar(){
+        
+            require('controller/validadorCtrl.php');
+            $codigo = validadorCtrl::validarNum($_REQUEST['codigo']);
+            $resultado = $this -> modelo -> modificar($codigo);
+            
+            if($resultado){
+                require('view/usuarioModificado.php'); #cambiar a html
             }
-        
-        }
-    
-        function modificarUsuario(){
             
-            
-        
+            else{
+                require('view/errorUsuarioModificado.php'); #cambiar a html
+            }
         }
-    
     }
-    
 
 ?>

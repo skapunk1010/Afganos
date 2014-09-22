@@ -2,23 +2,24 @@
 	
 	class Usuario{
 	
+		private $codigo;
 		private $nombre;
 		private $apellido;
 		private $telefono;
 		private $email;
 		
-#		public function __construct($nombre){
-#		
-#			$this -> nombre = nombre;
-#		}
-		public function __construct($nombre, $apellido, $telefono, $email){
+		public function __construct($codigo, $nombre, $apellido, $telefono, $email){
 		
-			$this -> nombre = nombre;
-			$this -> apellido = apellido;
-			$this -> telefono = telefono;
-			$this -> email = email;
+			$this -> codigo = $codigo;
+			$this -> nombre = $nombre;
+			$this -> apellido = $apellido;
+			$this -> telefono = $telefono;
+			$this -> email = $email;
 		}
 	
+		public function getCodigo(){
+			return this -> codigo;
+		}
 		public function getNombre(){
 		
 			return $this -> nombre;
@@ -36,6 +37,9 @@
 			return $this -> email;
 		}
 	
+		public function setCodigo($codigo){
+			$this -> codgo = $codigo;
+		}
 		public function setNombre($nombre){
 		
 			$this -> nombre = $nombre;
