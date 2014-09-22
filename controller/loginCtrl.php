@@ -40,7 +40,7 @@
             $resultado = $this -> modelo -> signin($usuario,$password);
             
             if($resultado){
-                require('index.php'); #cambiar a html
+                require('view/loginSignin.php'); #cambiar a html
             } 
             else{  
                 require('view/error.php'); #cambiar a html
