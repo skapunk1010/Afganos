@@ -6,18 +6,21 @@
 		private $anho;
 		private $color;
 		private $cilindraje;
-		private $transmicion;
+		private $transmision;
 		private $combustible;
 
-		public function __construct($vin,$marca,$modelo,$anho,$color,$cilindraje,$transmicion,$combustible){
+		private $status;
+
+		public function __construct($vin,$marca,$modelo,$anho,$color,$cilindraje,$transmision,$combustible){
 			$this->vin 		= $vin;
 			$this->marca 	= $marca;
 			$this->modelo 	= $modelo;
 			$this->anho 	= $anho;
 			$this->color 	= $color;
 			$this->cilindraje = $cilindraje;
-			$this->transmicion = $transmicion;
+			$this->transmision = $transmision;
 			$this->combustible = $combustible;
+			$this->status = TRUE;
 		}
 
 		public function getVin(){
@@ -40,12 +43,16 @@
 			return $this->cilindraje;
 		}
 
-		public function getTransmicion(){
-			return $this->transmicion;
+		public function getTransmision(){
+			return $this->transmision;
 		}
 
 		public function getCombustible(){
 			return $this->combustible;
+		}
+
+		public function getStatus(){
+			return $this->status;
 		}
 
 		public function setMarca($marca){
@@ -64,12 +71,16 @@
 			$this->cilindraje = $cilindraje;
 		}
 
-		public function setTransmicion($transmicion){
-			$this->transmicion = $transmicion;
+		public function setTransmision($transmision){
+			$this->transmision = $transmision;
 		}
 
 		public function setCombustible($combustible){
 			$this->combustible = $combustible;
+		}
+
+		public function setStatus($status){
+			$this->status = $status;
 		}
 	}
 ?>
