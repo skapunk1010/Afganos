@@ -18,6 +18,10 @@
         case 'login':
             require('controller/loginCtrl.php');
             $ctrl = new loginCtrl();
+            break;
+        case 'area':
+            require('controller/areaCtrl.php');
+            $ctrl = new areaCtrl();
             break;				
         default:
                 #no se encontro parametros
