@@ -3,7 +3,9 @@
 	require('model/Vehiculo.php'); 
 	class vehiculoMdl
 	{
-		//Se inserta un nuevo vehículo una vez que se han validado los datos.
+		/**
+		*Se inserta un nuevo vehículo una vez que se han validado los datos.
+		*/
 		public function insertar($vin,$marca,$modelo,$anho,$color,$cilindraje,$transmision,$combustible){
 		
 			$vehiculo = new Vehiculo($vin,$marca,$modelo,$anho,$color,$cilindraje,$transmision,$combustible);
@@ -11,15 +13,19 @@
 			return TRUE;
 		}
 
-		//Regresa una lista de los carros obtenidos de la base de datos.
+		/**
+		*@return Array con un listado de los vehículos.
+		*/
 		public function listar()
 		{
 			#lista todlos los vehículos.
 			return array("carro1","carro2","carro3","carro4");
 		}
 
-		//Se modifica información del vehículo por medio del VIN.
-		//Regresa verdadero de ser acción exitosa.
+		/**
+		*@param String $vin recibe el vin de un auto a modificar
+		*@return boolean según sea su validez.
+		*/
 		public function modificar($vin)
 		{
 			#modificar el auto con ese vin
@@ -28,8 +34,10 @@
 			return TRUE;
 		}
 
-		//Se modifica el status del vehículo a través del VIN.
-		//De ser acción exitosa regresará verdadero.
+		/**
+		*@param String $vin recibe el vin de un auto a modificar
+		*@return boolean según sea su validez.
+		*/
 		public function eliminar($vin)
 		{
 			#cambiar status del vehículo.
