@@ -1,89 +1,73 @@
 <?php
 	class Vehiculo{
-		private $vin;
-		private $marca;
-		private $modelo;
-		private $anho;
+		private $VIN;
+		#private $marca;
+		private $IDmodelo;
 		private $color;
-		private $cilindraje;
 		private $transmision;
-		private $combustible;
-
-		private $status;
+		private $cilindraje;
+		private $anho;
+		private $numeroPuertas;
+		#private $combustible ??
 
 		/**
 		*Inicializa los valores de un nuevo vehículo.
 		*/
-		public function __construct($vin,$marca,$modelo,$anho,$color,$cilindraje,$transmision,$combustible){
-			$this->vin 		= $vin;
-			$this->marca 	= $marca;
-			$this->modelo 	= $modelo;
-			$this->anho 	= $anho;
-			$this->color 	= $color;
-			$this->cilindraje = $cilindraje;
-			$this->transmision = $transmision;
-			$this->combustible = $combustible;
-			$this->status = TRUE;
+		public function __construct($VIN, $IDmodelo, $transmision, $cilindraje){
+			$this -> VIN 		= $VIN;
+			$this -> IDmodelo 	= $IDmodelo;
+			$this -> transmision= $transmision;
+			$this -> cilindraje	= $cilindraje;
 		}
 
-		public function getVin(){
-			return $this->vin;
+		public function getVIN(){
+			return $this -> VIN;
 		}
-
-		public function getMarca(){
-			return $this->marca;
+		public function getIDmodelo(){
+			return $this-> IDmodelo;
 		}
-
-		public function getModelo(){
-			return $this->modelo;
-		}
-
 		public function getColor(){
-			return $this->color;
+			return $this -> color;
 		}
-
-		public function getCilindraje(){
-			return $this->cilindraje;
-		}
-
 		public function getTransmision(){
-			return $this->transmision;
+			return $this -> transmision;
 		}
-
-		public function getCombustible(){
-			return $this->combustible;
+		public function getCilindraje(){
+			return $this -> cilindraje;
 		}
-
-		public function getStatus(){
-			return $this->status;
+		public function getAnho(){
+			return $this -> anho;
 		}
-
-		public function setMarca($marca){
-			$this->marca = $marca;
+		public function getNumeroPuertas(){
+			return $this -> numeroPuertas;
 		}
+		#public function getCombustible(){
+		#	return $this->combustible;
+		#}
 
-		public function setModelo($modelo){
-			$this->modelo = $modelo;
+		public function setVIN($VIN){
+			$this -> VIN = $VIN;
 		}
-
+		public function setIDmodelo($IDmodelo){
+			$this -> IDmodelo = $IDmodelo;
+		}
 		public function setColor($color){
-			$this->color = $color;
+			$this -> color = $color;
 		}
-
-		public function setCilindraje($cilindraje){
-			$this->cilindraje = $cilindraje;
-		}
-
 		public function setTransmision($transmision){
-			$this->transmision = $transmision;
+			$this -> transmision = $transmision;
 		}
-
-		public function setCombustible($combustible){
-			$this->combustible = $combustible;
+		public function setCilindraje($cilindraje){
+			$this -> cilindraje = $cilindraje;
 		}
-
-		public function setStatus($status){
-			$this->status = $status;
+		public function setAnho($anho){
+			$this -> anho = $anho;
 		}
+		public function setNumeroPuertos($numeroPuertas){
+			$this -> numeroPuertas = $numeroPuertas;
+		}
+		#public function setCombustible($combustible){
+		#	$this->combustible = $combustible;
+		#}
 	}
 ?>
