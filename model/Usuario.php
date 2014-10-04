@@ -3,61 +3,51 @@
 	class Usuario{
 	
 		private $codigo;
-		private $nombre;
-		private $apellido;
-		private $telefono;
-		private $email;
+		private $contrasenha;
+		private $status;
+		private $fechaRegistro;
 		
 		/**
 		*Inicializa los datos de un usuario.
 		*/
-		public function __construct($codigo, $nombre, $apellido, $telefono, $email){
+		public function __construct($codigo, $contrasenha, $status, $fechaRegistro){
 		
 			$this -> codigo = $codigo;
-			$this -> nombre = $nombre;
-			$this -> apellido = $apellido;
-			$this -> telefono = $telefono;
-			$this -> email = $email;
+			$this -> contrasenha = $contrasenha;
+			$this -> status = $status;
+			$this -> fechaRegistro = $fechaRegistro;
 		}
 	
 		public function getCodigo(){
 			return $this -> codigo;
 		}
-		public function getNombre(){
+		public function getContrasenha(){
 		
-			return $this -> nombre;
+			return $this -> contrasenha;
 		}
-		public function getApellido(){
+		public function getStatus(){
 		
-			return $this -> apellido;
+			return $this -> status;
 		}
-		public function getTelefono(){
+		public function getFechaRegistro(){
 		
-			return $this -> telefono;
-		}
-		public function getEmail(){
-		
-			return $this -> email;
+			return $this -> fechaRegistro;
 		}
 	
 		public function setCodigo($codigo){
-			$this -> codgo = $codigo;
+			$this -> codigo = $codigo;
 		}
-		public function setNombre($nombre){
+		public function setContrasenha($contrasenha){
 		
-			$this -> nombre = $nombre;
+			$this -> contrasenha = $contrasenha;
 		}
-		public function setApellido($apellido){
+		public function setStatus($status){
 		
-			$this -> apellido = $apellido;
+			$this -> status = $status;
 		}
-		public function setTelefono($telefono){
+		public function setFechaRegistro($fechaRegistro){
 		
-			$this -> telefono = $telefono;
-		}
-		public function setEmail($email){
-		
-			$this -> email = $email;
+			$this -> fechaRegistro = $fechaRegistro;
 		}
 	
 	}
