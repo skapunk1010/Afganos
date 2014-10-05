@@ -2,9 +2,21 @@
 	
 	class Area{
 
+		private $idArea;
 		private $area;
-		private $ubicacion;
-		private $encargado;
+		private $Encargado_Codigo;
+		private $descripcion;
+
+		/**
+		*Constructor
+		*/
+		function __construct($idArea, $Encargado_Codigo, $area){
+
+			$this -> idArea = $idArea;
+			$this -> Encargado_Codigo = $Encargado_Codigo;
+			$this -> area = $area;
+		}
+
 
 		/**
 		*@return String Regresa nueva área
@@ -14,41 +26,54 @@
 		}
 
 		/**
-		*@return String Regresa nueva ubicación
+		*@return String Regresa idArea
 		*/
-		public function getUbicacion(){
-			return $this -> ubicacion;
+		public function getIdArea(){
+			return $this -> idArea;
 		}
 
 		/**
 		*@return String Regresa al encargado
 		*/
 		public function getEncargado(){
-			return $this -> encargado;
+			return $this -> Encargado_Codigo;
+		}
+
+
+		/**
+		*@return String Regresa descripción
+		*/
+		public function getDescripcion(){
+			return $this -> descripcion;
 		}
 
 		/**
-		*Asigna nueva área
-		*@param String $area recibe el nombre de un área
+		*@param String $area recibe el nombre de área
 		*/
 		public function setArea($area){
-			$this -> area = $area;
+			return $this -> area = $area;
 		}
 
 		/**
-		*Asigna nueva ubicación
-		*@param String $ubicación recibe el nombre de una ubicación
+		*@param String $idArea recibe el id de área
 		*/
-		public function setUbicacion($ubicacion){
-			$this -> ubicacion = $ubicacion;
+		public function setIdArea($idArea){
+			return $this -> idArea = $idArea;
 		}
 
 		/**
-		*Asigna nuevo encargado.
-		*@param String $encargado recibe el valor de un nuevo encargado
+		*@param String $Encargado_Codigo recibe el codigo de empleado
 		*/
-		public function setEncargado($encargado){
-			$this -> encargado = $encargado;
+		public function setEncargado($Encargado_Codigo){
+			return $this -> Encargado_Codigo = $Encargado_Codigo;
+		}
+
+
+		/**
+		*@param String $descripcion recibe el nombre de una ubicación
+		*/
+		public function setDescripcion($descripcion){
+			return $this -> descripcion = $descripcion;
 		}
 	}
 
