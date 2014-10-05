@@ -1,0 +1,71 @@
+//MARCA
+query("INSERT INTO Marca VALUES ('".$idMarca."','".$marca."')");
+
+query("INSERT INTO Marca (idArea, Marca) VALUES ('".$idMarca."','".$marca."')");
+
+
+
+//VEHÍCULO
+query("INSERT INTO Vehiculo VALUES ('".$VIN."','".$Modelo_idModelo."','".$color."','".$transmision."','".$cilindraje."','".$anho."','".$numeroPuertas."')");
+
+query("INSERT INTO Vehiculo (VIN, Modelo_idModelo, color, transmision, cilindraje, anho, numeroPuertas) VALUES ('".$VIN."','".$Modelo_idModelo."','".$color."','".$transmision."','".$cilindraje."','".$anho."','".$numeroPuertas."')");
+
+
+
+//MODELO
+query("INSERT INTO Modelo VALUES ('".$idModelo."','".$Marca_idMarca."','".$Modelo."')");
+
+query("INSERT INTO Modelo (idModelo, Marca_idMarca, Modelo) VALUES ('".$idModelo."','".$Marca_idMarca."','".$Modelo."')");
+
+
+
+//UBICACION
+query("INSERT INTO Ubicacion VALUES ('".$idUbicacion."','".$Area_idArea."','".$seccion."','".$numero."','".$status."')");
+
+query("INSERT INTO Ubicacion (idUbicacion, Area_idArea, seccion, numero, status) VALUES ('".$idUbicacion."','".$Area_idArea."','".$seccion."','".$numero."','".$status."')");
+
+
+
+//REPORTE
+query("INSERT INTO Reporte VALUES ('".$numeroReporte."','".$Vehiculo_VIN."','".$fechaEntrada."','".$fechaSalida."','".$status."')");
+
+query("INSERT INTO Reporte (numeroReporte, Vehiculo_VIN, fechaEntrada, fechaSalida, status) VALUES ('".$numeroReporte."','".$Vehiculo_VIN."','".$fechaEntrada."','".$fechaSalida."','".$status."')");
+
+
+
+//MOVIMIENTO INTERNO
+query("INSERT INTO MovimientoInterno VALUES ('".$idMovimiento."','".$Ubicacion_idUbicacion."','".$Empleado_Codigo."','".$descripcion."','".$Reporte_numeroReporte."')");
+
+query("INSERT INTO MovimientoInterno (idMovimiento, Ubicacion_idUbicacion, Empleado_Codigo, descripcion, Reporte_numeroReporte) VALUES ('".$idMovimiento."','".$Ubicacion_idUbicacion."','".$Empleado_Codigo."','".$descripcion."','".$Reporte_numeroReporte."')");
+
+
+
+//AREA
+query("INSERT INTO Area VALUES ('".$idArea."','".$Encargado_Codigo."','".$area."','".$descripcion."')");
+
+query("INSERT INTO Area (idArea, Encargado_codigo, area, descripcion) VALUES ('".$idArea."','".$Encargado_Codigo."','".$area."','".$descripcion."')");
+
+
+
+//EMPLEADO
+query("INSERT INTO Empleado VALUES ('".$Codigo."','".$nombre."','".$apellidoMaterno."','".$apellidoPaterno."','".$fechaNacimiento."','".$RFC."','".$NSS."','".$email."','".$status."')");
+
+query("INSERT INTO Empleado (Codigo, nombre, apellidoMaterno, apellidoPaterno, fechaNacimiento, RFC, NSS, email, status) VALUES ('".$Codigo."','".$nombre."','".$apellidoMaterno."','".$apellidoPaterno."','".$fechaNacimiento."','".$RFC."','".$NSS."','".$email."','".$status."')");
+
+
+
+//TELEFONO
+query("INSERT INTO Telefono VALUES ('".$idTelefono."','".$Empleado_Codigo."','".$telefono."','".$tipo."')");
+
+query("INSERT INTO Telefono (idTelefono, Empleado_Codigo, telefono, tipo) VALUES ('".$idTelefono."','".$Empleado_Codigo."','".$telefono."','".$tipo."' WHERE Empleado_Codigo = '".$Empelado_Codigo."')");
+
+
+
+//DIRECCIÓN
+query("INSERT INTO Direccion VALUES ('".$idDireccion."','".$Empleado_Codigo."','".$calle."','".$numeroExt."','".$numeroInt."','".$codigoPostal."','".$colonia."','".$ciudad."','".$estado."')");
+
+query("INSERT INTO Direccion (idDireccion, Empleado_Codigo, calle, numeroExt, numeroInt, codigoPostal, colonia, ciudad, estado) VALUES ('".$idDireccion."','".$Empleado_Codigo."','".$calle."','".$numeroExt."','".$numeroInt."','".$codigoPostal."','".$colonia."','".$ciudad."','".$estado."')");
+
+
+//USUARIO
+query("INSERT INTO Usuario (Codigo, contrasenha, status, fechaRegistro) VALUES ('".$Codigo."','".$contrasenha."','".$status."','".$fechaRegistro."')");

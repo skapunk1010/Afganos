@@ -1,0 +1,10 @@
+**Reporte
+query("UPDATE Reporte set status = FALSE WHERE numeroReporte = '".$numeroReporte."'");
+
+
+**Usuario
+query("UPDATE Usuario set status = FALSE WHERE Codigo = '".$Codigo."'");
+
+**DELETE**
+//TELEFONO
+//DIRECCION
