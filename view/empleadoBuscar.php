@@ -1,0 +1,3 @@
+<?php
+	echo 'Empleado consultado!';
+?>
