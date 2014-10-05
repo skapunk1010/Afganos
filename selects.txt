@@ -1,0 +1,44 @@
+***marca***
+query("SELECT * FROM Marca");
+query("SELECT * FROM Marca WHERE idArea = '".$idArea."'");
+
+***modelo**
+query("SELECT * FROM Modelo");
+query("SELECT * FROM Modelo WHERE idModelo = '".$idModelo."'");
+
+**Vehiculo**
+query("SELECT * FROM Vehiculo");
+query("SELECT * FROM Vehiculo WHERE VIN = '".$VIN."'");
+
+**Ubicacion**
+query("SELECT * FROM Ubicacion");
+query("SELECT idUbicacion FROM Ubicacion WHERE Area_idArea = '".$Area_idArea."' AND status = TRUE LIMIT 1");
+query("SELECT * FROM Ubicacion WHERE Area_idArea = '".$Area_idArea."' AND status = TRUE");
+
+**Reporte
+query("SELECT * FROM Reporte");
+query("SELECT * FROM Reporte WHERE numeroReporte = '".$numeroReporte."'");
+
+**MovimientoInterno
+query("SELECT * FROM MovimientoInterno");
+query("SELECT * FROM MovimientoInterno WHERE Reporte_numeroReporte = '".$Reporte_numeroReporte."'");
+
+**area
+query("SELECT * FROM Area");
+query("SELECT * FROM Area WHERE idArea = '".$idArea."'");
+
+**empleado
+query("SELECT * FROM Empleado");
+query("SELECT * FROM Empleado WHERE Codigo = '".$Codigo."'");
+
+**direccion
+query("SELECT * FROM Direccion");
+query("SELECT * FROM Direccion WHERE Empleado_Codigo = '".$Empleado_Codigo."'");
+
+**telefono
+query("SELECT * FROM Telefono");
+query("SELECT * FROM Telefono WHERE Empleado_Codigo = '".$Empleado_Codigo."'");
+
+**usuario
+query("SELECT * FROM Usuario");
+query("SELECT contrasenha FROM Usuario WHERE Codigo = '".$Codigo."' AND status = TRUE");
