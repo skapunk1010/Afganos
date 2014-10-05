@@ -1,0 +1,3 @@
+<?php
+echo "DIRECCIÓN ELIMINADA CON ÉXITO.";
+<?

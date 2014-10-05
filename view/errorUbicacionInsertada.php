@@ -1,0 +1,3 @@
+<?php
+echo "ERROR AL INSERTAR UNA UBICACIÓN";
+?>
