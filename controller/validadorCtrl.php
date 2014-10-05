@@ -13,7 +13,7 @@
 		private const REGEXP_FECHA		= "/^(0[1-9]|[12][\d]|3[01])[-](0[1-9]|1[012])[-]([\d]{4})$/";
 		private const REGEXP_RFC		= "/^([A-Z]{4})([\d]{2})(0[1-9]|1[012])(0[1-9]|[12][\d]|3[01])([A-Z]{3})$/";
 		private const REGEXP_NSS		= "/^[\d]{11}$/";
-
+		private const REGEXP_CARACTER	= "/^[a-zA-Z]$/";
 		/**
 		*Valida que tenga la estructura de un email.
 		*@param string $email Dirección de email.
@@ -211,6 +211,20 @@
 			if(preg_match(REGEXP_NSS, $nss)){
 				return TRUE;
 			}else{
+				return FALSE;
+			}
+		}
+
+		/**
+		*@param string $cadena Recibe una cadena a validar.
+		*@return boolean Regresa TRUE si la cadena es un caracter A-F o a-f
+		*regresa FALSE en caso contrario
+		*/
+		public static function validarCaracter($cadena){
+			if(preg_match(REGEXP_CARACTER, $cadena)){
+				return TRUE;
+			}
+			else{
 				return FALSE;
 			}
 		}
