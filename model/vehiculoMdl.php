@@ -51,7 +51,16 @@
 			#update en BD.
 			return TRUE;
 		}
-
+		/**
+		 * Busca el vehiculo en la base de datos.
+		 * @param String $vin Vin del vehiculo que se va a consular
+		 * @return Array $resutaldo Registro del vehiculo consultado.
+		 * en caso de no encontrarse, regresa null.
+		 */
+		public function buscar($vin){
+			#Buscar vehiculo
+			return TRUE;
+		}
 	}
 
 ?>
