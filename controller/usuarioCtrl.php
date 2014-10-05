@@ -19,7 +19,7 @@
         *Recibe la acción que se desea con el usuario 
         *y manda al método correspondiente.
         */
-        function run(){
+        public function run(){
 
             switch($_REQUEST['accion']){
                 
@@ -39,7 +39,7 @@
         /**
         *valida que la información recibida sea correcta.
         */
-        function insertar(){
+        public function insertar(){
         
             require('controller/validadorCtrl.php');                     
             $codigo     = validadorCtrl::validarNum($_REQUEST['codigo']);   
@@ -61,7 +61,7 @@
         /**
         *Modifica información a través del código.
         */
-        function modificar(){
+        public function modificar(){
         
             require('controller/validadorCtrl.php');
             $codigo = validadorCtrl::validarNum($_REQUEST['codigo']);

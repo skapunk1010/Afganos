@@ -26,6 +26,7 @@
 				
 
 				default:
+					require('view/error.php');
 					break;
 			}
 		}
