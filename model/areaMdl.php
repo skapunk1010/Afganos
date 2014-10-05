@@ -28,9 +28,13 @@
 			$descripcionESC = $this -> conexion -> real_escape_string($descripcion);
 
 			$query = "INSERT INTO Area (Encargado_Codigo, area, descripcion) 
-				VALUES ('".$Encargado_Codigo."','".$areaESC."','".$descripcionESC."')");
-			
+				VALUES ('".$Encargado_Codigo."','".$areaESC."','".$descripcionESC."')";
 			$correcto = $this -> conexion -> query($query);
+
+			if($correcto)
+				$nuevaArea -> setIdArea($this -> conexion -> insert_id);
+			else $nuevaArea = NULL;
+			
 			return $correcto; 
 		}
 
