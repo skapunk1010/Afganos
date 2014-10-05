@@ -38,11 +38,12 @@
 			if($this->conexion->error){
 				require('view/errorEmpleadoInsertado.php');
 				echo $this->conexion->error;
+				$this->conexion->close();
 				return FALSE;
 			}else{
+				$this->conexion->close();
 				return TRUE;
 			}
-			$this->conexion->close();
 		}
 		/**
 		 *Consulta un empleado en la base de datos.
@@ -58,8 +59,10 @@
 			if($this->conexion->error){
 				require('view/errorEmpleadoBuscar.php');
 				echo $this->conexion->error;
+				$this->conexion->close();
 				return null;
 			}else{
+				$this->conexion->close();
 				return $resultado->fetch_assoc();
 			}
 		}
