@@ -15,7 +15,7 @@
 		
 		/** 
 		 *Hace la inserción de una nueva direccion para un empleado
-         *@param String $Encargado_Codigo, codigo de empleado al q se agrega la direccion
+         *@param String $Empleado_Codigo, codigo de empleado al q se agrega la direccion
          *@param String $calle
 		 *@param String $numeroExt
 		 *@param String $colonia
