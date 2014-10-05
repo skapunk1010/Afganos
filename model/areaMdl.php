@@ -1,6 +1,12 @@
 <?php
 	require('model/Area.php');
 	class areaMdl{
+		private $conexion;
+
+		function __construct(){
+			require('controller/ConexionBaseDeDatos.php');
+			$this->conexion = ConexionBaseDeDatos::getInstace();
+		}
 		
 		/** 
 		 *Hace la inserción de una nueva área en la base de datos.

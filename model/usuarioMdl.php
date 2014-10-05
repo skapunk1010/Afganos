@@ -2,6 +2,11 @@
 
 	require('model/Usuario.php'); 
 	class usuarioMdl{
+		private $conexion;
+		function __construct(){
+			require('controller/ConexionBaseDeDatos.php');
+			$this->conexion = ConexionBaseDeDatos::getInstance();
+		}
 		
 		/**
 		*@param String $codigo recibe una cadena de código nuevo

@@ -1,6 +1,12 @@
 <?php
 
 	class loginMdl{
+		private $conexion;
+
+		function __construct(){
+			require('controller/ConexionBaseDeDatos.php');
+			$this->conexion = ConexionBaseDeDatos::getInstance();
+		}
 		
 		/**
 		*Función encargada del inicio de sesión de un usuario.

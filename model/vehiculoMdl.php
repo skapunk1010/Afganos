@@ -1,8 +1,14 @@
 <?php
 
 	require('model/Vehiculo.php'); 
-	class vehiculoMdl
-	{
+	class vehiculoMdl {
+		private $conexion;
+
+		function __construct(){
+			require('controller/ConexionBaseDeDatos.php');
+			$this->conexion = ConexionBaseDeDatos::getInstance();
+		}
+
 		/**
 		*Se inserta un nuevo vehículo una vez que se han validado los datos.
 		*/
