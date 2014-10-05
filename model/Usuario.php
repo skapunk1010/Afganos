@@ -1,55 +1,82 @@
 <?php
 	
 	class Usuario{
-	
-		private $codigo;
+
+		private $Codigo;
 		private $contrasenha;
 		private $status;
 		private $fechaRegistro;
-		
+
 		/**
-		*Inicializa los datos de un usuario.
+		*Constructor
 		*/
-		public function __construct($codigo, $contrasenha, $status, $fechaRegistro){
-		
-			$this -> codigo = $codigo;
+		function __construct($Codigo, $Contrasenha, $status, $fechaRegistro){
+
+			$this -> Codigo = $Codigo;
 			$this -> contrasenha = $contrasenha;
 			$this -> status = $status;
 			$this -> fechaRegistro = $fechaRegistro;
 		}
-	
+
+
+		/**
+		*@return String Regresa código
+		*/
 		public function getCodigo(){
-			return $this -> codigo;
+			return $this -> Codigo;
 		}
+
+		/**
+		*@return String Regresa contraseña
+		*/
 		public function getContrasenha(){
-		
 			return $this -> contrasenha;
 		}
+
+		/**
+		*@return String Regresa status
+		*/
 		public function getStatus(){
-		
 			return $this -> status;
 		}
+
+
+		/**
+		*@return String Regresa fecha de registro
+		*/
 		public function getFechaRegistro(){
-		
 			return $this -> fechaRegistro;
 		}
-	
-		public function setCodigo($codigo){
-			$this -> codigo = $codigo;
+
+		/**
+		*@param String $Codigo recibe el código
+		*/
+		public function setCodigo($Codigo){
+			return $this -> Codigo = $Codigo;
 		}
+
+		/**
+		*@param String $contrasenha recibe una contraseña
+		*/
 		public function setContrasenha($contrasenha){
-		
-			$this -> contrasenha = $contrasenha;
+			return $this -> contrasenha = $contrasenha;
 		}
+
+		/**
+		*@param String $status recibe el status de un usuario 
+		*/
 		public function setStatus($status){
-		
-			$this -> status = $status;
+			return $this -> status = $status;
 		}
+
+
+		/**
+		*@param String $fechaRegistro recibe la fecha de registro
+		*/
 		public function setFechaRegistro($fechaRegistro){
-		
-			$this -> fechaRegistro = $fechaRegistro;
+			return $this -> fechaRegistro = $fechaRegistro;
 		}
-	
 	}
+
 
 ?>
