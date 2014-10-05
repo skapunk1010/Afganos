@@ -10,6 +10,9 @@
 		private const REGEXP_ANHO		= "/^[\d]{4}$/";
 		private const REGEXP_NOMBRE		= "/^[a-zA-Z]+$/";
 		private const REGEXP_CODIGO_POSTAL = "/^[\d]{3,10}$/"; 
+		private const REGEXP_FECHA		= "/^(0[1-9]|[12][\d]|3[01])[-](0[1-9]|1[012])[-]([\d]{4})$/";
+		private const REGEXP_RFC		= "/^([A-Z]{4})([\d]{2})(0[1-9]|1[012])(0[1-9]|[12][\d]|3[01])([A-Z]{3})$/";
+		private const REGEXP_NSS		= "/^[\d]{11}$/";
 
 		/**
 		*Valida que tenga la estructura de un email.
@@ -148,8 +151,64 @@
 			}
 		}
 
+		/**
+		 *Valida el código postal. 
+		 *@param string $codigo Codigo postal a validar.
+		 *@return boolean Regresa TRUE si el código postal es válido.
+		 *Regresa FALSE, en caso contrario.
+		 */
 		public static function validarCodigoPostal($codigoPostal){
 			if(preg_match(REGEXP_CODIGO_POSTAL, $codigoPostal)){
+				return TRUE;
+			}else{
+				return FALSE;
+			}
+		}
+		/**
+		 *Valida que el status sea verdadero. Para que sea verdadero,
+		 *@param string $status Contiene el valor del status a validar.
+		 *@return boolean Regresa TRUE si la variable $status contiene un 1 o la palabra 'true'.
+		 *Regresa FALSE en caso contrario.
+		 */
+		public static function validarStatus($status){
+			return filter_var($status,FILTER_VALIDATE_BOOLEAN);
+		}
+
+		/**
+		 *Valida que la fecha tenga el formato correcto.
+		 *@param string $fecha La cadena debe de tener un formato dd-mm-yyyy .
+		 *@return boolean Regresa TRUE si la fecha tiene el formato correcto.
+		 *Regresa FALSE en caso contrario.
+		 */
+		public static function validarFecha($fecha){
+			if(preg_match(REGEXP_FECHA, $fecha)){
+				return TRUE;
+			}else{
+				return FALSE;
+			}
+		}
+
+		/**
+		 *Valida que el RFC(Registro Federal del Contribuyente) tenga el formato correcto.
+		 *@param string $rfc Cadena que contiene el RFC a validar.
+		 *@return boolean Regresa TRUE si la cadena tiene el formato correcto.
+		 *Regresa FALSE en caso contrario.
+		 */
+		public static function validarRfc($rfc){
+			if(preg_match(REGEXPR_RFC, $rfc)){
+				return TRUE;
+			}else{
+				return FALSE;
+			}
+		}
+		/**
+		 *Valida el formato del NSS(Número de Seguridad Social).
+		 *@param string $nss Cadena que contiene el NSS.
+		 *@return boolean Regresa TRUE si la cadena cumple con el formato correcto.
+		 *Regresa FALSE en caso contrario.
+		 */
+		public static function validarNss($nss){
+			if(preg_match(REGEXP_NSS, $nss)){
 				return TRUE;
 			}else{
 				return FALSE;
