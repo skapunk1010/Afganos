@@ -3,6 +3,7 @@
     class usuarioCtrl{
 
         private $modelo;
+        private $conexion;
         
         /**
         *Al momento de crear el controlador usuario 

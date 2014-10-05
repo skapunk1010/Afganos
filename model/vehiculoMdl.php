@@ -1,8 +1,14 @@
 <?php
 
 	require('model/Vehiculo.php'); 
-	class vehiculoMdl
-	{
+	class vehiculoMdl {
+		private $conexion;
+
+		function __construct(){
+			require('controller/ConexionBaseDeDatos.php');
+			$this->conexion = ConexionBaseDeDatos::getInstance();
+		}
+
 		/**
 		*Se inserta un nuevo vehículo una vez que se han validado los datos.
 		*/
@@ -45,7 +51,16 @@
 			#update en BD.
 			return TRUE;
 		}
-
+		/**
+		 * Busca el vehiculo en la base de datos.
+		 * @param String $vin Vin del vehiculo que se va a consular
+		 * @return Array $resutaldo Registro del vehiculo consultado.
+		 * en caso de no encontrarse, regresa null.
+		 */
+		public function buscar($vin){
+			#Buscar vehiculo
+			return TRUE;
+		}
 	}
 
 ?>

@@ -25,6 +25,10 @@ class vehiculoCtrl{
 				$this -> insertar();
 				break;
 
+			case "buscar":
+				$this->buscar();
+				break;
+
 			case "listar":
 				$this -> listar();
 				break;
@@ -123,6 +127,22 @@ class vehiculoCtrl{
         else{     
             require('view/errorVehiculoEliminado.php'); #cambiar a html
         }
+	}
+
+	/**
+	 * Consulta de vehiculo almacenado.
+	 */
+	public function buscar(){
+		require('controller/validadorCtrl.php');
+		$vin = validadorCtrl::validarVin($_REQUEST['vin']);
+		
+		$resultado = $this->modelo->eliminar();
+		
+		if($resultado){
+			require();
+		}else{
+			require();
+		}
 	}
 }
 
