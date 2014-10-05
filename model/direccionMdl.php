@@ -34,7 +34,8 @@
 			$ciudadESC = $this -> conexion -> real_escape_string($ciudad);
 			$estadoESC = $this -> conexion -> real_escape_string($estado);
 
-			$query = "INSERT INTO Direccion (Empleado_Codigo, calle, numeroExt, colonia, ciudad, estado) VALUES ('".$Empleado_Codigo."','".$calleESC."','".$numExtESC."','".$coloniaESC."','".$ciudadESC."','".$estadoESC."')";
+			$query = "INSERT INTO Direccion (Empleado_Codigo, calle, numeroExt, colonia, ciudad, estado) 
+				VALUES ('".$Empleado_Codigo."','".$calleESC."','".$numExtESC."','".$coloniaESC."','".$ciudadESC."','".$estadoESC."')";
 			$correcto = $this -> conexion -> query($query);
 
 			if($correcto)
@@ -78,8 +79,10 @@
 		 */
 		public function eliminar($IdDireccion){
 			
-			#Mostrar resultados
-			return TRUE; #Retorno temporal
+			$query = "DELETE FROM Direccion WHERE IdDireccion = ".$IdDireccion;
+			$correcto = $this -> conexion -> query($query);
+			
+			return $correcto; 	
 		}
 
 	}
