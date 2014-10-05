@@ -1,35 +1,50 @@
 <?php
-	require('model/Area.php');
+	
 	class areaMdl{
+
 		private $conexion;
 
+		/**
+		*Constructor
+		*/
 		function __construct(){
+			require('model/Area.php');
 			require('controller/ConexionBaseDeDatos.php');
 			$this->conexion = ConexionBaseDeDatos::getInstace();
 		}
 		
 		/** 
 		 *Hace la inserción de una nueva área en la base de datos.
-		 *@param String $area Nombre del área.
-         *@param String $ubicacion Ubicación del area.
-         *@param String $encargado Encargado responsable de esta área.
-		 *
-         *@return bool TRUE si la inserción fue satisfactoria.
+         *@param String $Encargado_Codigo, codigo de empleado encargado del area
+         *@param String $area, nombre del area.
+		 *@param String $descripcion, breve descripcion de la ocpacion del area
+         *@return bool TRUE si la inserción a la BD fue satisfactoria.
 		 */
-		public function insertar($area,$ubicacion,$encargado){
-			$nuevaArea = new Area($area,$ubicacion,$encargado);
-			#Simular conexión a base de datos e inserción de registro.
-			return TRUE; #Retorno temporal
+		public function insertar($Encargado_Cod, $area, $descripcion){
+			
+			$nuevaArea = new Area($Encargado_Cod, $area);
+			
+			$areaESC = $this -> conexion -> real_escape_string($area);
+			$descripcionESC = $this -> conexion -> real_escape_string($descripcion);
+
+			$query = "INSERT INTO Area (Encargado_Codigo, area, descripcion) 
+				VALUES ('".$Encargado_Codigo."','".$areaESC."','".$descripcionESC."')";
+			$correcto = $this -> conexion -> query($query);
+
+			if($correcto)
+				$nuevaArea -> setIdArea($this -> conexion -> insert_id);
+			else $nuevaArea = NULL;
+			
+			return $correcto; 
 		}
 
 		/**
-		 *Crea consultar a la base de datos del área especificada
-		 *en el parámetro.
-		 *@param String $area Nombre el area que se desea consultar.
+		 *Consulta a la base de datos del área especificada x el IdArea
+		 *@param int $Idarea, PK del area a consultar.
 		 *
 		 *@return bool TRUE si la consulta fue satisfactoria.
 		 */
-		public function consultar($area){
+		public function consultar($IdArea){
 			#Establecer conexion con BD
 			#Hacer consultar a ella.
 			#Mostrar resultados
@@ -38,15 +53,13 @@
 
 		/**
 		 * Hace la modificación a la base de datos del área indicada.
-		 *@param String $area Nombre de área que se desea modificar.
-         *@param String $ubicacion Nombre actualizado del área.
-         *@param String $encargado Encargado responsable del área actualizado.
+		 *@param Int $IdArea
+         *@param campo, variable variable, en su 1 valor campo a modificar, en su 2 valor: el nuevo valor
          *
          *@return bool TRUE si la modificación fue satisfactoria.
 		 */
-		public function modificar($area,$ubicacion,$encargado){
-			#Establecer conexion con BD
-			#Hacer consultar a ella.
+		public function modificar($IdArea, $campo){
+			
 			#Mostrar resultados
 			return TRUE; #Retorno temporal
 		}
