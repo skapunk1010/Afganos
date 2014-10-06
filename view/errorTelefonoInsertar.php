@@ -1,0 +1,3 @@
+<?php
+echo "ERRO AL INSERTAR TELÉFONO DE EMPLEADO.";
+?>
