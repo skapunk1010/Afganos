@@ -17,7 +17,12 @@
 		 */
 		public function insertar($Vehiculo_VIN,$fechaEntrada,$status,$detalle);
 			#Generar numero de Reporte
-			#$numeroReporte = GENERAR $this->conexion->real_escape_string()
+			$queryParaNum 	= "SELECT COUNT() as total FROM Reporte";
+			$resultado		= $this->conexion->query($queryParaNum);
+			$row			= $resultado->fetch_array();
+			$nReportes	 	= $row[0] + 1;
+			$codigo 		= str_pad($nReportes, 6, '0', STR_PAD_LEFT);
+
 			$Vehiculo_VIN	= $this->conexion->real_escape_string($Vehiculo_VIN);
 			$fechaEntrada	= $this->conexion->real_escape_string($fechaEntrada);
 			$status 		= $this->conexion->real_escape_string($status);

@@ -20,7 +20,12 @@
 		 */
 		public function insertar($nombre,$apellidoPat,$apellidoMat,$fechaNac,$rfc,$nss,$email,$status){
 			#Generar codigo
-			#$codigo = Generar
+			$queryParaCodigo = "SELECT COUNT() as total FROM Empleado";
+			$resultado	= $this->conexion->query($queryParaCodigo);
+			$row		= $resultado->fetch_array();
+			$nEmpleados = $row[0] + 1;
+			$codigo 	= str_pad($nEmpleados, 6, '0', STR_PAD_LEFT);
+
 			$nombre		= $this->conexion->real_escape_string($nombre);
 			$apellidoPat= $this->conexion->real_escape_string($apellidoPat);
 			$apellidoMat= $this->conexion->real_escape_string($apellidoMat);
@@ -66,12 +71,5 @@
 				return $resultado->fetch_assoc();
 			}
 		}
-		/**
-		 *Cambia el status a FALSE del empleado que se indica. 
-		 *De esta forma el empleado no se elimina, solamente permanece inactivo.
-		 *@param string $codigo Código del empleado a eliminar.
-		 *@return boolean Regresa TRUE si el cambio del status fue satisfactorio.
-		 *Regresa FALSE en caso contrario.
-		 */
 	}
 ?>

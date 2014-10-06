@@ -17,7 +17,13 @@
 		*@return bool dependiendo de su validez.
 		*/
 		public function insertar($codigo, $nombre, $apellido, $telefono, $email){
-		
+			#Generar codigoUsuario
+			$queryParaUsuario 	= "SELECT COUNT() as total FROM Usuario";
+			$resultado			= $this->conexion->query($queryParaUsuario);
+			$row				= $resultado->fetch_array();
+			$nUsuarios 			= $row[0] + 1;
+			$codigo 			= str_pad($nUsuarios, 6, '0', STR_PAD_LEFT);
+
 			$usuario = new Usuario($codigo, $nombre, $apellido, $telefono, $email);
 			#simular conexion a la base de datos
 			return TRUE;
