@@ -35,6 +35,7 @@
 				$nuevaArea -> setIdArea($this -> conexion -> insert_id);
 			else $nuevaArea = NULL;
 			
+			$this -> conexion -> close();
 			return $correcto; 
 		}
 
@@ -44,11 +45,19 @@
 		 *
 		 *@return bool TRUE si la consulta fue satisfactoria.
 		 */
-		public function consultar($IdArea){
-			#Establecer conexion con BD
-			#Hacer consultar a ella.
-			#Mostrar resultados
-			return TRUE; #Retornno temporal
+		public function buscar($IdArea){
+			
+			$query = "SELECT * FROM Area WHERE IdArea = ".$IdArea;
+			
+			$correcto = $this -> conexion -> query($query);
+
+			if($correcto != FALSE){
+				
+				### se encontro el area 
+			}
+
+			$this -> conexion -> close();
+			return $correcto; 
 		}
 
 		/**

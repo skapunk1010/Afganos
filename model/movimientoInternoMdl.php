@@ -45,7 +45,7 @@
 		 *
 		 *@return bool TRUE si la consulta fue satisfactoria.
 		 */
-		public function consultar($IdMovimiento){
+		public function buscar($IdMovimiento){
 			#Establecer conexion con BD
 			#Hacer consultar a ella.
 			#Mostrar resultados

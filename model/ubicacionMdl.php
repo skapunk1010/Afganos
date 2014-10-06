@@ -33,8 +33,9 @@
 				$ubicacion -> setIdUbicacion($this -> conexion -> insert_id);
 			}
 			else{
-				$bicacion = NULL;
+				$ubicacion = NULL;
 			}
+			$this -> conexion -> close();
 			return $resultado;
 		}
 

@@ -33,6 +33,7 @@
 				$nuevoModelo -> setIdModelo($this -> conexion -> insert_id);
 			else $nuevoModelo = NULL;
 			
+			$this -> conexion -> close();
 			return $correcto; 
 		}
 
@@ -42,7 +43,7 @@
 		 *
 		 *@return bool TRUE si la consulta fue satisfactoria.
 		 */
-		public function consultar($IdModelo){
+		public function buscar($IdModelo){
 			#Establecer conexion con BD
 			#Hacer consultar a ella.
 			#Mostrar resultados

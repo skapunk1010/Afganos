@@ -36,6 +36,7 @@
 				$nuevoTelef -> setIdTelefono($this -> conexion -> insert_id);
 			else $nuevoTelef = NULL;
 			
+			$this -> conexion -> close();
 			return $correcto; 
 		}
 
@@ -45,7 +46,7 @@
 		 *
 		 *@return bool TRUE si la consulta fue satisfactoria.
 		 */
-		public function consultar($IdTelefono){
+		public function buscar($IdTelefono){
 			#Establecer conexion con BD
 			#Hacer consultar a ella.
 			#Mostrar resultados

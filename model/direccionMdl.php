@@ -42,6 +42,7 @@
 				$nuevaDireccion -> setIdDireccion($this -> conexion -> insert_id);
 			else $nuevaDireccion = NULL;
 			
+			$this -> conexion -> close();
 			return $correcto; 
 		}
 
@@ -51,7 +52,7 @@
 		 *
 		 *@return bool TRUE si la consulta fue satisfactoria.
 		 */
-		public function consultar($IdDireccion){
+		public function buscar($IdDireccion){
 			#Establecer conexion con BD
 			#Hacer consultar a ella.
 			#Mostrar resultados

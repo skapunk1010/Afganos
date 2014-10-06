@@ -29,7 +29,7 @@
 			$detalle 		= $this->conexion->real_escape_string($detalle);
 
 			$query = "INSERT INTO Reporte(numeroReporte,Vehiculo_VIN,fechaEntrada,status,detalle) 
-						VALUES ('".$numeroReporte."','".$Vehiculo_VIN."','".$fechaEntrada."','".$status."','".$detalle."')");
+						VALUES ('".$numeroReporte."','".$Vehiculo_VIN."','".$fechaEntrada."','".$status."','".$detalle."')";
 			
 			$resultado = $this->conexion->query($query);
 
@@ -50,7 +50,7 @@
 		public function buscar($numeroReporte){
 			$numeroReporte	= $this->conexion->real_escape_string($numeroReporte);
 
-			$query = "SELECT * FROM Reporte WHERE numeroReporte = '".$numeroReporte."'");
+			$query = "SELECT * FROM Reporte WHERE numeroReporte = '".$numeroReporte."'";
 			
 			$resultado = $this->conexion->query($query);
 
@@ -74,7 +74,7 @@
 		public function eliminar($numeroReporte){
 			$numeroReporte	= $this->conexion->real_escape_string($numeroReporte);
 			
-			$query = "UPDATE Reporte SET status = FALSE WHERE numeroReporte = '".$numeroReporte."'");
+			$query = "UPDATE Reporte SET status = FALSE WHERE numeroReporte = '".$numeroReporte."'";
 			
 			$resultado = $this->conexion->query($query);
 
