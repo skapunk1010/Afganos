@@ -11,9 +11,8 @@
 		/**
 		*Constructor
 		*/
-		function __construct($idUbicacion, $Area_idArea, $seccion, $numero, $status){
+		function __construct($Area_idArea, $seccion, $numero, $status){
 
-			$this -> idUbicacion = $idUbicacion;
 			$this -> Area_idArea = $Area_idArea;
 			$this -> seccion = $seccion;
 			$this -> numero = $numero;
