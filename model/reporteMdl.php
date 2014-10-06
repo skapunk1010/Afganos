@@ -28,13 +28,12 @@
 			$status 		= $this->conexion->real_escape_string($status);
 			$detalle 		= $this->conexion->real_escape_string($detalle);
 
-			$query = "INSERT INTO Reporte 
-						VALUES ('".$numeroReporte."','".$Vehiculo_VIN."','".$fechaEntrada."','".$status."')");
+			$query = "INSERT INTO Reporte(numeroReporte,Vehiculo_VIN,fechaEntrada,status,detalle) 
+						VALUES ('".$numeroReporte."','".$Vehiculo_VIN."','".$fechaEntrada."','".$status."','".$detalle."')");
 			
 			$resultado = $this->conexion->query($query);
 
 			if($this->conexion->error){
-				require('view/errorReporteInsertado.php');
 				echo $this->conexion->error;
 				$this->conexion->close();
 				return FALSE;
@@ -46,7 +45,7 @@
 		/**
 		 *Consulta de reporte en la base de datos.
 		 *@param string $numeroReporte Número de reporte del se quiere buscar.
-		 *@return Array Regresa el reporte encontrado en un arreglo asociativo.
+		 *@return Array Regresa TRUE si el reporte es encontrado. Regresa FALSE en caso contrario.
 		 */
 		public function buscar($numeroReporte){
 			$numeroReporte	= $this->conexion->real_escape_string($numeroReporte);
@@ -56,13 +55,12 @@
 			$resultado = $this->conexion->query($query);
 
 			if($this->conexion->error){
-				require('view/errorReporteBuscar.php');
 				echo $this->conexion->error;
 				$this->conexion->close();
-				return null;
+				return FALSE;
 			}else{
 				$this->conexion->close();
-				return $resultado->fetch_assoc();
+				return TRUE;
 			}
 		}
 
@@ -81,7 +79,6 @@
 			$resultado = $this->conexion->query($query);
 
 			if($this->conexion->error){
-				require('view/errorReporteEliminar.php');
 				echo $this->conexion->error;
 				$this->conexion->close();
 				return FALSE;

@@ -13,7 +13,7 @@
 		*Se inserta un nuevo vehículo una vez que se han validado los datos.
 		*/
 		public function insertar($vin,$marca,$modelo,$anho,$color,$cilindraje,$transmision,$combustible){
-			
+
 			$vehiculo = new Vehiculo($vin,$marca,$modelo,$anho,$color,$cilindraje,$transmision,$combustible);
 			#simular conexion a la base de datos
 			return TRUE;

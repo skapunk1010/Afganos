@@ -62,13 +62,12 @@
 
 			$resultado = $this->conexion->query($query);
 			if($this->conexion->error){
-				require('view/errorEmpleadoBuscar.php');
 				echo $this->conexion->error;
 				$this->conexion->close();
-				return null;
+				return FALSE;
 			}else{
 				$this->conexion->close();
-				return $resultado->fetch_assoc();
+				return TRUE;
 			}
 		}
 	}

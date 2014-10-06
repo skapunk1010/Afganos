@@ -24,7 +24,6 @@
 					$this->buscar();
 					break;
 				
-
 				default:
 					require('view/error.php');
 					break;
