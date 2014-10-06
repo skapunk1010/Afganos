@@ -30,7 +30,7 @@
 		public function listar()
 		{
 			$query = "SELECT * FROM Vehiculo";
-			$resultado = $this -> conexion -Z query($query);
+			$resultado = $this -> conexion -> query($query);
 			if($resultado)
 				$resultado -> fetch_assoc();
 			else

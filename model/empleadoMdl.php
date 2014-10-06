@@ -41,7 +41,6 @@
 
 			$resultado = $this->conexion->query($query);
 			if($this->conexion->error){
-				require('view/errorEmpleadoInsertado.php');
 				echo $this->conexion->error;
 				$this->conexion->close();
 				return FALSE;
