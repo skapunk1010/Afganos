@@ -1,0 +1,3 @@
+<?php
+echo "ERROR EN LA MODIFICACIÓN DE MARCA.";
+?>

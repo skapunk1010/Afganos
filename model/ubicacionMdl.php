@@ -25,15 +25,17 @@
 		 */
 		public function insertar($Area_idArea, $seccion, $numero, $status){
 
+			$ubicacion = new Ubicacion($Area_idArea, $seccion, $numero, $status);
 			$query = "INSERT INTO Ubicacion (Area_idArea, seccion, numero, status) VALUES ('".$Area_idArea."','".$seccion."','".$numero."','".$status."')";
 			
 			$resultado = $this -> conexion -> query($query);
 			if($resultado){
-				return TRUE;
+				$ubicacion -> setIdUbicacion($this -> conexion -> insert_id);
 			}
 			else{
-				return FALSE;
+				$bicacion = NULL;
 			}
+			return $resultado;
 		}
 
 		/**

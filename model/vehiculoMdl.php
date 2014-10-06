@@ -12,11 +12,16 @@
 		/**
 		*Se inserta un nuevo vehículo una vez que se han validado los datos.
 		*/
-		public function insertar($vin,$marca,$modelo,$anho,$color,$cilindraje,$transmision,$combustible){
+		public function insertar($VIN, $IDmodelo, $transmision, $cilindraje){
+			
+			$vehiculo = new Vehiculo($VIN, $IDmodelo, $transmision, $cilindraje);
+			$query = "INSERT INTO Vehiculo (VIN, Modelo_idModelo, color, transmision, cilindraje, anho, numeroPuertas) 
+			VALUES ('".$VIN."','".$Modelo_idModelo."','".$color."','".$transmision."','".$cilindraje."','".$anho."','".$numeroPuertas."')";
 
-			$vehiculo = new Vehiculo($vin,$marca,$modelo,$anho,$color,$cilindraje,$transmision,$combustible);
-			#simular conexion a la base de datos
-			return TRUE;
+			$resultado = $this -> conexion -> query($query);
+			if(!$resultado)
+				$vehiculo = NULL;
+			return $resultado;
 		}
 
 		/**
@@ -24,8 +29,12 @@
 		*/
 		public function listar()
 		{
-			#lista todlos los vehículos.
-			return array("carro1","carro2","carro3","carro4");
+			$query = "SELECT * FROM Vehiculo";
+			$resultado = $this -> conexion -Z query($query);
+			if($resultado)
+				$resultado -> fetch_assoc();
+			else
+				return FALSE;
 		}
 
 		/**
