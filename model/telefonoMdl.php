@@ -26,7 +26,7 @@
 			$nuevoTelef = new Telefono($Empleado_Codigo, $telefono, $tipo);
 			
 			$telefonoESC = $this -> conexion -> real_escape_string($telefono);
-			$tipoESC = $this -> conexion -> real_escape_string($tipoExt);
+			$tipoESC = $this -> conexion -> real_escape_string($tipo);
 
 			$query = "INSERT INTO Telefono (Empleado_Codigo, telefono, tipo) 
 				VALUES ('".$Empleado_Codigo."','".$telefonoESC."','".$tipoESC."')";
@@ -59,7 +59,7 @@
          *
          *@return bool TRUE si la modificación fue satisfactoria.
 		 */
-		public function modificar($IdDireccion, $campo){
+		public function modificar($IdTelefono, $campo){
 			
 			#Mostrar resultados
 			return TRUE; #Retorno temporal
