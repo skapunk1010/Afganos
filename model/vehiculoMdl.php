@@ -29,8 +29,12 @@
 		*/
 		public function listar()
 		{
-			#lista todlos los vehículos.
-			return array("carro1","carro2","carro3","carro4");
+			$query = "SELECT * FROM Vehiculo";
+			$resultado = $this -> conexion -Z query($query);
+			if($resultado)
+				$resultado -> fetch_assoc();
+			else
+				return FALSE;
 		}
 
 		/**
