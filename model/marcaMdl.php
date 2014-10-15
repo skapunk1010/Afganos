@@ -10,7 +10,7 @@
 		function __construct(){
 			require('model/Marca.php');
 			require('controller/ConexionBaseDeDatos.php');
-			$this->conexion = ConexionBaseDeDatos::getInstace();
+			$this->conexion = ConexionBaseDeDatos::getInstance();
 		}
 		
 		/** 
@@ -30,7 +30,7 @@
 
 			if($correcto)
 				$nuevaMarca -> setIdMarca($this -> conexion -> insert_id);
-			else $nuevaArea = NULL;
+			else $nuevaMarca = NULL;
 			
 			$this -> conexion -> close();
 			return $correcto; 
@@ -40,13 +40,22 @@
 		 *Consulta a la base de datos de la marca especificada x el IdMarca
 		 *@param int $IdMarca, PK de la marca a consultar.
 		 *
-		 *@return bool TRUE si la consulta fue satisfactoria.
+		 *@return Marca Regresa un objeto de la clase Marca.
+		 * Si la marca no existe en la base de datos, regresa NULL.
 		 */
-		public function buscar($IdMarca){
-			#Establecer conexion con BD
-			#Hacer consultar a ella.
-			#Mostrar resultados
-			return TRUE; #Retornno temporal
+		public function consultar($idMarca){
+			$marcaESC = $this -> conexion -> real_escape_string($idMarca);
+			$query = "SELECT * FROM Marca WHERE idMarca = '".$marcaESC."'";
+			$correcto = $this -> conexion -> query($query);
+
+			$this -> conexion -> close();
+			if($correcto){
+				$fila = $correcto -> fetch_assoc();
+				$marca = new Marca($fila['Marca']);
+				$marca ->SetIdMarca($fila['idMarca']);
+				return $marca;
+			}
+			else return NULL;
 		}
 
 		/**
@@ -56,10 +65,17 @@
          *
          *@return bool TRUE si la modificación fue satisfactoria.
 		 */
-		public function modificar($IdMarca, $campo){
-			
-			#Mostrar resultados
-			return TRUE; #Retorno temporal
+		public function modificar($IdMarca, $marca){
+			$marcaESC = $this -> conexion -> real_escape_string($IdMarca);
+			$IdMarcaEsc = $this->conexion->real_escape_string($marca);
+			$query = "UPDATE Marca SET marca = '".$marca."' WHERE idMarca = '".$IdMarca."'";
+			$correcto = $this -> conexion -> query($query);
+
+			$this -> conexion -> close();
+			if($correcto){
+				return TRUE;
+			}
+			else return FALSE;
 		}
 	}
 ?>

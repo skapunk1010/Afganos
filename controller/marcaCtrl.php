@@ -1,6 +1,6 @@
 <?php
 
-    class marcaMdl{
+    class marcaCtrl{
 
         private $modelo;
         
@@ -8,7 +8,6 @@
          *Crea la instancia de un objeto de la clase marcaMdl. 
          */
         function __construct(){
-
             require('model/marcaMdl.php');
             $this -> modelo = new marcaMdl();
         }
@@ -63,11 +62,12 @@
 
         public function consultar(){
             require('controller/validadorCtrl.php');
-            $marca = $_REQUEST['marca'];
-            if(validadorCtrl::validarTexto($marca)){
-                $resultado = $this -> modelo -> consultar($marca); 
-                if($resultado)
-                    #var_dump($resultado);
+            $idMarca = $_REQUEST['idmarca'];
+            if(validadorCtrl::validarNumero($idMarca)){
+                $resultado = $this -> modelo -> consultar($idMarca); 
+                if($resultado != NULL){
+                    var_dump($resultado);
+                }
                 else
                     require('view/errorMarcaConsulta.php');
             }
@@ -82,8 +82,9 @@
         public function modificar(){
             require('controller/validadorCtrl.php');
             $marca = $_REQUEST['marca'];
-            if(validadorCtrl::validarTexto($marca)){
-                $resultado = $this -> modelo -> modificar($marca); 
+            $idMarca = $_REQUEST['idMarca'];
+            if(validadorCtrl::validarTexto($marca) && validadorCtrl::validarNumero($idMarca)){
+                $resultado = $this -> modelo -> modificar($idMarca,$marca); 
                 if($resultado)
                     require('view/marcaModificar.php');
                 else

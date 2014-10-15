@@ -7,6 +7,7 @@
 
 		/**
 		*Constructor
+		* @param marcar Nombre de la marca
 		*/
 		function __construct($marca){
 
