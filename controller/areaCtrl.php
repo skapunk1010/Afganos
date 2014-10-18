@@ -45,11 +45,11 @@
         public function insertar(){
         
             require('controller/validadorCtrl.php');
-            $area       = validadorCtrl::validarTxt($_REQUEST['area']);   
-            $ubicacion  = validadorCtrl::validarTxt($_REQUEST['ubicacion']);
-            $encargado  = validadorCtrl::validarTxt($_REQUEST['encargado']);
+            $Area           = validadorCtrl::validarTexto($_REQUEST['area']);   
+            $Encargado_Cod  = validadorCtrl::validarTexto($_REQUEST['encargado']);
+            $descripcion    = validadorCtrl::validarTexto($_REQUEST['descripcion']);
             
-            $resultado = $this -> modelo -> insertar($area,$ubicacion,$encargado);
+            $resultado = $this -> modelo -> insertar($Encargado_Cod,$Area,$descripcion);
             
             if($resultado){
                 require('view/areaInsertada.php'); #cambiar a html

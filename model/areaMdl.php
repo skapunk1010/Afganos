@@ -10,7 +10,7 @@
 		function __construct(){
 			require('model/Area.php');
 			require('controller/ConexionBaseDeDatos.php');
-			$this->conexion = ConexionBaseDeDatos::getInstace();
+			$this->conexion = ConexionBaseDeDatos::getInstance();
 		}
 		
 		/** 
@@ -20,15 +20,15 @@
 		 *@param String $descripcion, breve descripcion de la ocpacion del area
          *@return bool TRUE si la inserción a la BD fue satisfactoria.
 		 */
-		public function insertar($Encargado_Cod, $area, $descripcion){
+		public function insertar($Encargado_Cod, $Area, $descripcion){
 			
-			$nuevaArea = new Area($Encargado_Cod, $area);
+			$nuevaArea = new Area($Encargado_Cod, $Area);
 			
-			$areaESC = $this -> conexion -> real_escape_string($area);
+			$areaESC = $this -> conexion -> real_escape_string($Area);
 			$descripcionESC = $this -> conexion -> real_escape_string($descripcion);
 
 			$query = "INSERT INTO Area (Encargado_Codigo, area, descripcion) 
-				VALUES ('".$Encargado_Codigo."','".$areaESC."','".$descripcionESC."')";
+				VALUES ('".$Encargado_Cod."','".$areaESC."','".$descripcionESC."')";
 			$correcto = $this -> conexion -> query($query);
 
 			if($correcto)
