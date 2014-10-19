@@ -39,9 +39,9 @@
 
 		/**
 		 *Consulta a la base de datos del modelo especificado x el IdModelo
-		 *@param int $IdModelo, PK del modelo a consultar.
+		 *@param int $modelo, modelo a consultar.
 		 *
-		 *@return bool TRUE si la consulta fue satisfactoria.
+		 *@return Array con los resultados.
 		 */
 		public function buscar($modelo){
 			
@@ -61,6 +61,33 @@
 			$this -> conexion -> close();
 			return $array; 
 		}
+
+
+		/**
+		 *Consulta a la base de datos de modelos por marca
+		 *@param int $modelo, modelo a consultar.
+		 *
+		 *@return Array con los resultados.
+		 */
+		public function buscarPorMarca($idMarca){
+			
+			$query = "SELECT Modelo FROM Modelo WHERE Marca_idMarca = '".$idMarca."'";
+			$correcto = $this -> conexion -> query($query);
+
+			$array;
+			if($correcto){
+				$i = 0;
+
+				while ($fila = $correcto->fetch_assoc()) {
+        			$array[$i++] = $fila;
+  			  }
+			}
+			else $array = NULL;
+
+			$this -> conexion -> close();
+			return $array; 
+		}
+	}
 
 		/**
 		 * Hace la modificación a la base de datos del modelo indicado.

@@ -33,6 +33,10 @@
                 case 'modificar':
                     $this -> modificar();
                     break;
+
+                case 'buscarpormarca':
+                    $this -> buscarpormarca();
+                    break;
                         
                 default: 
                     require('view/error.php');
@@ -78,6 +82,23 @@
             }
             else{
                 require('view/noResultadoBuscarModelo.php'); #cambiar a html
+            }
+        }
+
+        /*
+        *Hace la consulta de modelos basándose en la marca
+        */
+         public function buscarpormarca(){
+
+            $idMarca = $_REQUEST['idMarca'];
+            $resultado = $this -> modelo -> buscarPorMarca($idMarca);
+
+            if(count($resultado)>0){
+                var_dump($resultado);
+                #Se agregará su html para mostrar resultado.
+            }
+            else{
+                #No se hallaron coincidencias.             
             }
         }
         
