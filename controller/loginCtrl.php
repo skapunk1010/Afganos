@@ -79,10 +79,7 @@
         *Destruirá información de la sesión.
         */
         function cerrarSesion(){
-        	#Destruye la variable de sesión
-        	echo 'Sesión terminada!';
-            #CAMBIAR ECHO A VISTA 
-        	#Redirecciona al view inicial
+        	$this->modelo->cerrarSesion();
         }
 
 	}

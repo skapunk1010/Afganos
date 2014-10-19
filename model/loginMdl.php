@@ -42,5 +42,14 @@
 			return TRUE;
 		}
 
+		/**
+		 * Cierra la sesión que actualmente ha sido iniciada.
+		 */
+		public function cerrarSesion(){
+			session_unset();
+			session_destroy();		
+			setcookie(session_name(), '', time()-3600);
+		}
+
 	}
 ?>
