@@ -1,6 +1,6 @@
 <?php
-
-class vehiculoCtrl{
+require('controller/CtrlEstandar.php');
+class vehiculoCtrl extends CtrlEstandar{
 
 	private $modelo;
 

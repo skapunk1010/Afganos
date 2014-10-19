@@ -1,6 +1,6 @@
 <?php
-
-    class modeloCtrl{
+    require('controller/CtrlEstandar.php');
+    class modeloCtrl extends CtrlEstandar{
 
         private $modelo;
         

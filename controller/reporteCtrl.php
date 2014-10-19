@@ -1,5 +1,6 @@
 <?php
-	class reporteCtrl{
+	require('controller/CtrlEstandar.php');
+	class reporteCtrl extends CtrlEstandar{
 		private $modelo;
 		private $conexion;
 

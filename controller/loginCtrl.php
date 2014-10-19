@@ -1,5 +1,6 @@
 <?php
-	class loginCtrl{
+    require('controller/CtrlEstandar.php');
+	class loginCtrl extends CtrlEstandar{
 		private $modelo;
 
         /**

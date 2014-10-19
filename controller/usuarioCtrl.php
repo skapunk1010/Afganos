@@ -1,6 +1,6 @@
 <?php
-
-    class usuarioCtrl{
+    require('controller/CtrlEstandar.php');
+    class usuarioCtrl extends CtrlEstandar{
 
         private $modelo;
         private $conexion;
