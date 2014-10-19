@@ -55,13 +55,13 @@ class vehiculoCtrl extends CtrlEstandar{
 
 		require('controller/validadorCtrl.php');
 		$vin = validadorCtrl::validarVin($_REQUEST['vin']);
-        $marca = validadorCtrl::validarTxt($_REQUEST['marca']);
-        $modelo = validadorCtrl::validarTxt($_REQUEST['modelo']);
+        $marca = validadorCtrl::validarTexto($_REQUEST['marca']);
+        $modelo = validadorCtrl::validarTexto($_REQUEST['modelo']);
         $anho = validadorCtrl::validarAnho($_REQUEST['anho']);
-        $color = validadorCtrl::validarTxt($_REQUEST['color']);
-        $cilindraje = validadorCtrl::validarTxt($_REQUEST['cilindraje']);
-        $transmision = validadorCtrl::validarTxt($_REQUEST['transmision']);
-        $combustible = validadorCtrl::validarTxt($_REQUEST['combustible']);
+        $color = validadorCtrl::validarTexto($_REQUEST['color']);
+        $cilindraje = validadorCtrl::validarTexto($_REQUEST['cilindraje']);
+        $transmision = validadorCtrl::validarTexto($_REQUEST['transmision']);
+        $combustible = validadorCtrl::validarTexto($_REQUEST['combustible']);
 
         $resultado = $this -> modelo -> insertar($vin,$marca,$modelo,$anho,$color,$cilindraje,$transmision,$combustible);
             
@@ -136,12 +136,11 @@ class vehiculoCtrl extends CtrlEstandar{
 		require('controller/validadorCtrl.php');
 		$vin = validadorCtrl::validarVin($_REQUEST['vin']);
 		
-		$resultado = $this->modelo->eliminar();
-		
+		$resultado = $this->modelo->buscar($vin);
 		if($resultado){
-			require();
+			require('view/vehiculoBuscar.php');
 		}else{
-			require();
+			require('view/errorVehiculoBuscar.php');
 		}
 	}
 }
