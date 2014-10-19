@@ -95,10 +95,11 @@
          *
          *@return bool TRUE si la modificación fue satisfactoria.
 		 */
-		public function modificar($IdModelo, $campo){
-			
-			#Mostrar resultados
-			return TRUE; #Retorno temporal
+		public function modificar($idModelo, $campo){
+			$query = "UPDATE Modelo SET Modelo = '".$campo."' WHERE idModelo = '".$idModelo."'";
+			$correcto = $this -> conexion -> query($query);
+
+			return $correcto;
 		}
 
 	}
