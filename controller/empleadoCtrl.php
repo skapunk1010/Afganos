@@ -51,7 +51,7 @@
 				$nombre		= (validadorCtrl::validarNombre($nombre))? $nombre: die('Nombre no válido'); 
 				$apellidoPat= (validadorCtrl::validarNombre($apellidoPat))? $apellidoPat : die('Apellido paterno no valido');
 				$apellidoMat= (validadorCtrl::validarNombre($apellidoMat))? $apellidoMat : die('Apellido materno no valido'); 
-				$status		= (validadorCtrl::validarTexto($status); 
+				$status		=  validadorCtrl::validarTexto($status); 
 				$fechaNac	= (validadorCtrl::validarFecha($fechaNac))? $fechaNac : die('Formato de fecha no valido');
 				$rfc		= (validadorCtrl::validarRfc($rfc))? $rfc : die('Fomarto de RFC no valido');
 				$nss		= (validadorCtrl::validarNss($nss))? $nss : die('Formato de NSS no valido');
@@ -70,11 +70,6 @@
 				}else{
 					require('view/errorEmpleadoInsertado.php');
 				}
-			}else{
-				#Falta algún dato para poder dar de insertar un empleado.
-				#Se consideran los datos que son not null para poder hacer la inserción.
-				require('view/errorEmpleadoInsertado.php');
-			}
 		}
 
 		/**
@@ -101,7 +96,7 @@
 		 *
 		 */
 		public function listar(){
-			$resultado = $this->modelo->listar(){
+			$resultado = $this->modelo->listar();
 
 			if($resultado){
 				require('view/empleadoListar.php');

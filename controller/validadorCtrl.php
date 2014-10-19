@@ -196,7 +196,7 @@
 		 *Regresa FALSE en caso contrario.
 		 */
 		public static function validarRfc($rfc){
-			if(preg_match(self::REGEXPR_RFC, $rfc)){
+			if(preg_match(self::REGEXP_RFC, $rfc)){
 				return TRUE;
 			}else{
 				return FALSE;

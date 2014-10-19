@@ -22,7 +22,7 @@
 			#Generar codigo
 			$queryParaCodigo = "SELECT COUNT() as total FROM Empleado";
 			$resultado	= $this->conexion->query($queryParaCodigo);
-			$row		= $resultado->fetch_array();
+			$row		= $resultado->fetch_array;
 			$nEmpleados = $row[0] + 1;
 			$codigo 	= str_pad($nEmpleados, 6, '0', STR_PAD_LEFT);
 
