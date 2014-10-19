@@ -21,7 +21,8 @@
 			$resultado		= $this->conexion->query($queryParaNum);
 			$row			= $resultado->fetch_array();
 			$nReportes	 	= $row[0] + 1;
-			$codigo 		= str_pad($nReportes, 6, '0', STR_PAD_LEFT);
+			$codigo 		= str_pad($nReportes, 5, '0', STR_PAD_LEFT);
+			$codigo			= "1".$codigo;
 
 			$Vehiculo_VIN	= $this->conexion->real_escape_string($Vehiculo_VIN);
 			$fechaEntrada	= $this->conexion->real_escape_string($fechaEntrada);
@@ -32,20 +33,19 @@
 						VALUES ('".$numeroReporte."','".$Vehiculo_VIN."','".$fechaEntrada."','".$status."','".$detalle."')";
 			
 			$resultado = $this->conexion->query($query);
-
-			if($this->conexion->error){
-				echo $this->conexion->error;
-				$this->conexion->close();
+			$this->conexion->close();
+			if(!$resultado){
 				return FALSE;
 			}else{
-				$this->conexion->close();
 				return TRUE;
 			}
 		}
+
 		/**
 		 *Consulta de reporte en la base de datos.
 		 *@param string $numeroReporte Número de reporte del se quiere buscar.
-		 *@return Array Regresa TRUE si el reporte es encontrado. Regresa FALSE en caso contrario.
+		 *@return Reporte Regresa un objeto de la clase Reporte con el reporte encontrado. Regresa NULL en caso de que
+		 *no se encontró el reporte.
 		 */
 		public function buscar($numeroReporte){
 			$numeroReporte	= $this->conexion->real_escape_string($numeroReporte);
@@ -54,13 +54,15 @@
 			
 			$resultado = $this->conexion->query($query);
 
-			if($this->conexion->error){
-				echo $this->conexion->error;
+			if($resultado){
+				$fila = $resultado->fetch_assoc();
+				require('model/Reporte.php');
+				$reporte = new Reporte($fila['numeroReporte'], $fila['Vehiculo_VIN'], $fila['fechaEntrada'], $fila['status']);
 				$this->conexion->close();
-				return FALSE;
+				return $reporte;
 			}else{
 				$this->conexion->close();
-				return TRUE;
+				return NULL;
 			}
 		}
 
@@ -77,13 +79,11 @@
 			$query = "UPDATE Reporte SET status = FALSE WHERE numeroReporte = '".$numeroReporte."'";
 			
 			$resultado = $this->conexion->query($query);
-
-			if($this->conexion->error){
-				echo $this->conexion->error;
-				$this->conexion->close();
+			$this->conexion->close();
+			if($resultado){
 				return FALSE;
 			}else{
-				$this->conexion->close();
+				echo $this->conexion->error;
 				return TRUE;
 			}
 		}
