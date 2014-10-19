@@ -10,7 +10,7 @@
 		function __construct(){
 			require('model/Modelo.php');
 			require('controller/ConexionBaseDeDatos.php');
-			$this->conexion = ConexionBaseDeDatos::getInstace();
+			$this->conexion = ConexionBaseDeDatos::getInstance();
 		}
 		
 		/** 

@@ -85,9 +85,7 @@
          * Modifica el modelo mencionado.
          */
         public function modificar(){
-            require('controller/validadorCtrl.php');
-            $id
-            
+            require('controller/validadorCtrl.php');          
         }
     }
 
