@@ -1,3 +1,3 @@
 <?php
 echo "ERROR AL CONSULTAR DIRECCIONES DE EMPLEADO";
-<?
+?>

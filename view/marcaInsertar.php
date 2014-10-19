@@ -1,3 +1,3 @@
 <?php
-echo "MODELO INSERTADO CON ÉXITO.";
+echo "MARCA INSERTADO CON ÉXITO.";
 ?>
