@@ -87,7 +87,6 @@
 			$this -> conexion -> close();
 			return $array; 
 		}
-	}
 
 		/**
 		 * Hace la modificación a la base de datos del modelo indicado.
@@ -101,5 +100,6 @@
 			#Mostrar resultados
 			return TRUE; #Retorno temporal
 		}
+
 	}
 ?>
