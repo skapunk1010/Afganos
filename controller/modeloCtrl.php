@@ -106,7 +106,17 @@
          * Modifica el modelo mencionado.
          */
         public function modificar(){
-            require('controller/validadorCtrl.php');          
+            
+            $nuevaCadena = $_REQUEST['modelo'];
+            $resultado = $this -> modelo -> modificar($idModelo,$nuevaCadena);
+
+            if($resultado){
+               require('view/modeloModificado.php'); #cambiar a html
+            }
+            else
+{                require('view/errorModeloModificado.php'); #cambiar a html
+            }
+
         }
     }
 
