@@ -60,13 +60,40 @@
 			$query = "SELECT * FROM Empleado WHERE Codigo = '".$Codigo."'";
 
 			$resultado = $this->conexion->query($query);
-			if($this->conexion->error){
+			if($resultado){
 				echo $this->conexion->error;
 				$this->conexion->close();
 				return FALSE;
 			}else{
 				$this->conexion->close();
 				return TRUE;
+			}
+		}
+		/**
+		 * Lista todos los empleados registrados.
+		 *@return array Arreglo con todos los empleados y todos sus datos.
+		 * En caso de que no encontrara nada o hubiera algún error, regresa NULL.
+		 */
+		public function listar(){
+			$query = "SELECT * FROM Empleado";
+
+			$resultado = $this->conexion->query($query);
+			$empleados = array();
+			
+			if($resultado){
+				require('model/Empleado.php');
+				while(($fila = $resultado->fetch_assoc())) {
+					$empleado = new Empleado($fila['codigo'],$fila['nombre'],$fila['apellidoPaterno'], $fila['apellidoMaterno'], $fila['status']);
+					$empleado -> setEmail($fila['email']);
+					$empleado -> setRfc($fila['rfc']);
+					$empleado -> setNss($fila['nss']);
+					$empleados[] = $empleado;
+				}
+				$this->conexion();
+				return $empleados;
+			}else{
+				$this->conexion();
+				return NULL;
 			}
 		}
 	}
