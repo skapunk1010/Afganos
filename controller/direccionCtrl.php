@@ -56,12 +56,24 @@
                 $ciudad = $_REQUEST['ciudad'];
                 $estado = $_REQUEST['estado'];
 
-                if(!validadorCtrl::validarNumero($idEmpleado)) die("Formato de número de empleado incorrecto.");
-                if(!validadorCtrl::validarTexto($calle)) die("Formato de calle incorrecto.");
-                if(!validadorCtrl::validarTexto($numeroExt)) die("Formato de número exterior incorrecto.");
-                if(!validadorCtrl::validarTexto($colonia)) die("Formato de colonia incorrecto.");
-                if(!validadorCtrl::validarTexto($ciudad)) die("Formato de ciudad incorrecto.");
-                if(!validadorCtrl::validarTexto($estado)) die("Formato de estado incorrecto.");
+                if(!validadorCtrl::validarNumero($idEmpleado)){
+                    die("Formato de número de empleado incorrecto.");
+                }
+                if(!validadorCtrl::validarTexto($calle)){
+                  die("Formato de calle incorrecto.");  
+                }
+                if(!validadorCtrl::validarTexto($numeroExt)) {
+                    die("Formato de número exterior incorrecto.");
+                }
+                if(!validadorCtrl::validarTexto($colonia)){
+                  die("Formato de colonia incorrecto.");  
+                } 
+                if(!validadorCtrl::validarTexto($ciudad)){
+                  die("Formato de ciudad incorrecto.");  
+                } 
+                if(!validadorCtrl::validarTexto($estado)){
+                  die("Formato de estado incorrecto.");  
+                } 
 
                 $resultado = $this -> modelo -> insertar($idEmpleado, $calle, $numeroExt, $colonia, $ciudad, $estado);
                 if($resultado){
@@ -86,9 +98,8 @@
             $idEmpleado  = validadorCtrl::validarTexto($_REQUEST['idEmpleado']);
             $resultado  = $this -> modelo ->consultar($idEmpleado);
 
-            if($resultado){
+            if(count($resultado) > 0){
                 var_dump($resultado); 
-                #regresará array asociativo con datos necesarios para mostrarlos en la vista.
             }
             else{
                 require('view/errorDireccionConsultar.php'); #cambiar a html

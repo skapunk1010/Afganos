@@ -52,11 +52,23 @@
 		 *
 		 *@return bool TRUE si la consulta fue satisfactoria.
 		 */
-		public function buscar($IdDireccion){
-			#Establecer conexion con BD
-			#Hacer consultar a ella.
-			#Mostrar resultados
-			return TRUE; #Retornno temporal
+		public function buscar($idEmpleado){
+
+			$query = "SELECT * FROM Direccion WHERE Empleado_Codigo = '".$idEmpleado."'";
+			$correcto = $this -> conexion -> query($query);
+
+			$array;
+			if($correcto){
+				$i = 0;
+
+				while ($fila = $correcto->fetch_assoc()) {
+        			$array[$i++] = $fila;
+  			  }
+			}
+			else $array = NULL;
+
+			$this -> conexion -> close();
+			return $array; 
 		}
 
 		/**
@@ -79,7 +91,7 @@
          *@return bool TRUE si la eliminacion fue satisfactoria.
 		 */
 		public function eliminar($IdDireccion){
-			
+			#Primero se hace una consulta previa y se señala cuál es la dirección a borrar.
 			$query = "DELETE FROM Direccion WHERE IdDireccion = ".$IdDireccion;
 			$correcto = $this -> conexion -> query($query);
 			
