@@ -43,11 +43,23 @@
 		 *
 		 *@return bool TRUE si la consulta fue satisfactoria.
 		 */
-		public function buscar($IdModelo){
-			#Establecer conexion con BD
-			#Hacer consultar a ella.
-			#Mostrar resultados
-			return TRUE; #Retornno temporal
+		public function buscar($modelo){
+			
+			$query = "SELECT * FROM Modelo WHERE modelo LIKE = '%".$modelo."%'";
+			$correcto = $this -> conexion -> query($query);
+
+			$array;
+			if($correcto){
+				$i = 0;
+
+				while ($fila = $correcto->fetch_assoc()) {
+        			$array[$i++] = $fila;
+  			  }
+			}
+			else $array = NULL;
+
+			$this -> conexion -> close();
+			return $array; 
 		}
 
 		/**

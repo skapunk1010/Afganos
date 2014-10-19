@@ -54,7 +54,11 @@
         case 'area':
             require('controller/areaCtrl.php');
             $ctrl = new areaCtrl();
-            break;			
+            break;
+        case 'modelo':
+            require('controller/modeloCtrl.php');
+            $ctrl = new modeloCtrl();
+            break;	
         default:
             break;
                 #no se encontro parametros
