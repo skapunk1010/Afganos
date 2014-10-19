@@ -43,17 +43,17 @@
 				$nombre		= $_REQUEST['nombre'];
 				$apellidoPat= $_REQUEST['apellidoPat'];
 				$apellidoMat= $_REQUEST['apellidoMat'];
-				$fechaNac	= $_REQUEST['fechaNac'];
-				$rfc		= $_REQUEST['rfc'];
-				$nss		= $_REQUEST['nss'];
-				$email		= $_REQUEST['email'];
+				$fechaNac	= (isset($_REQUEST['fechaNac'])) ?$_REQUEST['fechaNac'] : null;
+				$rfc		= (isset($_REQUEST['rfc'])) ? $_REQUEST['rfc'] : null;
+				$nss		= (isset($_REQUEST['nss'])) ?$_REQUEST['nss'] : null;
+				$email		= (isset($_REQUEST['email'])) ? $_REQUEST['email'] : null;
 				$status		= $_REQUEST['status'];
 
-				$nombre		= (validadorCtrl::validarNombre($nombre))? $nombre: die('Nombre no válido');
-				$apellidoPat= (validadorCtrl::validarNombre($apellidoPat))? $apellidoPat : die('Apellido paterno no valido');
-				$apellidoMat= (validadorCtrl::validarNombre($apellidoMat))? $apellidoMat : die('Apellido materno no valido');
-				$status		=  validadorCtrl::validarStatus($status);
-				$fechaNac	= (validadorCtrl::validarFecha())? $fecha : die('Formato de fecha no valido');
+				$nombre		= (validadorCtrl::validarNombre($nombre))? $nombre: die('Nombre no válido'); //
+				$apellidoPat= (validadorCtrl::validarNombre($apellidoPat))? $apellidoPat : die('Apellido paterno no valido');//
+				$apellidoMat= (validadorCtrl::validarNombre($apellidoMat))? $apellidoMat : die('Apellido materno no valido'); //
+				$status		= (validadorCtrl::validarStatus($status); //
+				$fechaNac	= (validadorCtrl::validarFecha($fechaNac))? $fechaNac : die('Formato de fecha no valido');
 				$rfc		= (validadorCtrl::validarRfc($rfc))? $rfc : die('Fomarto de RFC no valido');
 				$nss		= (validadorCtrl::validarNss($nss))? $nss : die('Formato de NSS no valido');
 				$email		= (validadorCtrl::validarEmail($email))? $email : die('Formato de Email no valido');
@@ -74,6 +74,7 @@
 			}else{
 				#Falta algún dato para poder dar de insertar un empleado.
 				#Se consideran los datos que son not null para poder hacer la inserción.
+				require('view/errorEmpleadoInsertado.php');
 			}
 		}
 
