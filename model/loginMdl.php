@@ -12,34 +12,63 @@
 		*Función encargada del inicio de sesión de un usuario.
 		*@param String $usuario recibe una cadena de usuario
 		*@param String $password recibe una cadena de contraseña
-		*@return bool dependiendo de su validez. 
+		*@return Usuario Regresa el usuario que se ha autentificado.
+		* Si no existe el usuario o hubo algún error, regresa NULL.
 		*/
 		public function iniciarSesion($usuario,$password){
 			#Establecer conexión con BD
-			#if(Validar si usuario está registrado en BD){
-			#  iniciar variables de sesión
-			#  redireccionar al view index
-			#  return TRUE;
-			#}else {
-			#  marcar error de login
-			#  redireccionar a view login
-			#  return FALSE;
-			#}
-			return TRUE;
+			$query = "SELECT * FROM Usuario WHERE usuario = '".$usuario."' AND contrasenha = '".$password."'";
+			$resultado = $this->conexion->query($query);
+
+			$this->conexion->close();
+
+			if($resultado){
+				require('model/Usuario')
+				$fila = $resultado -> fetch_assoc();
+				$usuario = new Usuario($fila['usuario'], $fila['contrasenha'], $fila['status'], $fila['fechaRegistro']);
+				return $usuario;
+			}else{
+				return NULL;
+			}
 		}
 
 		/**
 		*Función para registrar a un usuario.
+		*@param String $codigo Código del empleado al que se le asignará el nuevo usuario.
 		*@param String $usuario recibe una cadena de usuario
 		*@param String $password recibe una cadena de contraseña
 		*@return bool dependiendo de su validez. 
 		*/
-		public function signin($usuario,$password){
-			#Establecer conexion con BD
-			#Insertar usuario y password a BD
-			#Crear variables de sesion
-			#Redireccionar a view index
-			return TRUE;
+		public function signin($codigo,$usuario,$password){
+			$fechaRegistro = date("d")."-".date("m")."-".date("Y");
+			$query = "SELECT * FROM Empleado WHERE Codigo = '".$codigo."'";
+			$resultadoEmpleado = $this->conexion->query($query);
+			if($resultadoEmpleado){
+					$query = "INSERT INTO Usuario
+							  VALUES ('".$codigo."','".$usuario."', '".$password."', 'true','".$fechaRegistro."')";
+
+					$resultado = $this->conexion->query($query);
+					$this->conexion->close();
+
+					if($resultado){
+						#Mandar mail de confirmación.
+						$destino = $resultadoEmpleado['email'];
+						$origen  = "From : afganosweb@gmail.com\r\n";
+						$asunto  = "!Registro exitoso!";
+						$mensaje = "Buen día, '".$resultadoEmpleado['nombre']."'!\n".
+									"Te queremos informar que tu registro en nuestra página ha sido exitoso."
+									"Ya puedes navegar en nuestro sitio.\n\n".
+									"Te deseamos un excelente día."
+						mail($destino,$asunto,$mensaje,$origen);
+						return TRUE;
+					}else{
+						return FALSE;
+					}
+			}else{
+				#No existe el empleado con el código $codigo.
+				$this->conexion->close();
+				return FALSE;
+			}
 		}
 
 		/**

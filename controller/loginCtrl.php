@@ -50,10 +50,12 @@
                         
             $usuario = validadorCtrl::validarUsuario($_REQUEST['usuario']);
             $password = validadorCtrl::validarPassword($_REQUEST['password']);
+            $codigo   = validadorCtrl::validarCodigoEmpleado($_REQUEST['codigoEmpleado']);
             
-            $resultado = $this -> modelo -> signin($usuario,$password);
+            $resultado = $this -> modelo -> signin($codigoEmpleado,$usuario,$password);
             
             if($resultado){
+                $
                 require('view/loginSignin.php'); #cambiar a html
             } 
             else{  
