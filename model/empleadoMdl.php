@@ -24,7 +24,8 @@
 			$resultado	= $this->conexion->query($queryParaCodigo);
 			$row		= $resultado->fetch_array;
 			$nEmpleados = $row[0] + 1;
-			$codigo 	= str_pad($nEmpleados, 6, '0', STR_PAD_LEFT);
+			$codigo 		= str_pad($nReportes, 5, '0', STR_PAD_LEFT);
+			$codigo			= "1".$codigo;
 
 			$nombre		= $this->conexion->real_escape_string($nombre);
 			$apellidoPat= $this->conexion->real_escape_string($apellidoPat);
