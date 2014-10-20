@@ -14,6 +14,7 @@
 		const REGEXP_RFC		= "/^([A-Z]{4})([\d]{2})(0[1-9]|1[012])(0[1-9]|[12][\d]|3[01])([A-Z]{3})$/";
 		const REGEXP_NSS		= "/^[\d]{11}$/";
 		const REGEXP_CARACTER	= "/^[a-zA-Z]$/";
+		const REGEXP_CODIGO_EMPLEADO = "/^1[\d]{5}$/";
 		
 		/**
 		*Valida que tenga la estructura de un email.
@@ -226,6 +227,19 @@
 				return TRUE;
 			}
 			else{
+				return FALSE;
+			}
+		}
+
+		/**
+		 *@param String $codigo Codigo de empleado a validar.
+		 *@return bool Regresa TRUE si el código del empleado cumple con el formato correcto.
+		 *Regresa FALSE en caso contrario.
+		 */
+		public static function validarCodigoEmpleado($codigo){
+			if(preg_match(self::REGEXP_CODIGO_EMPLEADO, $codigo)){
+				return TRUE;
+			}else{
 				return FALSE;
 			}
 		}
