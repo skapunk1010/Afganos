@@ -3,6 +3,7 @@
 	class Usuario{
 
 		private $Codigo;
+		private $usuario;
 		private $contrasenha;
 		private $status;
 		private $fechaRegistro;
@@ -10,9 +11,9 @@
 		/**
 		*Constructor
 		*/
-		function __construct($Codigo, $Contrasenha, $status, $fechaRegistro){
+		function __construct($usuario, $Contrasenha, $status, $fechaRegistro){
 
-			$this -> Codigo = $Codigo;
+			$this -> usuario = $usuario;
 			$this -> contrasenha = $contrasenha;
 			$this -> status = $status;
 			$this -> fechaRegistro = $fechaRegistro;
@@ -24,6 +25,13 @@
 		*/
 		public function getCodigo(){
 			return $this -> Codigo;
+		}
+
+		/**
+		 *@return String Nickname del usuario.
+		 */
+		public function getUsuario(){
+			return $this -> usuario;
 		}
 
 		/**
@@ -53,6 +61,13 @@
 		*/
 		public function setCodigo($Codigo){
 			return $this -> Codigo = $Codigo;
+		}
+
+		/**
+		 *@param String $usuario Nickname del usuario.
+		 */
+		public function setUsuario($usuario){
+			return $this->usuario = $usuario;
 		}
 
 		/**
