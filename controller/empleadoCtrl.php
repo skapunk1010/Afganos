@@ -18,15 +18,39 @@
 		function run(){
 			switch ($_REQUEST['accion']) {
 				case 'insertar':
-					$this->insertar();
+					if($this->estaLogeado() && $this->esAdmin() ) {
+						$this->insertar();
+					}else{
+						if(!$this->estaLogeado()){
+							header('Location: index.php?ctrl=login&accion=iniciarSesion');
+						}else{
+							require('view/errorAcceso.php');
+						}
+					}
 					break;
 				
 				case 'buscar':
-					$this->buscar();
+					if($this->estaLogeado() && $this->esAdmin() ) {
+						$this->buscar();
+					}else{
+						if(!$this->estaLogeado()){
+							header('Location: index.php?ctrl=login&accion=iniciarSesion');
+						}else{
+							require('view/errorAcceso.php');
+						}
+					}
 					break;
 				
 				case 'listar':
-					$this->listar();
+					if($this->estaLogeado() && $this->esAdmin() ) {
+						$this->listar();
+					}else{
+						if(!$this->estaLogeado()){
+							header('Location: index.php?ctrl=login&accion=iniciarSesion');
+						}else{
+							require('view/errorAcceso.php');
+						}
+					}
 
 				default:
 					require('view/error.php');

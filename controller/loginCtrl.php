@@ -18,17 +18,23 @@
         */
 		function run(){
             switch($_REQUEST['accion']){
-                
-                case 'signin': 
-                    $this -> signin();
+                if()
+                case 'signin':
+                    if(!$this->estaLogeado()){
+                        $this -> signin();
+                    }
                     break;
 
                 case 'iniciarSesion':
-                    $this -> iniciarSesion();
+                    if(!$this->estaLogeado()){
+                        $this -> iniciarSesion();
+                    }
                     break;
 
                 case 'cerrarSesion':
-                	$this->cerrarSesion();
+                    if($this->estaLogeado()){
+                        $this->cerrarSesion();
+                    }
                 	break;
 
                 default: #accion incorrecta

@@ -21,19 +21,51 @@
 
             switch($_REQUEST['accion']){
                 
-                case 'insertar': 
-                    $this -> insertar();
+                case 'insertar':
+                    if($this->estaLogeado && ($this->esUsuario() || $this->esAdmin() )){
+                        $this -> insertar();
+                    }else{
+                        if(!$this->estaLogeado()){
+                            header('Location: index.php?ctrl=login&accion=iniciarSesion');
+                        }else{
+                            require('view/errorAcceso.php');
+                        }
+                    } 
                     break;
 
                 case 'consultar':
-                    $this -> consultar();
+                    if($this->estaLogeado && ($this->esUsuario() || $this->esAdmin() )){
+                        $this -> consultar();
+                    }else{
+                        if(!$this->estaLogeado()){
+                            header('Location: index.php?ctrl=login&accion=iniciarSesion');
+                        }else{
+                            require('view/errorAcceso.php');
+                        }
+                    }
                     break;
 
                 case 'modificar':
-                    $this -> modificar();
+                    if($this->estaLogeado && $this->esAdmin() ){
+                        $this -> modificar();
+                    }else{
+                        if(!$this->estaLogeado()){
+                            header('Location: index.php?ctrl=login&accion=iniciarSesion');
+                        }else{
+                            require('view/errorAcceso.php');
+                        }
+                    }
                     break;
                 case 'eliminar':
-                    $this -> eliminar();
+                    if($this->estaLogeado && $this->esAdmin() ){
+                        $this -> eliminar();
+                    }else{
+                        if(!$this->estaLogeado()){
+                            header('Location: index.php?ctrl=login&accion=iniciarSesion');
+                        }else{
+                            require('view/errorAcceso.php');
+                        }
+                    }
                 default: 
                     require('view/error.php');
             }
