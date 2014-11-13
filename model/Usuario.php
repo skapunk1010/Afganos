@@ -7,16 +7,18 @@
 		private $contrasenha;
 		private $status;
 		private $fechaRegistro;
+		private $privilegios;
 
 		/**
 		*Constructor
 		*/
-		function __construct($usuario, $Contrasenha, $status, $fechaRegistro){
+		function __construct($usuario, $Contrasenha, $status, $fechaRegistro,$privilegios){
 
 			$this -> usuario = $usuario;
-			$this -> contrasenha = $contrasenha;
+			$this -> contrasenha = $Contrasenha;
 			$this -> status = $status;
 			$this -> fechaRegistro = $fechaRegistro;
+			$this -> privilegios = $privilegios;
 		}
 
 
@@ -57,31 +59,38 @@
 		}
 
 		/**
+		 *@return String Regresa los privilegios que tiene el usuario.
+		 */
+		public function getPrivilegios(){
+			return $this -> privilegios;
+		}
+
+		/**
 		*@param String $Codigo recibe el código
 		*/
 		public function setCodigo($Codigo){
-			return $this -> Codigo = $Codigo;
+			$this -> Codigo = $Codigo;
 		}
 
 		/**
 		 *@param String $usuario Nickname del usuario.
 		 */
 		public function setUsuario($usuario){
-			return $this->usuario = $usuario;
+			$this->usuario = $usuario;
 		}
 
 		/**
 		*@param String $contrasenha recibe una contraseña
 		*/
 		public function setContrasenha($contrasenha){
-			return $this -> contrasenha = $contrasenha;
+			$this -> contrasenha = $contrasenha;
 		}
 
 		/**
 		*@param String $status recibe el status de un usuario 
 		*/
 		public function setStatus($status){
-			return $this -> status = $status;
+			$this -> status = $status;
 		}
 
 
@@ -89,7 +98,14 @@
 		*@param String $fechaRegistro recibe la fecha de registro
 		*/
 		public function setFechaRegistro($fechaRegistro){
-			return $this -> fechaRegistro = $fechaRegistro;
+			$this -> fechaRegistro = $fechaRegistro;
+		}
+
+		/**
+		 *@param String $privilegios Recibe el nombre de los privilegios que tiene el usuario.
+		 */
+		public function setPrivilegios($privilegios){
+			$this -> privilegios = $privilegios;
 		}
 	}
 

@@ -46,7 +46,7 @@ class vehiculoCtrl extends CtrlEstandar{
 				break;
 
 			case "listar":
-				if($this->estaLogeado && ($this->esUsuario() || $this->esAdmin() )){
+				if($this->estaLogeado() && ($this->esUsuario() || $this->esAdmin() )){
                         $this -> listar();
                     }else{
                         if(!$this->estaLogeado()){

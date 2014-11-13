@@ -243,6 +243,19 @@
 				return FALSE;
 			}
 		}
+
+		/**
+		 *@param String $privilegio 
+		 *@return bool Regresa TRUE si el privilegio es 'administrador' ó 'usuario'.
+		 *Regresa FALSE en caso contrario.
+		 */
+		public static function validarPrivilegio($privilegio){
+			if($privilegio == 'administrador' || $privilegio == 'usuario'){
+				return TRUE;
+			}else{
+				return FALSE;
+			}
+		}
 	}
 	
 ?>

@@ -18,7 +18,7 @@
         */
 		function run(){
             switch($_REQUEST['accion']){
-                if()
+
                 case 'signin':
                     if(!$this->estaLogeado()){
                         $this -> signin();
@@ -46,20 +46,25 @@
         *Si el registro fue exitoso mostrará el index.
         */
         function signin(){
-        	require('controller/validadorCtrl.php');
-                        
-            $usuario = validadorCtrl::validarUsuario($_REQUEST['usuario']);
-            $password = validadorCtrl::validarPassword($_REQUEST['password']);
-            $codigo   = validadorCtrl::validarCodigoEmpleado($_REQUEST['codigoEmpleado']);
-            
-            $resultado = $this -> modelo -> signin($codigoEmpleado,$usuario,$password);
-            
-            if($resultado){
-                $
-                require('view/loginSignin.php'); #cambiar a html
-            } 
-            else{  
-                require('view/error.php'); #cambiar a html
+            #Si no hay datos, muestra de nuevo formulario.
+            if(empty($_POST)){
+                //Cargo la vista del formulario
+                
+            }else{
+                require('controller/validadorCtrl.php');            
+                $usuario    = (validadorCtrl::validarUsuario($_POST['usuario']))? $_POST['usuario'] : "";
+                $password   = (validadorCtrl::validarContrasenha($_POST['password']))? $_POST['password'] : "";
+                $codigoEmpleado     = (validadorCtrl::validarCodigoEmpleado($_POST['codigoEmpleado']))? $_POST['codigoEmpleado'] : "";
+                $privilegio = (validadorCtrl::validarPrivilegio($_POST['privilegios']))? $_POST['privilegios'] : "";
+                
+                $resultado = $this -> modelo -> signin($codigoEmpleado,$usuario,$password,$privilegio);
+                
+                if($resultado){
+                    require('view/loginSignin.php'); #cambiar a html
+                } 
+                else{  
+                    require('view/error.php'); #cambiar a html
+                }
             }
         }
 
@@ -69,18 +74,26 @@
         *Si el inicio fue correcto mostrará el index.
         */
         function iniciarSesion(){
-        	require('controller/validadorCtrl.php');
-                        
-            $usuario 	= validadorCtrl::validarUsuario($_REQUEST['usuario']);
-            $password	= validadorCtrl::validarPassword($_REQUEST['password']);
-            
-            $resultado = $this->modelo->iniciarSesion($usuario,$password);
-            
-            if($resultado){
-                require('index.php'); #cambiar a html
-            } 
-            else{  
-                require('view/error.php'); #cambiar a html
+        	if(empty($_POST)){
+                #Mostrar formulario donde ingresa los datos del login
+
+            }else{
+                require('controller/validadorCtrl.php');
+                    
+                $usuario    = (validadorCtrl::validarUsuario($_POST['usuario']))?$_POST['usuario'] : "";
+                $password   = (validadorCtrl::validarContrasenha($_POST['password']))? $_POST['password'] : "";
+                
+                $resultado = $this->modelo->iniciarSesion($usuario,$password);
+                
+                if($resultado != null){
+                    $_SESSION['usuario'] = $resultado->getUsuario();
+                    $_SESSION['tipoUsuario'] = $resultado->getPrivilegios();
+                    var_dump($_SESSION);
+                    //header('Location: index.php');
+                } 
+                else{  
+                    require('view/error.php'); #cambiar a html
+                }
             }
         }
 
