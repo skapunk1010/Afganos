@@ -22,7 +22,7 @@
 						$this->insertar();
 					}else{
 						if(!$this->estaLogeado()){
-							header('Location: index.php?ctrl=login&accion=iniciarSesion');
+							header('Location : index.php?ctrl=login&accion=iniciarSesion');
 						}else{
 							require('view/errorAcceso.php');
 						}
@@ -34,7 +34,7 @@
 						$this->buscar();
 					}else{
 						if(!$this->estaLogeado()){
-							header('Location: index.php?ctrl=login&accion=iniciarSesion');
+							header('Location : index.php?ctrl=login&accion=iniciarSesion');
 						}else{
 							require('view/errorAcceso.php');
 						}
@@ -46,7 +46,7 @@
 						$this->listar();
 					}else{
 						if(!$this->estaLogeado()){
-							header('Location: index.php?ctrl=login&accion=iniciarSesion');
+							header('Location : index.php?ctrl=login&accion=iniciarSesion');
 						}else{
 							require('view/errorAcceso.php');
 						}
@@ -63,23 +63,23 @@
 		 */
 		public function insertar(){
 				require('controller/validadorCtrl.php');
-				$nombre		= $_REQUEST['nombre'];
-				$apellidoPat= $_REQUEST['apellidoPat'];
-				$apellidoMat= $_REQUEST['apellidoMat'];
-				$fechaNac	= $_REQUEST['fechaNac'] ;
-				$rfc		= $_REQUEST['rfc'] ;
-				$nss		= $_REQUEST['nss'];
-				$email		= $_REQUEST['email'] ;
-				$status		= $_REQUEST['status'];
+				$nombre		= $_POST['nombre'];
+				$apellidoPat= $_POST['apellidoPat'];
+				$apellidoMat= $_POST['apellidoMat'];
+				$fechaNac	= $_POST['fechaNac'] ;
+				$rfc		= $_POST['rfc'] ;
+				$nss		= $_POST['nss'];
+				$email		= $_POST['email'] ;
+				$status		= $_POST['status'];
 
-				$nombre		= (validadorCtrl::validarNombre($nombre))? $nombre: die('Nombre no válido'); 
-				$apellidoPat= (validadorCtrl::validarNombre($apellidoPat))? $apellidoPat : die('Apellido paterno no valido');
-				$apellidoMat= (validadorCtrl::validarNombre($apellidoMat))? $apellidoMat : die('Apellido materno no valido'); 
+				$nombre		= (validadorCtrl::validarNombre($nombre))? $nombre: ""; 
+				$apellidoPat= (validadorCtrl::validarNombre($apellidoPat))? $apellidoPat : "";
+				$apellidoMat= (validadorCtrl::validarNombre($apellidoMat))? $apellidoMat : ""; 
 				$status		=  validadorCtrl::validarTexto($status); 
-				$fechaNac	= (validadorCtrl::validarFecha($fechaNac))? $fechaNac : die('Formato de fecha no valido');
-				$rfc		= (validadorCtrl::validarRfc($rfc))? $rfc : die('Fomarto de RFC no valido');
-				$nss		= (validadorCtrl::validarNss($nss))? $nss : die('Formato de NSS no valido');
-				$email		= (validadorCtrl::validarEmail($email))? $email : die('Formato de Email no valido');
+				$fechaNac	= (validadorCtrl::validarFecha($fechaNac))? $fechaNac : "";
+				$rfc		= (validadorCtrl::validarRfc($rfc))? $rfc : "";
+				$nss		= (validadorCtrl::validarNss($nss))? $nss : "";
+				$email		= (validadorCtrl::validarEmail($email))? $email : "";
 
 				$resultado = $this->modelo->insertar($nombre,
 													 $apellidoPat,
@@ -100,12 +100,12 @@
 		 *Ejecuta la acción buscar empleado.
 		 */
 		public function buscar(){
-			if(isset($_REQUEST['codigo']) && !empty($_REQUEST['codigo'])){
-				$codigo = $_REQUEST['codigo'];
+			if(isset($_POST['codigo']) && !empty($_POST['codigo'])){
+				$codigo = $_POST['codigo'];
 
 				$resultado = $this->modelo->buscar($codigo);
 
-				if($resultado){
+				if($resultado != NULL){
 					require('view/empleadoBuscar.php');
 				}else{
 					require('view/errorEmpleadoBuscar.php');
@@ -116,15 +116,15 @@
 		}
 
 		/**
-		 * Lista todos los elempleados registrados.
+		 * Lista todos los empleados registrados.
 		 *
 		 */
 		public function listar(){
 			$resultado = $this->modelo->listar();
 
 			if($resultado){
-				require('view/empleadoListar.php');
-				var_dump($registrados);
+				//require('view/empleadoListar.php');
+				var_dump($resultado);
 			}else{
 				require('view/errorEmpleado.php');
 			}

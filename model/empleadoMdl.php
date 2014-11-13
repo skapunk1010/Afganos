@@ -20,11 +20,12 @@
 		 */
 		public function insertar($nombre,$apellidoPat,$apellidoMat,$fechaNac,$rfc,$nss,$email,$status){
 			#Generar codigo
-			$queryParaCodigo = "SELECT COUNT() as total FROM Empleado";
+			$queryParaCodigo = "SELECT COUNT(*) as total FROM Empleado";
 			$resultado	= $this->conexion->query($queryParaCodigo);
-			$row		= $resultado->fetch_array;
-			$nEmpleados = $row[0] + 1;
-			$codigo 		= str_pad($nReportes, 5, '0', STR_PAD_LEFT);
+			$row		= $resultado->fetch_assoc();
+			var_dump($row);
+			$nEmpleados = $row['total'] + 1;
+			$codigo 		= str_pad($nEmpleados, 5, '0', STR_PAD_LEFT);
 			$codigo			= "1".$codigo;
 
 			$nombre		= $this->conexion->real_escape_string($nombre);
@@ -54,20 +55,21 @@
 		 *Consulta un empleado en la base de datos.
 		 *@param string $codigo Código del empleado a buscar.
 		 *@return Array Regresa el empleado en un arreglo asociativo. 
+		 *Regresa NULL en caso contrario.
 		 */
-		public function buscar($codigo){
-			$codigo = $this->conexion->real_escape_string($codigo);
+		public function buscar($Codigo){
+			$codigo = $this->conexion->real_escape_string($Codigo);
 
 			$query = "SELECT * FROM Empleado WHERE Codigo = '".$Codigo."'";
 
 			$resultado = $this->conexion->query($query);
 			if($resultado){
-				echo $this->conexion->error;
+				$empleado = $resultado->fetch_assoc();
 				$this->conexion->close();
-				return FALSE;
+				return $empleado;
 			}else{
 				$this->conexion->close();
-				return TRUE;
+				return NULL;
 			}
 		}
 		/**
@@ -83,17 +85,14 @@
 			
 			if($resultado){
 				require('model/Empleado.php');
-				while(($fila = $resultado->fetch_assoc())) {
-					$empleado = new Empleado($fila['codigo'],$fila['nombre'],$fila['apellidoPaterno'], $fila['apellidoMaterno'], $fila['status']);
-					$empleado -> setEmail($fila['email']);
-					$empleado -> setRfc($fila['rfc']);
-					$empleado -> setNss($fila['nss']);
-					$empleados[] = $empleado;
+				while(($fila = $resultado->fetch_assoc())){
+					$empleados[] = $fila;
 				}
-				$this->conexion();
+				
+				$this->conexion->close();
 				return $empleados;
 			}else{
-				$this->conexion();
+				$this->conexion->close();
 				return NULL;
 			}
 		}
