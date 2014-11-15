@@ -23,11 +23,11 @@
             switch($_REQUEST['accion']){
                 
                 case 'insertar': 
-                    if($this->estaLogeado() && ($this->esAdmin() || $this->esUsuario())) {
+                    if($this->estaLogeado() && ($this->esAdmin() || $this->esUsuario())) {
                         $this -> insertar();
                     }else{
                         if(!$this->estaLogeado()){
-                            header('Location: index.php?ctrl=login&accion=iniciarSesion');
+                            header('Location : index.php?ctrl=login&accion=iniciarSesion');
                         }else{
                             require('view/errorAcceso.php');
                         }
@@ -35,7 +35,7 @@
                     break;
 
                 case 'consultar':
-                    if($this->estaLogeado() && ($this->esAdmin() || $this->esUsuario())) {
+                    if($this->estaLogeado() && ($this->esAdmin() || $this->esUsuario())) {
                         $this -> consultar();
                     }else{
                         if(!$this->estaLogeado()){
@@ -59,7 +59,7 @@
                     break;
 
                 case 'buscarpormarca':
-                    if($this->estaLogeado() && ($this->esAdmin() || $this->esUsuario())) {
+                    if($this->estaLogeado() && ($this->esAdmin() || $this->esUsuario())) {
                         $this -> buscarpormarca();
                     }else{
                         if(!$this->estaLogeado()){
