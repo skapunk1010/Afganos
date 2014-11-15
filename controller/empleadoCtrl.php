@@ -29,9 +29,9 @@
 					}
 					break;
 				
-				case 'buscar':
+				case 'consultar':
 					if($this->estaLogeado() && $this->esAdmin() ) {
-						$this->buscar();
+						$this->consultar();
 					}else{
 						if(!$this->estaLogeado()){
 							header('Location : index.php?ctrl=login&accion=iniciarSesion');
@@ -62,6 +62,9 @@
 		 *Ejecuta la acción insertar empleado.
 		 */
 		public function insertar(){
+			if(empty($_POST)){
+				#Mostrar nuevamente el formulario
+			}else{
 				require('controller/validadorCtrl.php');
 				$nombre		= $_POST['nombre'];
 				$apellidoPat= $_POST['apellidoPat'];
@@ -94,12 +97,13 @@
 				}else{
 					require('view/errorEmpleadoInsertado.php');
 				}
+			}
 		}
 
 		/**
 		 *Ejecuta la acción buscar empleado.
 		 */
-		public function buscar(){
+		public function consultar(){
 			if(isset($_POST['codigo']) && !empty($_POST['codigo'])){
 				$codigo = $_POST['codigo'];
 

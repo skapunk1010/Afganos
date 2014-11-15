@@ -57,7 +57,7 @@
 		 *@return Array Regresa el empleado en un arreglo asociativo. 
 		 *Regresa NULL en caso contrario.
 		 */
-		public function buscar($Codigo){
+		public function consultar($Codigo){
 			$codigo = $this->conexion->real_escape_string($Codigo);
 
 			$query = "SELECT * FROM Empleado WHERE Codigo = '".$Codigo."'";
@@ -82,17 +82,14 @@
 
 			$resultado = $this->conexion->query($query);
 			$empleados = array();
-			
+			$this->conexion->close();
 			if($resultado){
-				require('model/Empleado.php');
 				while(($fila = $resultado->fetch_assoc())){
 					$empleados[] = $fila;
 				}
 				
-				$this->conexion->close();
 				return $empleados;
 			}else{
-				$this->conexion->close();
 				return NULL;
 			}
 		}
