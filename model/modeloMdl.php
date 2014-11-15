@@ -28,13 +28,8 @@
 			
 			$query = "INSERT INTO Modelo (Marca_idMarca, Modelo) VALUES (".$idMarca.",'".$modeloESC."')";
 			$correcto = $this -> conexion -> query($query);
-
-			if($correcto)
-				$nuevoModelo -> setIdModelo($this -> conexion -> insert_id);
-			else $nuevoModelo = NULL;
-			
 			$this -> conexion -> close();
-			return $correcto; 
+			return $correcto;
 		}
 
 		/**
@@ -43,12 +38,11 @@
 		 *
 		 *@return Array con los resultados.
 		 */
-		public function buscar($modelo){
+		public function consultar($modelo){
 			
-			$query = "SELECT * FROM Modelo WHERE modelo LIKE = '%".$modelo."%'";
+			$query = "SELECT * FROM Modelo WHERE Modelo = '".$modelo."'";
 			$correcto = $this -> conexion -> query($query);
-
-			$array;
+			$array = array();
 			if($correcto){
 				$i = 0;
 
@@ -57,7 +51,6 @@
   			  }
 			}
 			else $array = NULL;
-
 			$this -> conexion -> close();
 			return $array; 
 		}
@@ -98,7 +91,6 @@
 		public function modificar($idModelo, $campo){
 			$query = "UPDATE Modelo SET Modelo = '".$campo."' WHERE idModelo = '".$idModelo."'";
 			$correcto = $this -> conexion -> query($query);
-
 			return $correcto;
 		}
 
