@@ -25,7 +25,7 @@
                         $this -> insertar();
                     }else{
                         if(!$this->estaLogeado()){
-                            header('Location: index.php?ctrl=login&accion=iniciarSesion');
+                            header('Location : index.php?ctrl=login&accion=iniciarSesion');
                         }else{
                             require('view/errorAcceso.php');
                         }
@@ -33,11 +33,11 @@
                     break;
 
                 case 'consultar':
-                    if($this->estaLogeado() && ($this->esAdmin() || $this->esUsuario()){
+                    if($this->estaLogeado() && ($this->esAdmin() || $this->esUsuario())){
                         $this -> consultar();
                     }else{
                         if(!$this->estaLogeado()){
-                            header('Location: index.php?ctrl=login&accion=iniciarSesion');
+                            header('Location : index.php?ctrl=login&accion=iniciarSesion');
                         }else{
                             require('view/errorAcceso.php');   
                         }
@@ -49,13 +49,34 @@
                         $this -> modificar();
                     }else{
                         if(!$this->estaLogeado()){
-                            header('Location: index.php?ctrl=login&accion=iniciarSesion');
+                            header('Location : index.php?ctrl=login&accion=iniciarSesion');
                         }else{
                             require('view/errorAcceso.php');
                         }
                     }
                     break;
-                        
+                case 'eliminar':
+                    if($this->estaLogeado() && $this->esAdmin()){
+                        $this->eliminar();
+                    }else{
+                        if(!$this->estaLogeado()){
+                            header('Location : index.php?ctrl=login&accion=iniciarSesion');
+                        }else{
+                            #Mostrar error de acceso no permitido
+                        }
+                    }
+                    break;
+                case 'listar':
+                    if($this->estaLogeado() && ($this->esAdmin() || $this->esUsuario())){
+                        $this->listar();
+                    }else{
+                        if(!$this->estaLogeado()){
+                            header('Location : index.php?ctrl=login&accion=iniciarSesion');
+                        }else{
+                            #Mostrar error de acceso no permitido
+                        }
+                    }
+                    break;
                 default: 
                     require('view/error.php');
             }
@@ -65,18 +86,21 @@
          *Inserta una nueva marca de auto.
          */
         public function insertar(){
-        
-            require('controller/validadorCtrl.php');
-            $marca = $_REQUEST['marca'];
-            if(validadorCtrl::validarTexto($marca)){
-                $resultado = $this -> modelo -> insertar($marca); 
-                if($resultado)
-                    require('view/marcaInsertar.php');
-                else
-                    require('view/errorMarcaInsertar.php');
-            }
-            else{
-                die('Cadena de marca inválida');
+            if(empty($_POST)){
+                #Muestra formulario
+            }else{
+                require('controller/validadorCtrl.php');
+                $marca = $_POST['marca'];
+                if(validadorCtrl::validarTexto($marca)){
+                    $resultado = $this -> modelo -> insertar($marca); 
+                    if($resultado)
+                        require('view/marcaInsertar.php');
+                    else
+                        require('view/errorMarcaInsertar.php');
+                }
+                else{
+                    die('Cadena de marca inválida');
+                }
             }
         }
 
@@ -85,37 +109,82 @@
          */
 
         public function consultar(){
-            require('controller/validadorCtrl.php');
-            $idMarca = $_REQUEST['idmarca'];
-            if(validadorCtrl::validarNumero($idMarca)){
-                $resultado = $this -> modelo -> consultar($idMarca); 
-                if($resultado != NULL){
-                    var_dump($resultado);
+            if(empty($_POST)){
+                #Muestra formulario
+            }else{
+                require('controller/validadorCtrl.php');
+                $idMarca = $_POST['idMarca'];
+                if(validadorCtrl::validarNumero($idMarca)){
+                    $resultado = $this -> modelo -> consultar($idMarca); 
+                    if($resultado != NULL){
+                        var_dump($resultado);
+                    }
+                    else
+                        require('view/errorMarcaConsulta.php');
                 }
-                else
-                    require('view/errorMarcaConsulta.php');
+                else{
+                    die('Cadena de marca inválida');
+                }  
             }
-            else{
-                die('Cadena de marca inválida');
-            }  
         }
         
         /**
          * Modifica algún nombre de marca.
          */
         public function modificar(){
-            require('controller/validadorCtrl.php');
-            $marca = $_REQUEST['marca'];
-            $idMarca = $_REQUEST['idMarca'];
-            if(validadorCtrl::validarTexto($marca) && validadorCtrl::validarNumero($idMarca)){
-                $resultado = $this -> modelo -> modificar($idMarca,$marca); 
-                if($resultado)
-                    require('view/marcaModificar.php');
-                else
-                    require('view/errorMarcaModificar.php');
+            if(empty($_POST)){
+                #Muestra formulario
+            }else{
+                require('controller/validadorCtrl.php');
+                $marca = $_POST['marca'];
+                $idMarca = $_POST['idMarca'];
+                if(validadorCtrl::validarTexto($marca) && validadorCtrl::validarNumero($idMarca)){
+                    $resultado = $this -> modelo -> modificar($idMarca,$marca); 
+                    if($resultado)
+                        require('view/marcaModificar.php');
+                    else
+                        require('view/errorMarcaModificar.php');
+                }
+                else{
+                    die('Cadena de marca inválida');
+                }
             }
-            else{
-                die('Cadena de marca inválida');
+        }
+
+        /**
+         * Elimina la marca indicada.
+         */
+        public function eliminar(){
+            if(empty($_POST)){
+                #Muestra formulario
+            }else{
+                require('controller/validadorCtrl.php');
+                $idMarca = $_POST['idMarca'];
+                if(validadorCtrl::validarNumero($idMarca)){
+                    $resultado = $this -> modelo -> eliminar($idMarca); 
+                    if($resultado)
+                        #require('view/marcaModificar.php');
+                        echo 'Marca eliminada'; #Va vista aquí
+                    else
+                        require('view/errorMarcaModificar.php');
+                }
+                else{
+                    die('Cadena de marca inválida');
+                }
+            }
+        }
+
+        /**
+         * Muestra todas las marcas almacenadas en la base de datos.
+         */
+        public function listar(){
+            $resultado = $this->modelo->listar();
+
+            if($resultado){
+                #Mostrar marcas
+                var_dump($resultado);
+            }else{
+                require('view/errorMarca.php');
             }
         }
     }

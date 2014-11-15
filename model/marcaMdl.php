@@ -77,5 +77,44 @@
 			}
 			else return FALSE;
 		}
+
+		/**
+		 * Elimina la marca que se indica en el id.
+		 * @param int $idMarca Marca de la marca que se desea eliminar
+		 * @return bool TRUE en caso de que la eliminación sea correcta.
+		 * False en caso contrario.
+		 */
+		public function eliminar($idMarca){
+			$idMarca = $this -> conexion -> real_escape_string($idMarca);
+			$query = "DELETE FROM Marca WHERE idMarca = '".$idMarca."'";
+			
+			$resultado = $this -> conexion -> query($query);
+			
+			if($resultado){
+				return TRUE;
+			}else{
+				return FALSE;
+			}
+		}
+
+		/**
+		 * Muestra todas las marcas almacenadas en la base de datos.
+		 */
+		public function listar(){
+			$query = "SELECT * FROM Marca";
+			$resultado = $this -> conexion -> query($query);
+			$this -> conexion -> close();
+
+			if($resultado->num_rows > 0){
+				$marcas = array();
+				while(($fila = $resultado->fetch_assoc())){
+					$marcas[] = $fila;
+				}
+				
+				return $marcas;
+			}else{
+				return NULL;
+			}
+		}
 	}
 ?>
