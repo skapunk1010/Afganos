@@ -74,6 +74,7 @@
         *Si el inicio fue correcto mostrará el index.
         */
         function iniciarSesion(){
+            echo 'Entra';
         	if(empty($_POST)){
                 #Mostrar formulario donde ingresa los datos del login
 

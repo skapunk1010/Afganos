@@ -22,7 +22,7 @@
 
 			$query = "SELECT * FROM Usuario WHERE usuario = '".$usuario."' AND contrasenha = '".$password."'";
 			$resultado = $this->conexion->query($query);
-			var_dump($resultado);
+			
 			$this->conexion->close();
 			if($resultado->num_rows > 0){
 				require('model/Usuario.php');
