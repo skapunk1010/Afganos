@@ -13,7 +13,6 @@
             $this -> modelo = new modeloMdl();
         }
         
-
         /**
          * Recibe la acción a realizar en variable 
          *de nombre 'accion' por medio del método GET
@@ -22,29 +21,31 @@
 
             switch($_REQUEST['accion']){
                 
-                case 'insertar': 
-                    if($this->estaLogeado() && ($this->esAdmin() || $this->esUsuario())) {
-                        $this -> insertar();
-                    }else{
-                        if(!$this->estaLogeado()){
-                            header('Location : index.php?ctrl=login&accion=iniciarSesion');
-                        }else{
-                            require('view/errorAcceso.php');
-                        }
+                case 'insertar':
+                if($this->estaLogeado() && ($this->esAdmin() || $this->esUsuario() )){
+                    $this->insertar();
+                }
+                else{
+                    if(!$this->estaLogeado()){
+                        header('Location: index.php?ctrl=login&accion=iniciarSesion');
                     }
-                    break;
+                    else{
+                        require('view/errorAcceso.php');
+                    }
+                }
+                break;
 
                 case 'consultar':
-                    if($this->estaLogeado() && ($this->esAdmin() || $this->esUsuario())) {
-                        $this -> consultar();
+                if($this->estaLogeado() && ($this->esAdmin() || $this->esUsuario() )){
+                    $this -> consultar();
+                }else{
+                    if(!$this->estaLogeado()){
+                        header('Location: index.php?ctrl=login&accion=iniciarSesion');
                     }else{
-                        if(!$this->estaLogeado()){
-                            header('Location: index.php?ctrl=login&accion=iniciarSesion');
-                        }else{
-                            require('view/errorAcceso.php');
-                        }
+                        require('view/errorAcceso.php');
                     }
-                    break;
+                }
+                break;
 
                 case 'modificar':
                     if($this->estaLogeado() && $this->esAdmin()){
@@ -59,7 +60,7 @@
                     break;
 
                 case 'buscarpormarca':
-                    if($this->estaLogeado() && ($this->esAdmin() || $this->esUsuario())) {
+                    if($this->estaLogeado() && ($this->esAdmin() || $this->esUsuario() )){
                         $this -> buscarpormarca();
                     }else{
                         if(!$this->estaLogeado()){
@@ -83,7 +84,7 @@
             require('controller/validadorCtrl.php');
             
             $idMarca = $_REQUEST['idMarca'];
-            $modelo = $_REQUEST['modelo'];
+            $modelo = strtoupper($_REQUEST['modelo']);
 
             if(!validadorCtrl::validarNumero($idMarca)) {
                 die('Formato de idMarca inválido.');
@@ -92,10 +93,10 @@
             $resultado = $this -> modelo -> insertar($idMarca,$modelo);
             
             if($resultado){
-                require('view/areaInsertada.php'); #cambiar a html
+                require('../view/html/exitos/modeloInsertar.html');
             } 
             else{  
-                require('view/errorAreaInsertada.php'); #cambiar a html
+                require('../view/html/errores/errorModeloInsertar.html');
             }  
         }
 
@@ -105,15 +106,16 @@
 
         public function consultar(){
 
-            $modelo = $_REQUEST['modelo'];
-            $resultado = $this -> modelo -> buscar($modelo);
+            $modelo = strtoupper($_REQUEST['modelo']);
+            $resultado = $this -> modelo -> consultar($modelo);
 
             if(count($resultado)>0){
                 var_dump($resultado);
                 #Se agregará su html para mostrar resultado.
+                require("view/html/exitos/modeloConsultar.html");
             }
             else{
-                require('view/noResultadoBuscarModelo.php'); #cambiar a html
+                require('view/html/errores/errorModeloConsultar.html');
             }
         }
 
@@ -127,10 +129,10 @@
 
             if(count($resultado)>0){
                 var_dump($resultado);
-                #Se agregará su html para mostrar resultado.
+                require('view/html/exitos/modeloConsultar.html');
             }
             else{
-                #No se hallaron coincidencias.             
+                require('view/html/errores/errorModeloConsultar.html');
             }
         }
         
@@ -139,14 +141,16 @@
          */
         public function modificar(){
             
-            $nuevaCadena = $_REQUEST['modelo'];
-            $resultado = $this -> modelo -> modificar($idModelo,$nuevaCadena);
+            $nuevoModelo = strtoupper($_REQUEST['modelo']);
+            $idModelo = $_REQUEST['idModelo'];
+            $resultado = $this -> modelo -> modificar($idModelo,$nuevoModelo);
 
             if($resultado){
-               require('view/modeloModificado.php'); #cambiar a html
+               require('view/html/exitos/modeloModificar.html');
             }
             else
-{                require('view/errorModeloModificado.php'); #cambiar a html
+            {
+                require('view/html/errores/errorModeloModificar.html');
             }
 
         }
