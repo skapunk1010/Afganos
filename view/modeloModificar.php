@@ -1,3 +1,0 @@
-<?php
-echo "MODELO MODIFICADO CON ÉXITO!";
-?>

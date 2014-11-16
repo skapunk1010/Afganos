@@ -60,11 +60,21 @@
 		public function consultar($Codigo){
 			$codigo = $this->conexion->real_escape_string($Codigo);
 
-			$query = "SELECT * FROM Empleado WHERE Codigo = '".$Codigo."'";
+			//$query = "SELECT * FROM Empleado WHERE Codigo = '".$Codigo."'";
+
+			$query = "SELECT * 
+					FROM Empleado AS E,Telefono AS T, Direccion AS D, Usuario AS U
+					WHERE 	E.codigo = T.Empleado_Codigo AND 
+							T.Empleado_Codigo = D.Empleado_Codigo AND 
+							E.codigo = U.codigo AND
+							E.Codigo = '".$Codigo."'";
 
 			$resultado = $this->conexion->query($query);
 			if($resultado){
-				$empleado = $resultado->fetch_assoc();
+				$empleado = array();
+				while(($fila = $resultado->fetch_assoc())){
+					$empleado[] = $fila;
+				}
 				$this->conexion->close();
 				return $empleado;
 			}else{
@@ -78,7 +88,7 @@
 		 * En caso de que no encontrara nada o hubiera algún error, regresa NULL.
 		 */
 		public function listar(){
-			$query = "SELECT * FROM Empleado";
+			$query = "SELECT * FROM Empleado WHERE status = 'ACTIVO'";
 
 			$resultado = $this->conexion->query($query);
 			$empleados = array();

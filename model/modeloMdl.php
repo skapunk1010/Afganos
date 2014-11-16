@@ -9,7 +9,7 @@
 		*/
 		function __construct(){
 			require('model/Modelo.php');
-			require('controller/ConexionBaseDeDatos.php');
+			require_once('controller/ConexionBaseDeDatos.php');
 			$this->conexion = ConexionBaseDeDatos::getInstance();
 		}
 		
@@ -23,12 +23,14 @@
 		public function insertar($idMarca, $modelo){
 			
 			$nuevoModelo = new Modelo($idMarca, $modelo);
-			
+			//idMarca   = $this -> conexion -> real_escape_string($idMarca);
 			$modeloESC = $this -> conexion -> real_escape_string($modelo);
 			
 			$query = "INSERT INTO Modelo (Marca_idMarca, Modelo) VALUES (".$idMarca.",'".$modeloESC."')";
 			$correcto = $this -> conexion -> query($query);
+
 			$this -> conexion -> close();
+
 			return $correcto;
 		}
 
@@ -64,19 +66,19 @@
 		 */
 		public function buscarPorMarca($idMarca){
 			
-			$query = "SELECT Modelo FROM Modelo WHERE Marca_idMarca = '".$idMarca."'";
+			 $query = "SELECT idMarca,idModelo,Modelo FROM Modelo AS O,Marca AS M WHERE Marca_idMarca = '".$idMarca."' 
+			 			AND M.idMarca = O.Marca_idMarca AND O.status = true";
 			$correcto = $this -> conexion -> query($query);
 
-			$array;
+			$array = array();
 			if($correcto){
 				$i = 0;
 
-				while ($fila = $correcto->fetch_assoc()) {
-        			$array[$i++] = $fila;
+				while (($fila = $correcto->fetch_assoc())) {
+        			$array[] = $fila;
   			  }
 			}
 			else $array = NULL;
-
 			$this -> conexion -> close();
 			return $array; 
 		}
@@ -91,7 +93,21 @@
 		public function modificar($idModelo, $campo){
 			$query = "UPDATE Modelo SET Modelo = '".$campo."' WHERE idModelo = '".$idModelo."'";
 			$correcto = $this -> conexion -> query($query);
+			$this -> conexion -> close();
 			return $correcto;
+		}
+		
+		/**
+		 * Elimina el modelo indicado.
+		 *@param int Id del modelo que se desea eliminar.
+		 *@return bool TRUE si la eliminación fue exitosa. FALSE en caso contrario.
+		 */
+		public function eliminar($idModelo){
+			$idModelo = $this->conexion->real_escape_string($idModelo);
+			$query = "UPDATE Modelo SET status = false WHERE idModelo = '".$idModelo."'";
+			$resultado = $this->conexion->query($query);
+			$this -> conexion -> close();
+			return $resultado;
 		}
 
 	}

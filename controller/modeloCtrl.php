@@ -70,7 +70,17 @@
                         }
                     }
                     break;
-                        
+                case 'eliminar':
+                    if($this->estaLogeado() && ($this->esAdmin() || $this->esUsuario() )){
+                        $this -> eliminar();
+                    }else{
+                        if(!$this->estaLogeado()){
+                            header('Location: index.php?ctrl=login&accion=iniciarSesion');
+                        }else{
+                            require('view/errorAcceso.php');
+                        }
+                    }
+                    break;
                 default: 
                     require('view/error.php');
             }
@@ -80,24 +90,33 @@
          *Inserta un nuevo ejemplar de modelo.
          */
         public function insertar(){
-        
-            require('controller/validadorCtrl.php');
-            
-            $idMarca = $_REQUEST['idMarca'];
-            $modelo = strtoupper($_REQUEST['modelo']);
+            //if( (!isset($_GET['idMarca']) && empty($_GET['idMarca'])) || (empty($_POST)) ){
+            if(empty($_POST)){
+                $header     = file_get_contents('view/headerLoged.html');
+                $contenido  = file_get_contents('view/modeloInsertar.html');
+                $footer     = file_get_contents('view/footer.html');
+                $header     = str_replace('{usuario}', $_SESSION['usuario'], $header);
+                $contenido  = str_replace('{idMarca}', $_GET['idMarca'], $contenido);
+                echo $header.$contenido.$footer;
 
-            if(!validadorCtrl::validarNumero($idMarca)) {
-                die('Formato de idMarca inválido.');
+            }else{
+                require('controller/validadorCtrl.php');
+                $idMarca = $_GET['idMarca'];
+                $modelo = strtoupper($_POST['modelo']);
+
+                if(validadorCtrl::validarNumero($idMarca) && validadorCtrl::validarTexto($modelo)) {
+                    $resultado = $this -> modelo -> insertar($idMarca,$modelo);
+                    var_dump($resultado);
+                    if($resultado){
+                        require('view/html/exitos/modeloInsertar.html');
+                    } 
+                    else{  
+                        require('view/html/errores/errorModeloInsertar.html');
+                    }     
+                }else{
+                    die('Formato de idMarca inválido.');
+                }
             }
-
-            $resultado = $this -> modelo -> insertar($idMarca,$modelo);
-            
-            if($resultado){
-                require('../view/html/exitos/modeloInsertar.html');
-            } 
-            else{  
-                require('../view/html/errores/errorModeloInsertar.html');
-            }  
         }
 
         /**
@@ -140,20 +159,52 @@
          * Modifica el modelo mencionado.
          */
         public function modificar(){
-            
-            $nuevoModelo = strtoupper($_REQUEST['modelo']);
-            $idModelo = $_REQUEST['idModelo'];
-            $resultado = $this -> modelo -> modificar($idModelo,$nuevoModelo);
+            if(empty($_POST)){
+                $header     = file_get_contents('view/headerLoged.html');
+                $contenido  = file_get_contents('view/modeloModificar.html');
+                $footer     = file_get_contents('view/footer.html');
+                $diccionario= array('{usuario}'=>$_SESSION['usuario'],'{idModelo}'=>$_GET['modelo'],'{nombreModelo}'=>$_GET['nombre']);
+                $header     = str_replace('{usuario}', $_SESSION['usuario'], $header);
+                $contenido  = strtr($contenido,$diccionario);
+                echo $header.$contenido.$footer;
+            }else{
+                require('controller/validadorCtrl.php');
+                $nuevoModelo = strtoupper($_POST['modelo']);
+                $idModelo = $_GET['idModelo'];
+                if( validadorCtrl::validarTexto($nuevoModelo) & validadorCtrl::validarNumero($idModelo)){
+                    $resultado = $this -> modelo -> modificar($idModelo,$nuevoModelo);
+                    if($resultado){
+                        require('view/html/exitos/modeloModificar.html');
+                    } else {
+                        require('view/html/errores/errorModeloModificar.html');
+                    }
+                }else{
 
-            if($resultado){
-               require('view/html/exitos/modeloModificar.html');
+                }
             }
-            else
-            {
-                require('view/html/errores/errorModeloModificar.html');
-            }
+        }
 
+        /**
+         * Eliminación de modelo.
+         */
+        public function eliminar(){
+            if(!isset($_GET['modelo']) && empty($_GET['modelo'])){
+                //header('Location: index.php?ctrl=');
+            }else{
+                require('controller/validadorCtrl.php');
+                $idModelo = (int)$_GET['modelo'];
+                if(validadorCtrl::validarNumero($idModelo)){
+                    $resultado = $this -> modelo -> eliminar($idModelo); 
+                    if($resultado)
+                        echo 'Modelo eliminado'; #Va vista aquí
+                    else
+                        require('view/error.php');
+                }
+                else{
+                    die('Cadena de modelo inválida');
+                }
+            }
         }
     }
 
-?>
+?>  

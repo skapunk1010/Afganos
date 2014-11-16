@@ -52,6 +52,29 @@
 						}
 					}
 					break;
+
+				case 'modificar':
+					if($this->estaLogeado() && $this->esAdmin()){
+						$this->modificar();
+					}else{
+						if(!$this->estaLogeado()){
+							header('Location : index.php?ctrl=login&accion=iniciarSesion');
+						}else{
+							require('view/errorAcceso.php');
+						}
+					}
+					break;
+				case 'eliminar':
+					if($this->estaLogeado() && $this->esAdmin()){
+						$this->eliminar();
+					}else{
+						if(!$this->estaLogeado()){
+							header('Location : index.php?ctrl=login&accion=iniciarSesion');
+						}else{
+							require('view/errorAcceso.php');
+						}
+					}
+					break;
 				default:
 					require('view/error.php');
 					break;
@@ -63,7 +86,11 @@
 		 */
 		public function insertar(){
 			if(empty($_POST)){
-				#Mostrar nuevamente el formulario
+				$header 	= file_get_contents('view/headerLoged.html');
+				$contenido 	= file_get_contents('view/empleadoInsertar.html');
+				$footer 	= file_get_contents('view/footer.html');
+				$header 	= str_replace('{usuario}', $_SESSION['usuario'], $header);
+				echo $header.$contenido.$footer;
 			}else{
 				require('controller/validadorCtrl.php');
 				$nombre		= $_POST['nombre'];
@@ -104,13 +131,55 @@
 		 *Ejecuta la acción buscar empleado.
 		 */
 		public function consultar(){
-			if(isset($_POST['codigo']) && !empty($_POST['codigo'])){
-				$codigo = $_POST['codigo'];
+			if(isset($_GET['codigo']) && !empty($_GET['codigo'])){
+				$codigo = $_GET['codigo'];
 
-				$resultado = $this->modelo->buscar($codigo);
+				$resultado = $this->modelo->consultar($codigo);
 
 				if($resultado != NULL){
-					require('view/empleadoBuscar.php');
+					$header 	= file_get_contents('view/headerLoged.html');
+					$contenido 	= file_get_contents('view/empleadoConsultar.html');
+					$footer 	= file_get_contents('view/footer.html');
+
+					$inicioTelefono = strpos($contenido, '{inicioTelefono}');
+					$finTelefono	= strpos($contenido, '{finTelefono}')+13;
+					$filaTelefono	= substr($contenido, $inicioTelefono, $finTelefono-$inicioTelefono);
+
+					$filas ="";
+
+					foreach ($resultado as $telefono) {
+						//var_dump($telefono);echo '<br>';
+						
+						$nuevaFila = $filaTelefono;
+						$diccionario = array('{tipoTelefono}'=>$telefono['tipo'],'{telefono}'=>$telefono['telefono'],'{inicioTelefono}'=>'','{finTelefono}'=>'');
+						$nuevaFila = strtr($nuevaFila,$diccionario);
+						$filas .= $nuevaFila;
+					}
+
+					$diccionario = array(
+						'{nombre}'=>$resultado[0]['nombre'],
+						'{apellidoPaterno}'=>$resultado[0]['apellidoPaterno'],
+						'{apellidoMaterno}'=>$resultado[0]['apellidoMaterno'],
+						'{fechaNacimiento}'=>$resultado[0]['fechaNacimiento'],
+						'{rfc}'=>$resultado[0]['RFC'],
+						'{nss}'=>$resultado[0]['NSS'],
+						'{email}'=>$resultado[0]['email'],
+						'{calle}'=>$resultado[0]['calle'],
+						'{numeroExt}'=>$resultado[0]['numeroExt'],
+						'{numeroInt}'=>$resultado[0]['numeroInt'],
+						'{codigoPostal}'=>$resultado[0]['codigoPostal'],
+						'{colonia}'=>$resultado['']['colonia'],
+						'{ciudad}'=>$resultado[0]['ciudad'],
+						'{estado}'=>$resultado[0]['estado'],
+						'{usuario}'=>$resultado[0]['usuario']
+						//'{telefono}'=>$resultado['telefono']
+						//'{tipoTelefono}'=>$resultado['tipo'],
+						);
+					$header 	= str_replace('{usuario}', $_SESSION['usuario'], $header);
+					$contenido 	= strtr($contenido,$diccionario);
+					$contenido	= str_replace($filaTelefono, $filas, $contenido);
+
+					echo $header.$contenido.$footer;
 				}else{
 					require('view/errorEmpleadoBuscar.php');
 				}
@@ -152,6 +221,22 @@
 				
 			}else{
 				require('view/errorEmpleado.php');
+			}
+		}
+
+		public function modificar(){
+			if(isset($_GET['codigo']) && !empty($_GET['codigo'])){
+
+			}else{
+
+			}
+		}
+
+		public function eliminar(){
+			if(isset($_GET['codigo']) && !empty($_GET['codigo'])){
+
+			}else{
+				
 			}
 		}
 	}

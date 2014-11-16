@@ -40,7 +40,7 @@
 		 */
 		public function consultar($marca){
 			$marcaESC = $this -> conexion -> real_escape_string($marca);
-			$query = "SELECT * FROM Marca WHERE Marca = '".$marcaESC."'";
+			$query = "SELECT * FROM Marca WHERE idMarca = '".$marcaESC."'";
 			$correcto = $this -> conexion -> query($query);
 			$array = array();
 			
@@ -77,7 +77,7 @@
 		 */
 		public function eliminar($idMarca){
 			$idMarca = $this -> conexion -> real_escape_string($idMarca);
-			$query = "DELETE FROM Marca WHERE idMarca = '".$idMarca."'";
+			$query = "UPDATE Marca SET status = 'false' WHERE idMarca = '".$idMarca."'";
 			
 			$resultado = $this -> conexion -> query($query);
 			
@@ -92,7 +92,7 @@
 		 * Muestra todas las marcas almacenadas en la base de datos.
 		 */
 		public function listar(){
-			$query = "SELECT * FROM Marca";
+			$query = "SELECT * FROM Marca WHERE status=1 ORDER BY Marca";
 			$resultado = $this -> conexion -> query($query);
 			$this -> conexion -> close();
 
