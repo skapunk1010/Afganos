@@ -27,11 +27,6 @@
 			
 			$query = "INSERT INTO Marca (Marca) VALUES ('".$marcaESC."')";
 			$correcto = $this -> conexion -> query($query);
-
-			if($correcto)
-				$nuevaMarca -> setIdMarca($this -> conexion -> insert_id);
-			else $nuevaMarca = NULL;
-			
 			$this -> conexion -> close();
 			return $correcto; 
 		}
@@ -43,19 +38,21 @@
 		 *@return Marca Regresa un objeto de la clase Marca.
 		 * Si la marca no existe en la base de datos, regresa NULL.
 		 */
-		public function consultar($idMarca){
-			$marcaESC = $this -> conexion -> real_escape_string($idMarca);
-			$query = "SELECT * FROM Marca WHERE idMarca = '".$marcaESC."'";
+		public function consultar($marca){
+			$marcaESC = $this -> conexion -> real_escape_string($marca);
+			$query = "SELECT * FROM Marca WHERE Marca = '".$marcaESC."'";
 			$correcto = $this -> conexion -> query($query);
-
-			$this -> conexion -> close();
+			$array = array();
+			
 			if($correcto){
-				$fila = $correcto -> fetch_assoc();
-				$marca = new Marca($fila['Marca']);
-				$marca ->SetIdMarca($fila['idMarca']);
-				return $marca;
+				$i = 0;
+				while($fila = $correcto->fetch_assoc()){
+					$array[$i++] = $fila;
+				}
 			}
-			else return NULL;
+			else $array = NULL;
+			$this -> conexion -> close();
+			return $array;
 		}
 
 		/**
@@ -66,16 +63,10 @@
          *@return bool TRUE si la modificación fue satisfactoria.
 		 */
 		public function modificar($IdMarca, $marca){
-			$marcaESC = $this -> conexion -> real_escape_string($IdMarca);
-			$IdMarcaEsc = $this->conexion->real_escape_string($marca);
 			$query = "UPDATE Marca SET marca = '".$marca."' WHERE idMarca = '".$IdMarca."'";
 			$correcto = $this -> conexion -> query($query);
-
 			$this -> conexion -> close();
-			if($correcto){
-				return TRUE;
-			}
-			else return FALSE;
+			return $correcto;
 		}
 
 		/**
@@ -107,12 +98,13 @@
 
 			if($resultado->num_rows > 0){
 				$marcas = array();
+				$i = 0;
 				while(($fila = $resultado->fetch_assoc())){
-					$marcas[] = $fila;
+					$marcas[$i++] = $fila;
 				}
-				
 				return $marcas;
-			}else{
+			}
+			else{
 				return NULL;
 			}
 		}
