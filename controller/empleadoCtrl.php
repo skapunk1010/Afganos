@@ -51,7 +51,7 @@
 							require('view/errorAcceso.php');
 						}
 					}
-
+					break;
 				default:
 					require('view/error.php');
 					break;
@@ -127,8 +127,29 @@
 			$resultado = $this->modelo->listar();
 
 			if($resultado){
-				//require('view/empleadoListar.php');
-				var_dump($resultado);
+				#Se guardan archivos en variables
+				$header 	= file_get_contents('view/headerLoged.html');
+				$contenido	= file_get_contents('view/empleadoListar.html');
+				$footer		= file_get_contents('view/footer.html');
+				
+				$inicio_fila 	= strpos($contenido,'{inicioFila}');
+				$fin_fila		= strpos($contenido,'{finFila}')+9;
+				$filaTabla		= substr($contenido, $inicio_fila,$fin_fila-$inicio_fila);
+
+				$filas = "";
+				foreach ($resultado as $empleado) {
+					$new_fila = $filaTabla;
+					//Reemplazo con un diccionario
+					$nombreCompleto	= $empleado['nombre'].' '.$empleado['apellidoMaterno'].' '.$empleado['apellidoPaterno'];
+					$diccionario = array('{codigoEmpleado}' => $empleado['Codigo'], '{nombreEmpleado}' => $nombreCompleto,'{inicioFila}'=>'','{finFila}'=>'');
+					$new_fila = strtr($new_fila,$diccionario);
+					$filas .= $new_fila;
+				}
+				
+				$header = str_replace('{usuario}', $_SESSION['usuario'], $header);
+				$contenido = str_replace($filaTabla, $filas, $contenido);
+				echo $header.$contenido.$footer;
+				
 			}else{
 				require('view/errorEmpleado.php');
 			}
