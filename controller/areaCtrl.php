@@ -23,7 +23,7 @@
             switch($_REQUEST['accion']){
                 
                 case 'insertar': 
-                    if($this->estaLogeado && ($this->esUsuario() || $this->esAdmin() )){
+                    if($this->estaLogeado() && ($this->esUsuario() || $this->esAdmin() )){
                         $this -> insertar();
                     }else{
                         if(!$this->estaLogeado()){
@@ -34,8 +34,20 @@
                     }
                     break;
 
+                case 'listar':
+                    if($this->estaLogeado() && $this->esAdmin() ){
+                        $this -> listar();
+                    }else{
+                        if(!$this->estaLogeado()){
+                            header('Location: index.php?ctrl=login&accion=iniciarSesion');
+                        }else{
+                            require('view/errorAcceso.php');   
+                        }
+                    }
+                    break;
+
                 case 'consultar':
-                    if($this->estaLogeado && ($this->esUsuario() || $this->esAdmin() )){
+                    if($this->estaLogeado() && ($this->esUsuario() || $this->esAdmin() )){
                         $this -> consultar();
                     }else{
                         if(!$this->estaLogeado()){
@@ -47,7 +59,7 @@
                     break;
 
                 case 'modificar':
-                    if($this->estaLogeado && $this->esAdmin() ){
+                    if($this->estaLogeado() && $this->esAdmin() ){
                         $this -> modificar();
                     }else{
                         if(!$this->estaLogeado()){
@@ -69,18 +81,42 @@
         public function insertar(){
         
             require('controller/validadorCtrl.php');
-            $Area           = validadorCtrl::validarTexto($_REQUEST['area']);   
-            $Encargado_Cod  = validadorCtrl::validarTexto($_REQUEST['encargado']);
-            $descripcion    = validadorCtrl::validarTexto($_REQUEST['descripcion']);
-            
-            $resultado = $this -> modelo -> insertar($Encargado_Cod,$Area,$descripcion);
-            
-            if($resultado){
-                require('view/areaInsertada.php'); #cambiar a html
+                     
+            if(validadorCtrl::validarTexto($_POST['area']) && 
+                validadorCtrl::validarNumero($_POST['encargado']) && 
+                validadorCtrl::validarTexto($_POST['descripcion'])){
+                $Area = strtoupper($_POST['area']);
+                $Encargado_Cod  = $_POST['encargado'];
+                $descripcion = strtoupper($_POST['descripcion']);
+
+                $resultado = $this -> modelo -> insertar($Encargado_Cod,$Area,$descripcion);
+                if($resultado){
+                    require('view/areaInsertada.php'); #cambiar a html
+                } 
+                else{  
+                    require('view/errorAreaInsertada.php'); #cambiar a html
+                } 
+
+            }
+            else{
+                echo "formato de área inválido";
             } 
-            else{  
-                require('view/errorAreaInsertada.php'); #cambiar a html
-            }  
+        }
+
+
+        /**
+         * Hace listado de las áreas
+         */
+        public function listar(){
+            $resultado  = $this -> modelo ->listar();
+
+            if($resultado!=NULL){
+                var_dump($resultado);
+                require('view/areaConsultar.php'); #cambiar a html
+            }
+            else{
+                require('view/errorAreaConsultar.php'); #cambiar a html
+            }   
         }
 
         /**
@@ -89,15 +125,20 @@
 
         public function consultar(){
             require('controller/validadorCtrl.php');
-            $area       = validadorCtrl::validarTxt($_REQUEST['area']);
-            $resultado  = $this -> modelo ->consultar($area);
-
-            if($resultado){
-                require('view/areaConsultar.php'); #cambiar a html
+            if(validadorCtrl::validarNumero($_POST['idArea'])){
+                $idArea = $_POST['idArea'];
+                $resultado  = $this -> modelo ->consultar($idArea);
+                 if($resultado){
+                    var_dump($resultado);
+                    require('view/areaConsultar.php'); #cambiar a html
+                }
+                else{
+                    require('view/errorAreaConsultar.php'); #cambiar a html
+                } 
             }
             else{
-                require('view/errorAreaConsultar.php'); #cambiar a html
-            }   
+                echo "verifique formato de id;";
+            }
         }
         
         /**
@@ -105,10 +146,31 @@
          */
         public function modificar(){
             require('controller/validadorCtrl.php');
-            $area       = validadorCtrl::validarTxt($_REQUEST['area']);
-            $ubicacion  = validadorCtrl::validarTxt($_REQUEST['ubicacion']);
-            $encargado  = validadorCtrl::validarTxt($_REQUEST['encargado']);
-            $resultado  = $this -> modelo -> modificar($area,$ubicacion,$encargado);
+            $idArea = $_POST['idArea'];
+            $nuevoCampo = strtoupper($_POST['nuevoCampo']);
+            $aModificar = $_POST['campo'];
+            $campo = "";
+
+            switch ($aModificar) {
+                case 'empleado':
+                    $campo = "Encargado_Codigo";
+                    if(!validadorCtrl::validarNumero($nuevoCampo)){
+                        die("formato de empleado incorrecto");
+                    }
+                    break;
+                case 'area':
+                    $campo = "area";
+                    if(!validadorCtrl::validarTexto($nuevoCampo)){
+                        die("formato de empleado incorrecto");
+                    }
+                    break;
+                case 'descripcion':
+                    $campo = "descripcion";
+                    break;
+                
+                default:break;
+            }
+            $resultado  = $this -> modelo -> modificar($idArea,$campo,$nuevoCampo);           
             
             if($resultado){
                 require('view/areaModificada.php'); #cambiar a html
