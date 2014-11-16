@@ -19,9 +19,10 @@
 		public function run(){
 			switch($_REQUEST['accion']){
 				case 'insertar':
-					if($this->estaLogeado() && ($this->esAdmin() || $this->esUsuario())) {
+					if( $this->estaLogeado() && ( $this->esAdmin() || $this->esUsuario() )){
 						$this->insertar();
-					}else{
+					}
+					else{
 						if(!$this->estaLogeado()){
 							header('Location: index.php?ctrl=login&accion=iniciarSesion');
 						}else{
@@ -31,7 +32,7 @@
 					break;
 
 				case 'buscar':
-					if($this->estaLogeado() && ($this->esAdmin() || $this->esUsuario())) {
+					if( $this->estaLogeado() && ( $this->esAdmin() || $this->esUsuario() )){
 						$this->buscar();
 					}else{
 						if(!$this->estaLogeado()){
@@ -43,8 +44,20 @@
 					break;
 
 				case 'eliminar':
-					if($this->estaLogeado() && $this->esAdmin() ) {
+					if( $this->estaLogeado() && ( $this->esAdmin() || $this->esUsuario() )){
 						$this->eliminar();
+					}else{
+						if(!$this->estaLogeado()){
+							header('Location: index.php?ctrl=login&accion=iniciarSesion');
+						}else{
+							require('view/errorAcceso.php');
+						}
+					}
+					break;
+
+				case 'listar':
+					if( $this->estaLogeado() && ( $this->esAdmin() || $this->esUsuario() )){
+						$this->listar();
 					}else{
 						if(!$this->estaLogeado()){
 							header('Location: index.php?ctrl=login&accion=iniciarSesion');
@@ -63,32 +76,38 @@
 		/**
 		 *Ejecuta la acción insertar un nuevo reporte.
 		 */
-		public function insertar(){
-			if( (isset($_REQUEST['Vehiculo_VIN']) && !empty($_REQUEST['Vehiculo_VIN'])) &&
-				(isset($_REQUEST['fechaEntrada']) && !empty($_REQUEST['fechaEntrada'])) &&
-				(isset($_REQUEST['status'])		  && !empty($_REQUEST['status'])) )
+		public function insertar()
+		{
+			if( (isset($_POST['vin']) && !empty($_POST['vin'])) &&
+				(isset($_POST['status']) && !empty($_POST['status'])) )
 			{
 				require('controller/validadorCtrl.php');
-				$Vehiculo_VIN	= $_REQUEST['Vehiculo_VIN'];
-				$fechaEntrada	= $_REQUEST['fechaEntrada'];
-				$status			= $_REQUEST['status'];
-				$detalle		= $_REQUEST['detalle'];
+				$detalle = "";
+				$fechaSalida = "";
 
-				$Vehiculo_VIN 	= (validadorCtrl::validarVin($Vehiculo_VIN))? $Vehiculo_VIN : die('Formato de VIN no válido');
-				$fechaEntrada 	= (validadorCtrl::validarFecha($fechaEntrada))? $fechaEntrada : die('Formato de fecha no válido');
-				$status			=  validadorCtrl::validarStatus($status);
-				$detalle		= (validadorCtrl::validarTexto($detalle))? $detalle : null;
+				$Vehiculo_VIN	= $_POST['vin'];
+				$status			= $_POST['status'];
+				$detalle = (empty($_POST['detalle'])) ? "" : $_POST['detalle'];
+				$fechaEntrada = date('Y-m-d H:i:s');
 
-				$resultado = $this->modelo->insertar($Vehiculo_VIN,$fechaEntrada,$status,$detalle);
-
-				if($resultado){
-					require('view/reporteInsertado.php');
-				}else{
-					require('view/errorReporteInsertado.php');
+				if(validadorCtrl::validarVin($Vehiculo_VIN) && validadorCtrl::validarStatus($status))
+				{
+					$resultado = $this->modelo->insertar($Vehiculo_VIN,$fechaEntrada,$status,$detalle);
+					
+					if($resultado!=FALSE){
+						require('view/reporteInsertado.php');
+					}
+					else{
+						require('view/errorReporteInsertado.php');
+					}
 				}
-			}else{
-				#Falta algún dato para poder insertar un nuevo reporte.
-				#Se consideran los datos que son not null para poder hacer la inserción.
+
+				else{
+					echo "error insertar reporte";
+				}
+			}
+			else{
+				echo "faltan datos";
 			}
 		}
 
@@ -96,12 +115,13 @@
 		 *Ejecuta la acción buscar un reporte existente.
 		 */
 		public function buscar(){
-			if(isset($_REQUEST['numeroReporte']) && !empty($_REQUEST['numeroReporte'])){
-				$numeroReporte	= $_REQUEST['numeroReporte'];
-
+			if(isset($_POST['numeroReporte']) && !empty($_POST['numeroReporte']))
+			{
+				$numeroReporte	= $_POST['numeroReporte'];
 				$resultado = $this->modelo->buscar($numeroReporte);
 
-				if($resultado){
+				if($resultado!=NULL){
+					var_dump($resultado);
 					require('view/reporteBuscar.php');
 				}else{
 					require('view/errorReporteBuscar.php');
@@ -114,18 +134,31 @@
 		 *Ejecuta la acción eliminar un reporte existente.
 		 */
 		public function eliminar(){
-			if(isset($_REQUEST['numeroReporte']) && !empty($_REQUEST['numeroReporte'])){
-				$numeroReporte	= $_REQUEST['numeroReporte'];
-
+			if(isset($_POST['numeroReporte']) && !empty($_POST['numeroReporte'])){
+				$numeroReporte	= $_POST['numeroReporte'];
 				$resultado = $this->modelo->eliminar($numeroReporte);
-
 				if($resultado){
 					require('view/reporteEliminar.php');
-				}else{
+				}
+				else{
 					require('view/errorReporteEliminar.php');
 				}
-			}else{
-				#Número de reporte no se introdujo.
+			}
+			else{
+				echo "inserte numero de reporte a eliminar";
+			}
+		}
+		/**
+		*Ejecuta la acción de listar los reportes, todos.
+		*/
+		public function listar(){
+
+			$resultado = $this -> modelo -> listar();
+			if($resultado!=NULL){
+				var_dump($resultado);
+			}
+			else{
+				echo "error al listar reportes";
 			}
 		}
 	}
