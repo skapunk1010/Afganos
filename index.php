@@ -1,11 +1,11 @@
 <?php
     session_start();
-    $ctrl;
+    $ctrl = NULL;
     
     /**
     *Recibe la petición y carga el controlador necesario.
     */
-    switch($_REQUEST['ctrl']){
+    switch($_GET['ctrl']){
         
         case 'direccion':
             require('controller/direccionCtrl.php');
@@ -60,6 +60,19 @@
             $ctrl = new modeloCtrl();
             break;	
         default:
+            //$ctrL = NULL;
+            if(!empty($_SESSION)){
+                $header = file_get_contents('view/headerLoged.html');
+                $array = array('{usuario}'=>$_SESSION['usuario']);
+                $header = strtr($header,$array);
+                $content = file_get_contents('view/index.html');
+                $footer = file_get_contents('view/footer.html');
+            }else{
+                $header = file_get_contents('view/headerIndex.html');
+                $content = file_get_contents('view/index.html');
+                $footer = file_get_contents('view/footer.html');
+            }
+            echo $header.$content.$footer;
             break;
                 #no se encontro parametros
     }
@@ -68,6 +81,9 @@
     *ejecuta el método del controlador
     *encargado de recibir la acción a realizar.
     */
-    $ctrl -> run();
+    if($ctrl !== NULL){
+        $ctrl -> run();
+        $ctrl = NULL;
+    }
 
 ?>
