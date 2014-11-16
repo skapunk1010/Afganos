@@ -1,9 +1,11 @@
 <?php
 
-	require('model/Usuario.php'); 
-	class usuarioMdl{
+	
+	class usuarioMdl
+	{
 		private $conexion;
 		function __construct(){
+			require('model/Usuario.php'); 
 			require('controller/ConexionBaseDeDatos.php');
 			$this->conexion = ConexionBaseDeDatos::getInstance();
 		}
@@ -26,6 +28,7 @@
 
 			$usuario = new Usuario($codigo, $nombre, $apellido, $telefono, $email);
 			#simular conexion a la base de datos
+			$this -> conexion -> close();
 			return TRUE;
 		}
 
@@ -33,12 +36,57 @@
 		*@param String $codigo recibe el código del usuario a modificar.
 		*@return bool según sea su validez.
 		*/
-		public function modificar($codigo)
+		/*public function modificar($codigo)
 		{
 			#modificar usuarios a traves de su codigo
 			#hacer uso de variables variables como en vehiculoMdl.php para saber los 
 			#campo a modificar
 			return TRUE;
+		}*/
+
+		/**
+		*@param String $codigo recibe el código del usuario a deshabilitar.
+		*@return bool según sea su validez.
+		*/
+		public function deshabilitar($codigo){
+			$query = "UPDATE Usuario SET status = '0' WHERE Codigo = '".$codigo."'";
+			$correcto = $this->conexion->query($query);
+			$this -> conexion -> close();
+			return $correcto;
+		}
+
+		public function habilitar($codigo){
+			$query = "UPDATE Usuario SET status = '1' WHERE Codigo = '".$codigo."'";
+			$correcto = $this->conexion->query($query);
+			$this -> conexion -> close();
+			return $correcto;
+		}
+
+		public function existeUsuario($codigo,$passAct){
+			$query = "SELECT * FROM Usuario WHERE Codigo = '".$codigo."' AND contrasenha = '".$passAct."'";
+			$existe = $this->conexion->query($query);
+			$array = array();
+	
+			if($existe){
+				$i = 0;
+				while($fila = $existe->fetch_assoc()){
+					$array[$i++] = $fila;
+				}
+			}
+			else {
+				$array = NULL;
+			}
+			return $array;
+		}
+
+		public function cambiarContrasenha($codigo,$passNew)
+		{
+	
+			$consulta = "UPDATE Usuario SET contrasenha = '".$passNew."' WHERE Codigo = '".$codigo."'";
+			$resultado = $this->conexion->query($consulta);
+			$this -> conexion -> close();
+			return $resultado;
+			
 		}
 	}
 ?>
