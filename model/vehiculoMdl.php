@@ -12,15 +12,10 @@
 		/**
 		*Se inserta un nuevo vehículo una vez que se han validado los datos.
 		*/
-		public function insertar($VIN, $IDmodelo, $transmision, $cilindraje){
-			
-			$vehiculo = new Vehiculo($VIN, $IDmodelo, $transmision, $cilindraje);
+		public function insertar($VIN,$idModelo,$anho,$color,$cilindraje,$transmision,$nPuertas){
 			$query = "INSERT INTO Vehiculo (VIN, Modelo_idModelo, color, transmision, cilindraje, anho, numeroPuertas) 
-			VALUES ('".$VIN."','".$Modelo_idModelo."','".$color."','".$transmision."','".$cilindraje."','".$anho."','".$numeroPuertas."')";
-
+			VALUES ('".$VIN."','".$idModelo."','".$color."','".$transmision."','".$cilindraje."','".$anho."','".$nPuertas."')";
 			$resultado = $this -> conexion -> query($query);
-			if(!$resultado)
-				$vehiculo = NULL;
 			return $resultado;
 		}
 
@@ -30,23 +25,30 @@
 		public function listar()
 		{
 			$query = "SELECT * FROM Vehiculo";
-			$resultado = $this -> conexion -> query($query);
-			if($resultado)
-				$resultado -> fetch_assoc();
-			else
-				return FALSE;
+			$correcto = $this -> conexion -> query($query);
+			$array;
+			if($correcto){
+				$i = 0;
+				while ($fila = $correcto->fetch_assoc()) {
+        			$array[$i++] = $fila;
+  			  }
+			}
+			else $array = NULL;
+			$this -> conexion -> close();
+			return $array; 
 		}
 
 		/**
 		*@param String $vin recibe el vin de un auto a modificar
+		*@param String $campo recibe el campo a modificar
+		*@param String $nuevoCampo recibe el nuevo campor a modificar
 		*@return bool según sea su validez.
 		*/
-		public function modificar($vin)
+		public function modificar($vin,$campo,$nuevoCampo)
 		{
-			#modificar el auto con ese vin
-			#se puede hacer uso de $$var(variables variables) 
-			#para saber que campo se va a modificar y x cual valor
-			return TRUE;
+			$query = "UPDATE Vehiculo SET ".$campo." = '".$nuevoCampo."' WHERE VIN = '".$vin."'";
+			$correcto = $this -> conexion -> query($query);
+			return $correcto;
 		}
 
 		/**
@@ -60,6 +62,7 @@
 			#update en BD.
 			return TRUE;
 		}
+
 		/**
 		 * Busca el vehiculo en la base de datos.
 		 * @param String $vin Vin del vehiculo que se va a consular
@@ -67,8 +70,18 @@
 		 * en caso de no encontrarse, regresa null.
 		 */
 		public function buscar($vin){
-			#Buscar vehiculo
-			return TRUE;
+			$query = "SELECT * FROM Vehiculo WHERE VIN = '".$vin."'";
+			$correcto = $this -> conexion -> query($query);
+			$array;
+			if($correcto){
+				$i = 0;
+				while ($fila = $correcto->fetch_assoc()) {
+        			$array[$i++] = $fila;
+  			  }
+			}
+			else $array = NULL;
+			$this -> conexion -> close();
+			return $array; 
 		}
 	}
 
