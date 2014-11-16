@@ -90,13 +90,15 @@
                 #Muestra formulario
             }else{
                 require('controller/validadorCtrl.php');
-                $marca = $_POST['marca'];
+                $marca = strtoupper($_POST['marca']);
                 if(validadorCtrl::validarTexto($marca)){
                     $resultado = $this -> modelo -> insertar($marca); 
-                    if($resultado)
-                        require('view/marcaInsertar.php');
-                    else
-                        require('view/errorMarcaInsertar.php');
+                    if($resultado){
+                        require("view/html/exitos/marcaInsertar.html");
+                    }   
+                    else{
+                        require("view/html/errores/errorMarcaInsertar.html");
+                    }
                 }
                 else{
                     die('Cadena de marca inválida');
@@ -113,14 +115,15 @@
                 #Muestra formulario
             }else{
                 require('controller/validadorCtrl.php');
-                $idMarca = $_POST['idMarca'];
-                if(validadorCtrl::validarNumero($idMarca)){
-                    $resultado = $this -> modelo -> consultar($idMarca); 
+                $marca = $_POST['marca'];
+                if(validadorCtrl::validarTexto($marca)){
+                    $resultado = $this -> modelo -> consultar($marca); 
                     if($resultado != NULL){
                         var_dump($resultado);
+                        require('view/html/exitos/marcaConsultar.html');
                     }
                     else
-                        require('view/errorMarcaConsulta.php');
+                        require('view/html/errores/errorMarcaConsultar.html');
                 }
                 else{
                     die('Cadena de marca inválida');
@@ -141,9 +144,9 @@
                 if(validadorCtrl::validarTexto($marca) && validadorCtrl::validarNumero($idMarca)){
                     $resultado = $this -> modelo -> modificar($idMarca,$marca); 
                     if($resultado)
-                        require('view/marcaModificar.php');
+                        require('view/html/exitos/marcaModificar.html');
                     else
-                        require('view/errorMarcaModificar.php');
+                        require('view/html/errores/errorMarcaModificar.html');
                 }
                 else{
                     die('Cadena de marca inválida');
@@ -181,10 +184,11 @@
             $resultado = $this->modelo->listar();
 
             if($resultado){
-                #Mostrar marcas
                 var_dump($resultado);
-            }else{
-                require('view/errorMarca.php');
+                require('view/html/exitos/marcaListar.html');
+            }
+            else{
+                require('view/html/errores/errorMarcaListar.html');
             }
         }
     }
