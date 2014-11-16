@@ -38,9 +38,9 @@
 		 *@return Marca Regresa un objeto de la clase Marca.
 		 * Si la marca no existe en la base de datos, regresa NULL.
 		 */
-		public function consultar($marca){
-			$marcaESC = $this -> conexion -> real_escape_string($marca);
-			$query = "SELECT * FROM Marca WHERE Marca = '".$marcaESC."'";
+		public function consultar($idMarca)
+		{
+			$query = "SELECT * FROM Modelo WHERE Marca_idMarca = '".$idMarca."'";
 			$correcto = $this -> conexion -> query($query);
 			$array = array();
 			

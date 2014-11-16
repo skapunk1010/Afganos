@@ -115,9 +115,9 @@
                 #Muestra formulario
             }else{
                 require('controller/validadorCtrl.php');
-                $marca = $_POST['marca'];
-                if(validadorCtrl::validarTexto($marca)){
-                    $resultado = $this -> modelo -> consultar($marca); 
+                $idMarca = $_POST['idMarca'];
+                if(validadorCtrl::validarNumero($idMarca)){
+                    $resultado = $this -> modelo -> consultar($idMarca); 
                     if($resultado != NULL){
                         var_dump($resultado);
                         require('view/html/exitos/marcaConsultar.html');
