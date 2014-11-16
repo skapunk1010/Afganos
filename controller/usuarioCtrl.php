@@ -23,8 +23,9 @@
 
             switch($_REQUEST['accion']){
                 
-                case 'insertar': 
-                    if($this->estaLogeado && $this->esAdmin() ){
+                case 'insertar':
+                var_dump($_SESSION);
+                    if($this->estaLogeado() && $this->esAdmin() ){
                         $this -> insertar();
                     }else{
                         if(!$this->estaLogeado()){
@@ -36,7 +37,7 @@
                     break;
                         
                 case 'modificar':
-                    if($this->estaLogeado && $this->esAdmin() ){
+                    if($this->estaLogeado() && $this->esAdmin() ){
                         $this -> modificar();
                     }else{
                         if(!$this->estaLogeado()){
@@ -46,7 +47,29 @@
                         }
                     }
                     break;
-                        
+                case 'deshabilitar':
+                   if( $this->estaLogeado() && $this->esAdmin() ){
+                        $this -> deshabilitar();
+                    }else{
+                        if(!$this->estaLogeado()){
+                            header('Location: index.php?ctrl=login&accion=iniciarSesion');
+                        }else{
+                            require('view/errorAcceso.php');
+                        }
+                    }
+                    break;
+
+                case 'habilitar':
+                   if( $this->estaLogeado() && $this->esAdmin() ){
+                        $this -> habilitar();
+                    }else{
+                        if(!$this->estaLogeado()){
+                            header('Location: index.php?ctrl=login&accion=iniciarSesion');
+                        }else{
+                            require('view/errorAcceso.php');
+                        }
+                    }
+                    break;
                 default: 
                     require('view/error.php');
             }
@@ -58,19 +81,19 @@
         public function insertar(){
         
             require('controller/validadorCtrl.php');                     
-            $codigo     = validadorCtrl::validarNum($_REQUEST['codigo']);   
-            $nombre     = validadorCtrl::validarTxt($_REQUEST['nombre']);
-            $apellido   = validadorCtrl::validarTxt($_REQUEST['apellido']);
-            $telefono   = validadorCtrl::validarNum($_REQUEST['telef']);
-            $email      = validadorCtrl::validarEmail($_REQUEST['email']);
+            $codigo     = validadorCtrl::validarNumero($_POST['codigo']);   
+            $nombre     = validadorCtrl::validarTexto(strtoupper($_POST['nombre']));
+            $apellido   = validadorCtrl::validarTexto(strtoupper($_POST['apellido']));
+            $telefono   = validadorCtrl::validarNumero($_POST['telef']);
+            $email      = validadorCtrl::validarEmail(strtolower($_POST['email']));
             
             $resultado = $this -> modelo -> insertar($codigo, $nombre, $apellido, $telefono, $email);
             
             if($resultado){
-                require('view/usuarioInsertado.php'); #cambiar a html
+                require('view/html/exitos/usuarioInsertar.html');
             } 
             else{  
-                require('view/errorUsuarioInsertado.php'); #cambiar a html
+                require('view/html/errores/errorUsuarioInsertar.html'); #cambiar a html
             }  
         }
         
@@ -80,16 +103,73 @@
         public function modificar(){
         
             require('controller/validadorCtrl.php');
-            $codigo = validadorCtrl::validarNum($_REQUEST['codigo']);
-            $resultado = $this -> modelo -> modificar($codigo);
-            
-            if($resultado){
-                require('view/usuarioModificado.php'); #cambiar a html
+            $passAct = $_POST['passAct'];
+            $passNew = $_POST['passNew'];
+            $codigo = $_POST['codigo'];
+
+            if(validadorCtrl::validarContrasenha($passAct) && validadorCtrl::validarContrasenha($passNew) && validadorCtrl::validarNumero($codigo))
+            {
+                if($this -> modelo -> existeUsuario($codigo,$passAct) != NULL)
+                {
+                    if($this -> modelo -> cambiarContrasenha($codigo,$passNew))
+                    {
+                        echo "<br>contraseña cambiada.";
+                    }
+                    else
+                    {
+                        echo "error al cambiar contraseña";
+                    }
+                }
+                else
+                {
+                    echo "usuario no existe.";
+                }
             }
-            
+
             else{
-                require('view/errorUsuarioModificado.php'); #cambiar a html
+                echo "error formato contraseñas";
+            }            
+        }
+
+
+        public function deshabilitar(){
+            require('controller/validadorCtrl.php');
+            if(validadorCtrl::validarNumero($_POST['codigo']))
+            {
+                $codigo = $_POST['codigo'];
+                $resultado = $this -> modelo -> deshabilitar($codigo);
+                
+                if($resultado){
+                    require('view/html/exitos/usuarioDeshabilitar.html');
+                }
+                
+                else{
+                    require('view/html/errores/errorUsuarioDeshabilitar.html');
+                }
             }
+            else{
+                die("formato de codigo mal!");
+            } 
+        }
+
+        public function habilitar(){
+            require('controller/validadorCtrl.php');
+            if(validadorCtrl::validarNumero($_POST['codigo']))
+            {
+                $codigo = $_POST['codigo'];
+                $resultado = $this -> modelo -> habilitar($codigo);
+                
+                if($resultado){
+                    require('view/html/exitos/usuarioHabilitar.html');
+                }
+                
+                else{
+                    require('view/html/error/errorUsuarioHabilitar.html');
+                }
+            }
+            else{
+                die("formato de codigo mal!");
+            } 
         }
     }
 
