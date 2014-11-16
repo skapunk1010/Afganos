@@ -38,9 +38,9 @@
 		 *
 		 *@return Array con los resultados.
 		 */
-		public function consultar($modelo){
+		public function consultar($idModelo){
 			
-			$query = "SELECT * FROM Modelo WHERE Modelo = '".$modelo."'";
+			$query = "SELECT * FROM Modelo WHERE idModelo = '".$idModelo."'";
 			$correcto = $this -> conexion -> query($query);
 			$array = array();
 			if($correcto){
