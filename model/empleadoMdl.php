@@ -3,7 +3,7 @@
 		private $conexion;
 
 		function __construct(){
-			require('controller/ConexionBaseDeDatos.php');
+			require_once('controller/ConexionBaseDeDatos.php');
 			$this->conexion = ConexionBaseDeDatos::getInstance();
 		}
 
@@ -17,13 +17,14 @@
 		 *@param string $nss Número de seguro social del empleado.
 		 *@param string $email Email del empleado.
 		 *@param boolean $status Status del empleado.
+		 *@return int ID del último registro insertado. Regresa -1 si el hubo errores al insertarse.
 		 */
 		public function insertar($nombre,$apellidoPat,$apellidoMat,$fechaNac,$rfc,$nss,$email,$status){
 			#Generar codigo
 			$queryParaCodigo = "SELECT COUNT(*) as total FROM Empleado";
 			$resultado	= $this->conexion->query($queryParaCodigo);
 			$row		= $resultado->fetch_assoc();
-			var_dump($row);
+			
 			$nEmpleados = $row['total'] + 1;
 			$codigo 		= str_pad($nEmpleados, 5, '0', STR_PAD_LEFT);
 			$codigo			= "1".$codigo;
@@ -42,13 +43,15 @@
 					VALUES ('".$codigo."','".$nombre."','".$apellidoMat."','".$apellidoPat."','".$fechaNac."','".$rfc."','".$nss."','".$email."','".$status."')";
 
 			$resultado = $this->conexion->query($query);
+
 			if($this->conexion->error){
 				echo $this->conexion->error;
 				$this->conexion->close();
-				return FALSE;
+				return -1;
 			}else{
-				$this->conexion->close();
-				return TRUE;
+				$ultimoEmpleado = $this->conexion->query("SELECT MAX(Codigo) AS CodigoEmpleado FROM Empleado");
+				#$this->conexion->close();
+				return $ultimoEmpleado->fetch_assoc();
 			}
 		}
 		/**
@@ -63,13 +66,15 @@
 			//$query = "SELECT * FROM Empleado WHERE Codigo = '".$Codigo."'";
 
 			$query = "SELECT * 
-					FROM Empleado AS E,Telefono AS T, Direccion AS D, Usuario AS U
+					FROM Empleado AS E,Telefono AS T, Direccion AS D
 					WHERE 	E.codigo = T.Empleado_Codigo AND 
 							T.Empleado_Codigo = D.Empleado_Codigo AND 
-							E.codigo = U.codigo AND
-							E.Codigo = '".$Codigo."'";
+							
+							E.Codigo = '".$Codigo."' AND E.status = true";////E.codigo = U.codigo AND
+			//echo $query;
 
 			$resultado = $this->conexion->query($query);
+			
 			if($resultado){
 				$empleado = array();
 				while(($fila = $resultado->fetch_assoc())){
@@ -88,7 +93,7 @@
 		 * En caso de que no encontrara nada o hubiera algún error, regresa NULL.
 		 */
 		public function listar(){
-			$query = "SELECT * FROM Empleado WHERE status = 'ACTIVO'";
+			$query = "SELECT * FROM Empleado WHERE status = true";
 
 			$resultado = $this->conexion->query($query);
 			$empleados = array();
@@ -102,6 +107,59 @@
 			}else{
 				return NULL;
 			}
+		}
+		/**
+		 * Modifica empleado.
+		 *@param String $codigoEmpleado Código del empleado que se va a modificar.
+		 *@param String $nombre Nombre del empleado con el nuevo valor asigado a empleado.
+		 *@param String $apellidoPaterno Apellido Paterno del empleado con el nuevo valor asignado
+		 *@param String $apellidoMaterno Apellido Materno del empleado con el nuevo valor asignado.
+		 *@param String $fechaNacimiento Fecha de nacimiento del empleado con el nuevo valor asignado
+		 *@param String $rfc R.F.C. del empleado con el nuevo valor asignado.
+		 *@param String $nss N.S.S. del empleado con el nuevo valor asignado.
+		 *@param String $email Email del empleado con el nuevo valor asignado.
+		 *@param String $status Status de empleado.
+		 *@return 
+		 */
+		public function modificar($codigoEmpleado,$nombre, $apellidoPaterno, $apellidoMaterno, $fechaNacimiento, $rfc, $nss, $email, $status){
+			$codigoEmpleado 	= $this -> conexion -> real_escape_string($codigoEmpleado);
+			$nombre 			= $this -> conexion -> real_escape_string($nombre);
+			$apellidoPaterno 	= $this -> conexion -> real_escape_string($apellidoPaterno);
+			$apellidoMaterno 	= $this -> conexion -> real_escape_string($apellidoMaterno);
+			$fechaNacimiento 	= $this -> conexion -> real_escape_string($fechaNacimiento);
+			$rfc 				= $this -> conexion -> real_escape_string($rfc);
+			$nss 				= $this -> conexion -> real_escape_string($nss);
+			$email 				= $this -> conexion -> real_escape_string($email);
+			$status 			= $this -> conexion -> real_escape_string($status);
+
+			$query = "UPDATE Empleado SET nombre='".$nombre."',
+										  apellidoPaterno = '".$apellidoPaterno."',
+										  apellidoMaterno = '".$apellidoMaterno."',
+										  fechaNacimiento = '".$fechaNacimiento."',
+										  RFC = '".$rfc."',
+										  NSS = '".$nss."',
+										  email = '".$email."',
+										  status = '".$status."' WHERE Codigo = '".$codigoEmpleado."'";
+			$resultado = $this -> conexion -> query($query);
+			$this -> conexion ->close();
+			return $resultado;
+		}
+
+		/**
+		 * Elimina empleado.
+		 *@param String $codigoEmpleado Código de empleado del que se desea eliminar.
+		 *@return bool TRUE si la eliminacion fue correcta. FALSE en caso contrario.
+		 */
+		public function eliminar($codigoEmpleado){
+			$codigoEmpleado = $this->conexion->real_escape_string($codigoEmpleado);
+			$query = "UPDATE Empleado SET status ='INACTIVO' WHERE Codigo = '".$codigoEmpleado."'";
+			$resultado = $this->conexion->query($query);
+			$this->conexion->close();
+			return $resultado;
+		}
+
+		public function getConexion(){
+			return $this->conexion;
 		}
 	}
 ?>

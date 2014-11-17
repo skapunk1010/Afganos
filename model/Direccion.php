@@ -114,7 +114,7 @@
 		/**
 		*@param String $colonia recibe el nombre de colonia
 		*/
-		public function setIdDireccion($colonia){
+		public function setColonia($colonia){
 			return $this -> colonia = $colonia;
 		}
 		/**

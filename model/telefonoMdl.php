@@ -9,8 +9,8 @@
 		*/
 		function __construct(){
 			require('model/Telefono.php');
-			require('controller/ConexionBaseDeDatos.php');
-			$this->conexion = ConexionBaseDeDatos::getInstace();
+			require_once('controller/ConexionBaseDeDatos.php');
+			$this->conexion = ConexionBaseDeDatos::getInstance();
 		}
 		
 		/** 
@@ -19,25 +19,25 @@
          *@param String $telefono
 		 *@param String $tipo
 		 *
-         *@return bool TRUE si la inserción a la BD fue satisfactoria.
+         *@return int Regresa el id del teléfono que fue insertado. Si hubo problemas al insertar, regresa -1.
 		 */
 		public function insertar($Empleado_Codigo, $telefono, $tipo){
+
+			//$nuevoTelef = new Telefono($Empleado_Codigo, $telefono, $tipo);
 			
-			$nuevoTelef = new Telefono($Empleado_Codigo, $telefono, $tipo);
-			
-			$telefonoESC = $this -> conexion -> real_escape_string($telefono);
-			$tipoESC = $this -> conexion -> real_escape_string($tipo);
+			$telefonoESC 	= $this -> conexion -> real_escape_string($telefono);
+			$tipoESC 		= $this -> conexion -> real_escape_string($tipo);
 
 			$query = "INSERT INTO Telefono (Empleado_Codigo, telefono, tipo) 
 				VALUES ('".$Empleado_Codigo."','".$telefonoESC."','".$tipoESC."')";
 			$correcto = $this -> conexion -> query($query);
-
-			if($correcto)
-				$nuevoTelef -> setIdTelefono($this -> conexion -> insert_id);
-			else $nuevoTelef = NULL;
-			
-			$this -> conexion -> close();
-			return $correcto; 
+			#$this->conexion->close();
+			if($correcto){
+				#$nuevoTelef -> setIdTelefono($this -> conexion -> insert_id);
+				return $this->conexion->insert_id;
+			}else {
+				return -1;
+			}
 		}
 
 		/**

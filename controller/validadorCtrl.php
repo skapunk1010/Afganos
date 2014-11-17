@@ -8,9 +8,9 @@
 		const REGEXP_CONTRASENHA= "/^(?=.*\d)(?=.*\W)(?=.*[a-z])(?=.*[A-Z]).{5,20}$/";
 		const REGEXP_VIN		= "/^[a-zA-Z\d]{16}$/";
 		const REGEXP_ANHO		= "/^[\d]{4}$/";
-		const REGEXP_NOMBRE		= "/^[a-zA-Z]+$/";
+		const REGEXP_NOMBRE		= "/^[a-zA-Z ]+$/";
 		const REGEXP_CODIGO_POSTAL = "/^[\d]{3,10}$/"; 
-		const REGEXP_FECHA		= "/^(0[1-9]|[12][\d]|3[01])[-](0[1-9]|1[012])[-]([\d]{4})$/";
+		const REGEXP_FECHA		= "/^([\d]{4})[-](0[1-9]|1[012])[-](0[1-9]|[12][\d]|3[01])$/";
 		const REGEXP_RFC		= "/^([A-Z]{4})([\d]{2})(0[1-9]|1[012])(0[1-9]|[12][\d]|3[01])([A-Z]{3})$/";
 		const REGEXP_NSS		= "/^[\d]{11}$/";
 		const REGEXP_CARACTER	= "/^[a-zA-Z]$/";
