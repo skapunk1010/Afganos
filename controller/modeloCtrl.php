@@ -125,8 +125,8 @@
 
         public function consultar(){
 
-            $modelo = strtoupper($_REQUEST['modelo']);
-            $resultado = $this -> modelo -> consultar($modelo);
+            $idModelo = $_POST['idModelo'];
+            $resultado = $this -> modelo -> consultar($idModelo);
 
             if(count($resultado)>0){
                 var_dump($resultado);
@@ -143,7 +143,7 @@
         */
          public function buscarpormarca(){
 
-            $idMarca = $_REQUEST['idMarca'];
+            $idMarca = $_POST['idMarca'];
             $resultado = $this -> modelo -> buscarPorMarca($idMarca);
 
             if(count($resultado)>0){

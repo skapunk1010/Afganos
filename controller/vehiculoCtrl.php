@@ -22,7 +22,7 @@ class vehiculoCtrl extends CtrlEstandar{
 		switch($_REQUEST['accion']){
 			
 			case "insertar":
-				if($this->estaLogeado && ($this->esUsuario() || $this->esAdmin() )){
+				if($this->estaLogeado() && ($this->esUsuario() || $this->esAdmin() )){
                         $this -> insertar();
                     }else{
                         if(!$this->estaLogeado()){
@@ -34,7 +34,7 @@ class vehiculoCtrl extends CtrlEstandar{
 				break;
 
 			case "buscar":
-				if($this->estaLogeado && ($this->esUsuario() || $this->esAdmin() )){
+				if($this->estaLogeado() && ($this->esUsuario() || $this->esAdmin() )){
                         $this->buscar();
                     }else{
                         if(!$this->estaLogeado()){
@@ -58,7 +58,7 @@ class vehiculoCtrl extends CtrlEstandar{
 				break;
 
 			case "modificar":
-				if($this->estaLogeado && ($this->esUsuario() || $this->esAdmin() )){
+				if($this->estaLogeado() && ($this->esUsuario() || $this->esAdmin() )){
                         $this -> modificar();
                     }else{
                         if(!$this->estaLogeado()){
@@ -70,7 +70,7 @@ class vehiculoCtrl extends CtrlEstandar{
 				break;
 
 			case "eliminar":
-				if($this->estaLogeado && ($this->esUsuario() || $this->esAdmin() )){
+				if($this->estaLogeado() && ($this->esUsuario() || $this->esAdmin() )){
                         $this -> eliminar();
                     }else{
                         if(!$this->estaLogeado()){
@@ -94,25 +94,32 @@ class vehiculoCtrl extends CtrlEstandar{
 	public function insertar(){
 
 		require('controller/validadorCtrl.php');
-		$vin = validadorCtrl::validarVin($_REQUEST['vin']);
-        $marca = validadorCtrl::validarTexto($_REQUEST['marca']);
-        $modelo = validadorCtrl::validarTexto($_REQUEST['modelo']);
-        $anho = validadorCtrl::validarAnho($_REQUEST['anho']);
-        $color = validadorCtrl::validarTexto($_REQUEST['color']);
-        $cilindraje = validadorCtrl::validarTexto($_REQUEST['cilindraje']);
-        $transmision = validadorCtrl::validarTexto($_REQUEST['transmision']);
-        $combustible = validadorCtrl::validarTexto($_REQUEST['combustible']);
+		if(validadorCtrl::validarVin($_POST['vin']) && validadorCtrl::validarNumero($_POST['idmodelo'])
+			&& validadorCtrl::validarAnho($_POST['anho']) && validadorCtrl::validarTexto($_POST['color'])
+			&& validadorCtrl::validarNumero($_POST['cilindraje']) && validadorCtrl::validarTexto($_POST['transmision'])
+			&& validadorCtrl::validarTexto($_POST['nPuertas'])){
 
-        $resultado = $this -> modelo -> insertar($vin,$marca,$modelo,$anho,$color,$cilindraje,$transmision,$combustible);
+			$vin = $_POST['vin'];
+			$modelo = $_POST['idmodelo'];
+			$anho = $_POST['anho'];
+			$color = $_POST['color'];
+			$cilindraje = $_POST['cilindraje'];
+			$transmision = $_POST['transmision'];
+			$nPuertas = $_POST['nPuertas'];
+
+			$resultado = $this -> modelo -> insertar($vin,$modelo,$anho,$color,$cilindraje,$transmision,$nPuertas);
             
-        if($resultado){
-            require('view/vehiculoInsertado.php'); #cambiar a html
-        }
-            
-        else{                
-           require('view/errorVehiculoInsertado.php'); #cambiar a html
-        }
-            
+	        if($resultado){
+	            require('view/html/exitos/vehiculoInsertar.html'); #cambiar a html
+	        }
+	            
+	        else{                
+	           require('view/html/errores/errorVehiculoInsertar.html'); #cambiar a html
+	        }
+		}
+		else{
+			echo "formato de insercion de vehiculo incorrecto";
+		}
 	}
 
 	/**
@@ -123,11 +130,12 @@ class vehiculoCtrl extends CtrlEstandar{
 
 		$lista = $this -> modelo -> listar();
 		
-		if(isset($lista)){
-			require('view/vehiculoListado.php');
+		if($lista!=NULL){
+			var_dump($lista);
+			require('view/html/exitos/vehiculoListar.html');
 		}
 		else{
-			require('view/errorVehiculoListado.php'); #cambiar a html
+			require('view/html/errores/errorVehiculoListar.html');
 		}
 
 	}
@@ -139,16 +147,57 @@ class vehiculoCtrl extends CtrlEstandar{
 	public function modificar(){
 
 		require('controller/validadorCtrl.php');
-		$vin = validadorCtrl::validarVin($_REQUEST['vin']);
-		$resultado = $this -> modelo -> modificar($vin);
-            
-        if($resultado){
-            require('view/vehiculoModificado.php'); #cambiar a html
-        }
-            
-        else{
-            require('view/errorVehiculoModificado.php'); #cambiar a html
-        }
+		if(validadorCtrl::validarVin($_POST['vin'])){
+			$vin = $_POST['vin'];
+			$campoModificar = $_POST['aModificar'];
+			$nuevoCampo = $_POST['nuevo'];
+			switch ($campoModificar) {
+				case 'modelo':
+					$campoModificar = "Modelo_idModelo";
+					if(!validadorCtrl::validarNumero($nuevoCampo)){
+						echo "Error idModelo-Modificar";
+					}
+					break;
+				case 'color':
+					if(!validadorCtrl::validarTexto($nuevoCampo)){
+						echo "Error color-Modificar";
+					}
+					break;
+				case 'cilindraje':
+					if(!validadorCtrl::validarNumero($nuevoCampo)){
+						echo "Error cilindraje-Modificar";
+					}
+					break;
+				case 'transmision':
+					if(!validadorCtrl::validarTexto($nuevoCampo)){
+						echo "Error transmision-Modificar";
+					}
+					break;
+				case 'anho':
+					if(!validadorCtrl::validarNumero($nuevoCampo)){
+						echo "Error anho-Modificar";
+					}
+					break;
+				case 'numeroPuertas':
+					if(!validadorCtrl::validarNumero($nuevoCampo)){
+						echo "Error nPuertas-Modificar";
+					}
+					break;
+				default:break;
+			}
+			$resultado = $this -> modelo -> modificar($vin,$campoModificar,$nuevoCampo);
+			if($resultado){
+            	require('view/vehiculoModificado.php'); #cambiar a html
+	        }
+	            
+	        else{
+	            require('view/errorVehiculoModificado.php'); #cambiar a html
+	        }
+		}
+
+		else{
+			echo "formato de VIn incorrecto para modificar";
+		}
 	}
 
 	/**
@@ -174,13 +223,18 @@ class vehiculoCtrl extends CtrlEstandar{
 	 */
 	public function buscar(){
 		require('controller/validadorCtrl.php');
-		$vin = validadorCtrl::validarVin($_REQUEST['vin']);
-		
-		$resultado = $this->modelo->buscar($vin);
-		if($resultado){
-			require('view/vehiculoBuscar.php');
-		}else{
-			require('view/errorVehiculoBuscar.php');
+		if(validadorCtrl::validarVin($_POST['vin'])){
+			$vin = $_POST['vin'];
+			$resultado = $this->modelo->buscar($vin);
+			if($resultado!=NULL){
+				print_r($resultado);
+				require('view/vehiculoBuscar.php');
+			}else{
+				require('view/errorVehiculoBuscar.php');
+			}
+		}
+		else{
+			echo "formato de VIn incorrecto para búsqueda";
 		}
 	}
 }

@@ -70,6 +70,19 @@
                         }
                     }
                     break;
+
+                case 'consultar':
+                   if( $this->estaLogeado() && $this->esAdmin() ){
+                        $this -> consultar();
+                    }else{
+                        if(!$this->estaLogeado()){
+                            header('Location: index.php?ctrl=login&accion=iniciarSesion');
+                        }else{
+                            require('view/errorAcceso.php');
+                        }
+                    }
+                    break;
+
                 default: 
                     require('view/error.php');
             }
@@ -78,27 +91,41 @@
         /**
         *valida que la información recibida sea correcta.
         */
-        public function insertar(){
-        
-            require('controller/validadorCtrl.php');                     
-            $codigo     = validadorCtrl::validarNumero($_POST['codigo']);   
-            $nombre     = validadorCtrl::validarTexto(strtoupper($_POST['nombre']));
-            $apellido   = validadorCtrl::validarTexto(strtoupper($_POST['apellido']));
-            $telefono   = validadorCtrl::validarNumero($_POST['telef']);
-            $email      = validadorCtrl::validarEmail(strtolower($_POST['email']));
-            
-            $resultado = $this -> modelo -> insertar($codigo, $nombre, $apellido, $telefono, $email);
-            
-            if($resultado){
-                require('view/html/exitos/usuarioInsertar.html');
-            } 
-            else{  
-                require('view/html/errores/errorUsuarioInsertar.html'); #cambiar a html
-            }  
+        public function insertar()
+        {
+            require('controller/validadorCtrl.php');
+            if(validadorCtrl::validarTexto($_POST['usuario']) &&
+                validadorCtrl::validarContrasenha($_POST['password']) &&
+                validadorCtrl::validarTexto($_POST['privilegios']) &&
+                        validadorCtrl::validarNumero($_POST['codigo']))
+            {
+
+                $usuario = $_POST['usuario'];
+                $password = $_POST['password'];   
+                $privilegios = $_POST['privilegios'];
+                $codigo = $_POST['codigo'];
+
+                #if($this->existeEmpleado($codigo) != NULL){ 
+                    $resultado = $this -> modelo -> insertar($codigo, $usuario, $password, $privilegios);
+                        
+                    if($resultado != NULL){
+                       echo "si";
+                            #require('view/html/exitos/usuarioInsertar.html');
+                    } 
+                    else{  
+                        echo "no";
+                            #require('view/html/errores/errorUsuarioInsertar.html'); #cambiar a html
+                    }  
+                #}
+                #else{echo "No existe el usuario.";}    
+            }
+            else{
+                echo "formato inválido";
+            }
         }
         
         /**
-        *Modifica información a través del código.
+        *Modifica contraseña del usuario.
         */
         public function modificar(){
         
@@ -131,7 +158,9 @@
             }            
         }
 
-
+        /**
+        *Cambia status del usuario a deshabilitado.
+        */
         public function deshabilitar(){
             require('controller/validadorCtrl.php');
             if(validadorCtrl::validarNumero($_POST['codigo']))
@@ -151,7 +180,10 @@
                 die("formato de codigo mal!");
             } 
         }
-
+        
+        /**
+        *Cambia status del usuario a habilitado.
+        */
         public function habilitar(){
             require('controller/validadorCtrl.php');
             if(validadorCtrl::validarNumero($_POST['codigo']))
@@ -170,6 +202,18 @@
             else{
                 die("formato de codigo mal!");
             } 
+        }
+
+
+
+        public function consultar(){
+            $resultado = $this->modelo->consultar();
+            if($resultado!=NULL){
+                var_dump($resultado);
+            }
+            else{
+                echo "#error al mostrar todos.";
+            }
         }
     }
 

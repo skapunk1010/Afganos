@@ -15,29 +15,20 @@
 		 *@param boolean $status Status del reporte.
 		 *@param string $detalle Detalle del reporte.
 		 */
-		public function insertar($Vehiculo_VIN,$fechaEntrada,$status,$detalle);
-			#Generar numero de Reporte
-			$queryParaNum 	= "SELECT COUNT() as total FROM Reporte";
-			$resultado		= $this->conexion->query($queryParaNum);
-			$row			= $resultado->fetch_array();
-			$nReportes	 	= $row[0] + 1;
-			$codigo 		= str_pad($nReportes, 5, '0', STR_PAD_LEFT);
-			$codigo			= "1".$codigo;
-
+		public function insertar($Vehiculo_VIN,$fechaEntrada,$status,$detalle){
+			
 			$Vehiculo_VIN	= $this->conexion->real_escape_string($Vehiculo_VIN);
 			$fechaEntrada	= $this->conexion->real_escape_string($fechaEntrada);
 			$status 		= $this->conexion->real_escape_string($status);
 			$detalle 		= $this->conexion->real_escape_string($detalle);
 
-			$query = "INSERT INTO Reporte(numeroReporte,Vehiculo_VIN,fechaEntrada,status,detalle) 
-						VALUES ('".$numeroReporte."','".$Vehiculo_VIN."','".$fechaEntrada."','".$status."','".$detalle."')";
-			
-			$resultado = $this->conexion->query($query);
-			$this->conexion->close();
+			$query = "INSERT INTO Reporte (Vehiculo_VIN, fechaEntrada, status, detalle) 
+			VALUES ('".$Vehiculo_VIN."','".$fechaEntrada."','".$status."','".$detalle."')";
+			$resultado = $this -> conexion -> query($query);
+			$index = $this -> conexion -> insert_id;
+
 			if(!$resultado){
-				return FALSE;
-			}else{
-				return TRUE;
+				$index = FALSE;
 			}
 		}
 
@@ -48,22 +39,20 @@
 		 *no se encontró el reporte.
 		 */
 		public function buscar($numeroReporte){
-			$numeroReporte	= $this->conexion->real_escape_string($numeroReporte);
 
 			$query = "SELECT * FROM Reporte WHERE numeroReporte = '".$numeroReporte."'";
-			
 			$resultado = $this->conexion->query($query);
-
+			$array = array();
 			if($resultado){
-				$fila = $resultado->fetch_assoc();
-				require('model/Reporte.php');
-				$reporte = new Reporte($fila['numeroReporte'], $fila['Vehiculo_VIN'], $fila['fechaEntrada'], $fila['status']);
-				$this->conexion->close();
-				return $reporte;
-			}else{
-				$this->conexion->close();
-				return NULL;
+				$i = 0;
+
+				while ($fila = $resultado->fetch_assoc()) {
+        			$array[$i++] = $fila;
+  			  }
 			}
+			else $array = NULL;
+			$this -> conexion -> close();
+			return $array; 
 		}
 
 		/**
@@ -74,18 +63,31 @@
 		 *Regresa FALSE en caso contrario.
 		 */
 		public function eliminar($numeroReporte){
-			$numeroReporte	= $this->conexion->real_escape_string($numeroReporte);
-			
-			$query = "UPDATE Reporte SET status = FALSE WHERE numeroReporte = '".$numeroReporte."'";
-			
+			$numeroReporte	= $this->conexion->real_escape_string($numeroReporte);	
+			$query = "UPDATE Reporte SET status = '0' WHERE numeroReporte = '".$numeroReporte."'";	
 			$resultado = $this->conexion->query($query);
 			$this->conexion->close();
+			return $resultado;
+		}
+
+
+		/**
+		 *lista los reportes existentes, todos.
+		 *@return boolean Regresa FALSE si hubo error, array si tiene reportes que mostrar
+		 */
+		public function listar(){
+			$query = "SELECT * FROM Reporte";
+			$resultado = $this->conexion->query($query);
+			$array = array();
 			if($resultado){
-				return FALSE;
-			}else{
-				echo $this->conexion->error;
-				return TRUE;
+				$i = 0;
+				while ($fila = $resultado->fetch_assoc()) {
+        			$array[$i++] = $fila;
+  			  }
 			}
+			else $array = NULL;
+			$this -> conexion -> close();
+			return $array; 
 		}
 	}
 ?>

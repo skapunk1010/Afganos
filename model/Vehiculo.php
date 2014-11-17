@@ -1,14 +1,12 @@
 <?php
 	class Vehiculo{
 		private $VIN;
-		#private $marca;
 		private $IDmodelo;
 		private $color;
 		private $transmision;
 		private $cilindraje;
 		private $anho;
 		private $numeroPuertas;
-		#private $combustible ??
 
 		/**
 		*Inicializa los valores de un nuevo vehículo.
