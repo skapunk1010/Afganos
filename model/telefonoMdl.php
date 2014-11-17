@@ -55,15 +55,20 @@
 
 		/**
 		 * Hace la modificación a la base de datos del telefono indicado.
-		 *@param Int $IdTelefono
-         *@param campo, variable variable, en su 1 valor campo a modificar, en su 2 valor: el nuevo valor
-         *
-         *@return bool TRUE si la modificación fue satisfactoria.
+		 *@param String $codigoEmpleado Código del empleado del que se va modificar el teléfono.
+		 *@param String $telefono Téléfono con su nuevo valor.
+         *@param String $tipo Tipo del teléfono del que se va actualizar.
+         *@return bool TRUE si la modificación fue satisfactoria. FALSE en caso contrario.
 		 */
-		public function modificar($IdTelefono, $campo){
-			
-			#Mostrar resultados
-			return TRUE; #Retorno temporal
+		public function modificar($codigoEmpleado,$telefono,$tipo){
+			$codigoEmpleado		= $this->conexion->real_escape_string($codigoEmpleado);
+			$telefono 			= $this->conexion->real_escape_string($telefono);
+			$tipo 				= $this->conexion->real_escape_string($tipo);
+
+			$query = "UPDATE Telefono SET telefono = '".$telefono."' WHERE Empleado_Codigo = '".$codigoEmpleado."' AND tipo = '".$tipo."'";
+			$resultado = $this->conexion->query($query);
+			$this->conexion->close();
+			return $resultado;
 		}
 
 		/**

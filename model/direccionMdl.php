@@ -97,16 +97,13 @@
 			$estado			= $this -> conexion -> real_escape_string($estado);
 			
 			$query =  "UPDATE Direccion SET calle = '".$calle."',
-											numeroExterior = '".$numeroExt."',
-											numeroInterior = '".$numeroInt."',
+											numeroExt = '".$numeroExt."',
+											numeroInt = '".$numeroInt."',
 											codigoPostal = '".$codigoPostal."',
 											colonia = '".$colonia."',
 											ciudad = '".$ciudad."',
-											estado = '"$estado"'
-							WHERE Empleado_Codigo = '".$codigoEmpleado."'";
+											estado = '".$estado."' WHERE Empleado_Codigo = '".$codigoEmpleado."'";
 			$resultado = $this -> conexion -> query($query);
-			$this -> conexion -> close();
-			#Mostrar resultados
 			return $resultado;
 		}
 

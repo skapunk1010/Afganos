@@ -263,27 +263,26 @@
 			echo '!empty(POST)'.!empty($_POST).'<br>';
 			//if( (isset($_GET['codigo']) && !empty($_GET['codigo'])){
 			if( (isset($_GET['codigo']) && !empty($_GET['codigo'])) && !empty($_POST) ) {
-				//header('Location: index.php?ctrl=empleado&accion=listar');
+				require_once('controller/validadorCtrl.php');
 				$codigoEmpleado = $_GET['codigo'];
 				$nombre			= $_POST['nombre'];
-				$apellidoPaterno= $_POST['apellidoPataterno'];
+				$apellidoPaterno= $_POST['apellidoPaterno'];
 				$apellidoMaterno= $_POST['apellidoMaterno'];
 				$fechaNac		= $_POST['fechaNacimiento'] ;
 				$rfc			= $_POST['rfc'] ;
 				$nss			= $_POST['nss'];
 				$email			= $_POST['email'] ;
-				$status			= $_POST['status'];
+				//$status			= $_POST['status'];
 
 				$nombre		= (validadorCtrl::validarNombre($nombre))? $nombre: ""; 
-				$apellidoPat= (validadorCtrl::validarNombre($apellidoPat))? $apellidoPat : "";
-				$apellidoMat= (validadorCtrl::validarNombre($apellidoMat))? $apellidoMat : ""; 
+				$apellidoPaterno= (validadorCtrl::validarNombre($apellidoPaterno))? $apellidoPaterno : "";
+				$apellidoMaterno= (validadorCtrl::validarNombre($apellidoMaterno))? $apellidoMaterno : ""; 
 				$fechaNac	= (validadorCtrl::validarFecha($fechaNac))? $fechaNac : "";
 				$rfc		= (validadorCtrl::validarRfc($rfc))? $rfc : "";
 				$nss		= (validadorCtrl::validarNss($nss))? $nss : "";
 				$email		= (validadorCtrl::validarEmail($email))? $email : "";
-				$status		= ($status === 'ACTIVO') ? true : false; 
 
-				$resultadoEmpleado = $this->modelo->modificar($codigoEmpleado, $nombre, $apellidoPaterno, $apellidoMaterno, $fechaNac, $rfc, $nss, $email, $status);
+				$resultadoEmpleado = $this->modelo->modificar($codigoEmpleado, $nombre, $apellidoPaterno, $apellidoMaterno, $fechaNac, $rfc, $nss, $email);
 
 				if($resultadoEmpleado){
 					require_once('model/direccionMdl.php');
@@ -298,7 +297,15 @@
 					$modeloDireccion = new direccionMdl();
 					$resultadoDireccion = $modeloDireccion -> modificar($codigoEmpleado, $calle, $numeroExt, $numeroInt, $codigoPostal, $colonia, $ciudad, $estado);
 					if($resultadoDireccion){
+						require_once('model/telefonoMdl.php');
+						$telefono 	= (validadorCtrl::validarTelefono($_POST['telefono'])) ? $_POST['telefono'] : '';
+						$tipoTelefono = (validadorCtrl::validarTexto($_POST['tipoTelefono'])) ? $_POST['tipoTelefono'] : '';
+
+						$modeloTelefono = new telefonoMdl();
+						$resultadoTelefono = $modeloTelefono -> modificar($codigoEmpleado,$telefono,$tipoTelefono);
+
 						if($resultadoTelefono){
+							echo 'Empleado modificado con exito';
 
 						}else{
 							echo 'Error al insertar telefono'; #Cambiar por vista
@@ -348,8 +355,7 @@
 						'{codigoPostal}'=>$resultado[0]['codigoPostal'],
 						'{colonia}'=>$resultado[0]['colonia'],
 						'{ciudad}'=>$resultado[0]['ciudad'],
-						'{estado}'=>$resultado[0]['estado'],
-						'{usuario}'=>$resultado[0]['usuario']
+						'{estado}'=>$resultado[0]['estado']
 						);
 					$header 	= str_replace('{usuario}', $_SESSION['usuario'], $header);
 					$contenido 	= strtr($contenido,$diccionario);

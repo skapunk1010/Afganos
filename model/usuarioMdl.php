@@ -84,24 +84,22 @@
 			return $resultado;
 		}
 
-		/**
-		*@return array con los usuarios registrados.
-		*/
-		public function consultar(){
-			$query = "SELECT * FROM Usuario";
+		/** Consulta el usuario del empleado indicado.
+		 * @param String $codigoEmpleado Código del empleado del que se desea buscar su usuario.
+		 * @return array Usuario del empleado indicado. Si el empleado no tiene usuario devuelve NULL.
+		 */
+		public function consultar($codigoEmpleado){
+			$codigoEmpleado = $this->conexion->real_escape_string($codigoEmpleado);
+
+			$query = "SELECT Usuario, status, fechaRegistro, privilegios FROM Usuario WHERE Codigo = '".$codigoEmpleado."'";
 			$resultado = $this->conexion->query($query);
-			$array = array();
-	
+			$this->conexion->close();
 			if($resultado){
-				$i = 0;
-				while($fila = $resultado->fetch_assoc()){
-					$array[$i++] = $fila;
-				}
+				return $resultado->fetch_assoc();
 			}
 			else {
-				$array = NULL;
+				return NULL;
 			}
-			return $array;
 		}
 	}
 ?>

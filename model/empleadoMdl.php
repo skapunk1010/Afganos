@@ -121,7 +121,7 @@
 		 *@param String $status Status de empleado.
 		 *@return 
 		 */
-		public function modificar($codigoEmpleado,$nombre, $apellidoPaterno, $apellidoMaterno, $fechaNacimiento, $rfc, $nss, $email, $status){
+		public function modificar($codigoEmpleado,$nombre, $apellidoPaterno, $apellidoMaterno, $fechaNacimiento, $rfc, $nss, $email){
 			$codigoEmpleado 	= $this -> conexion -> real_escape_string($codigoEmpleado);
 			$nombre 			= $this -> conexion -> real_escape_string($nombre);
 			$apellidoPaterno 	= $this -> conexion -> real_escape_string($apellidoPaterno);
@@ -130,7 +130,6 @@
 			$rfc 				= $this -> conexion -> real_escape_string($rfc);
 			$nss 				= $this -> conexion -> real_escape_string($nss);
 			$email 				= $this -> conexion -> real_escape_string($email);
-			$status 			= $this -> conexion -> real_escape_string($status);
 
 			$query = "UPDATE Empleado SET nombre='".$nombre."',
 										  apellidoPaterno = '".$apellidoPaterno."',
@@ -138,10 +137,8 @@
 										  fechaNacimiento = '".$fechaNacimiento."',
 										  RFC = '".$rfc."',
 										  NSS = '".$nss."',
-										  email = '".$email."',
-										  status = '".$status."' WHERE Codigo = '".$codigoEmpleado."'";
+										  email = '".$email."' WHERE Codigo = '".$codigoEmpleado."'";
 			$resultado = $this -> conexion -> query($query);
-			$this -> conexion ->close();
 			return $resultado;
 		}
 
