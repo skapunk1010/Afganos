@@ -24,7 +24,7 @@
 		*/
 		public function listar()
 		{
-			$query = "SELECT * FROM Vehiculo";
+			$query = "SELECT * FROM Vehiculo AS V, Modelo AS M, Marca As A WHERE V.Modelo_idModelo = M.idModelo AND M.Marca_idMarca = A.idMarca";
 			$correcto = $this -> conexion -> query($query);
 			$array;
 			if($correcto){
@@ -69,15 +69,17 @@
 		 * @return Array $resutaldo Registro del vehiculo consultado.
 		 * en caso de no encontrarse, regresa null.
 		 */
-		public function buscar($vin){
-			$query = "SELECT * FROM Vehiculo WHERE VIN = '".$vin."'";
+		public function consultar($vin){
+			$vin = $this->conexion->real_escape_string($vin);
+			$query = "SELECT * FROM Vehiculo AS V, Marca AS M, Modelo AS O 
+						WHERE V.Modelo_idModelo = O.idModelo AND O.Marca_idMarca = M.idMarca AND V.VIN = '".$vin."'";
 			$correcto = $this -> conexion -> query($query);
 			$array;
 			if($correcto){
 				$i = 0;
 				while ($fila = $correcto->fetch_assoc()) {
         			$array[$i++] = $fila;
-  			  }
+  			  	}
 			}
 			else $array = NULL;
 			$this -> conexion -> close();

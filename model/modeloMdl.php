@@ -79,7 +79,7 @@
   			  }
 			}
 			else $array = NULL;
-			$this -> conexion -> close();
+			#$this -> conexion -> close();
 			return $array; 
 		}
 
