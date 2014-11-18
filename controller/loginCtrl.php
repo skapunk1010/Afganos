@@ -22,18 +22,24 @@
                 case 'signin':
                     if(!$this->estaLogeado()){
                         $this -> signin();
+                    }else{
+                        header('Location: index.php');
                     }
                     break;
 
                 case 'iniciarSesion':
                     if(!$this->estaLogeado()){
                         $this -> iniciarSesion();
+                    }else{
+                        header('Location: index.php');
                     }
                     break;
 
                 case 'cerrarSesion':
                     if($this->estaLogeado()){
                         $this->cerrarSesion();
+                    }else{
+                        header('Location: index.php');
                     }
                 	break;
 

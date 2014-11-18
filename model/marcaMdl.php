@@ -9,7 +9,7 @@
 		*/
 		function __construct(){
 			require('model/Marca.php');
-			require('controller/ConexionBaseDeDatos.php');
+			require_once('controller/ConexionBaseDeDatos.php');
 			$this->conexion = ConexionBaseDeDatos::getInstance();
 		}
 		
@@ -94,7 +94,7 @@
 		public function listar(){
 			$query = "SELECT * FROM Marca WHERE status=1 ORDER BY Marca";
 			$resultado = $this -> conexion -> query($query);
-			$this -> conexion -> close();
+			#$this -> conexion -> close();
 
 			if($resultado->num_rows > 0){
 				$marcas = array();

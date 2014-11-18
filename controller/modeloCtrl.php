@@ -71,7 +71,7 @@
                     }
                     break;
                 case 'eliminar':
-                    if($this->estaLogeado() && ($this->esAdmin() || $this->esUsuario() )){
+                    if($this->estaLogeado() && $this->esAdmin() ){
                         $this -> eliminar();
                     }else{
                         if(!$this->estaLogeado()){

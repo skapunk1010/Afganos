@@ -258,10 +258,7 @@
 		 * Modificación de los datos correspondientes a empleado.
 		 */
 		public function modificar(){
-			echo 'isset GET:'.isset($_GET['codigo']).'<br>';
-			echo '!empty(GET):'.!empty($_GET['codigo']).'<br>';
-			echo '!empty(POST)'.!empty($_POST).'<br>';
-			//if( (isset($_GET['codigo']) && !empty($_GET['codigo'])){
+			
 			if( (isset($_GET['codigo']) && !empty($_GET['codigo'])) && !empty($_POST) ) {
 				require_once('controller/validadorCtrl.php');
 				$codigoEmpleado = $_GET['codigo'];
