@@ -8,7 +8,7 @@
 	Martinez Castillo, Erick Jesus
 
 #Liga de demo
-http://afganos.atwebpages.com/index.php
+http://afganos.blackoutsystems.com/
 
 # Inventario vehicular e inspecciones
 
