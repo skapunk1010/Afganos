@@ -207,7 +207,6 @@
          * Modifica el area señalada. Se reciben sus datos actualizados .
          */
         public function modificar(){
-<<<<<<< HEAD
             if( (!isset($_GET['id']) && empty($_GET['id'])) || empty($_POST) ){
                 require_once('controller/validadorCtrl.php');
                 $idArea =  (validadorCtrl::validarNumero($_GET['id'])) ? (int)$_GET['id'] : "" ;
@@ -248,24 +247,10 @@
                     $header     = strtr($header,$diccionario);
                     $contenido  = str_replace($fila, $filas, $contenido);
                     echo $header.$contenido.$footer;
-=======
-            require('controller/validadorCtrl.php');
-            
-            $idArea = $_POST['idArea'];
-            $codigoEmpleado = $_POST['codigo'];
-            $area = strtoupper($_POST['area']);
-            $descripcion = strtoupper($_POST['descripcion']);
-
-            if(validadorCtrl::validarCodigoEmpleado($codigoEmpleado)){
-                $resultado = $this -> modelo -> modificar($idArea,$codigoEmpleado,$area,$descripcion);
-                if($resultado){
-                    require('view/areaModificada.php'); #cambiar a html
->>>>>>> bb31dd51875b6904c7fe2eab50ec66017e3e0deb
                 }
                 else{
                     require('view/errorAreaModificada.php'); #cambiar a html
                 }
-<<<<<<< HEAD
             }else{
                 require_once('controller/validadorCtrl.php');
                 $idArea = (validadorCtrl::validarNumero($_GET['id'])) ? (int)$_GET['id'] : "";
@@ -281,8 +266,6 @@
                 }else{
                     require('view/html/errores/errorMarcaModificar.html');
                 }
-=======
->>>>>>> bb31dd51875b6904c7fe2eab50ec66017e3e0deb
             }
             else
             {
