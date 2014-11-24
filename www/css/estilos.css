@@ -12,3 +12,7 @@
 	margin: auto auto;
 	padding: 15px;
 }
+
+#panelAsignarUbicacion{
+	display: none;
+}
