@@ -37,7 +37,7 @@
 		 */
 		public function listar(){
 			
-			$query = "SELECT * FROM Area";			
+			$query = "SELECT idArea, area FROM Area";
 			$correcto = $this -> conexion -> query($query);
 			$array = array();
 			if($correcto){
@@ -78,8 +78,9 @@
 		/**
 		 * Hace la modificación a la base de datos del área indicada.
 		 *@param Int $idArea
-         *@param campo, variable variable, en su 1 valor campo a modificar, en su 2 valor: el nuevo valor
-         *
+         *@param String $area Nombre del área con su nuevo valor.
+         *@param String $descripcion Descripción del área con su nuevo valor.
+         *@param String $codigoEncargado Código del empleado que es encargado del área con su nuevo valor.
          *@return bool TRUE si la modificación fue satisfactoria.
 		 */
 		public function modificar($idArea, $area, $descripcion, $codigoEncargado){

@@ -97,7 +97,7 @@
             if(validadorCtrl::validarTexto($_POST['usuario']) &&
                 validadorCtrl::validarContrasenha($_POST['password']) &&
                 validadorCtrl::validarTexto($_POST['privilegios']) &&
-                        validadorCtrl::validarNumero($_POST['codigo']))
+                        validadorCtrl::validarCodigoEmpleado($_POST['codigo']))
             {
 
                 $usuario = $_POST['usuario'];
@@ -134,7 +134,7 @@
             $passNew = $_POST['passNew'];
             $codigo = $_POST['codigo'];
 
-            if(validadorCtrl::validarContrasenha($passAct) && validadorCtrl::validarContrasenha($passNew) && validadorCtrl::validarNumero($codigo))
+            if(validadorCtrl::validarContrasenha($passAct) && validadorCtrl::validarContrasenha($passNew) && validadorCtrl::validarCodigoEmpleado($codigo))
             {
                 if($this -> modelo -> existeUsuario($codigo,$passAct) != NULL)
                 {
@@ -163,7 +163,7 @@
         */
         public function deshabilitar(){
             require('controller/validadorCtrl.php');
-            if(validadorCtrl::validarNumero($_POST['codigo']))
+            if(validadorCtrl::validarCodigoEmpleado($_POST['codigo']))
             {
                 $codigo = $_POST['codigo'];
                 $resultado = $this -> modelo -> deshabilitar($codigo);
@@ -186,7 +186,7 @@
         */
         public function habilitar(){
             require('controller/validadorCtrl.php');
-            if(validadorCtrl::validarNumero($_POST['codigo']))
+            if(validadorCtrl::validarCodigoEmpleado($_POST['codigo']))
             {
                 $codigo = $_POST['codigo'];
                 $resultado = $this -> modelo -> habilitar($codigo);
