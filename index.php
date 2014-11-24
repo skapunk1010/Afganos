@@ -18,6 +18,7 @@
             break;
 
         case 'marca':
+        echo "*******";
             require('controller/marcaCtrl.php');
             $ctrl = new marcaCtrl();
             break;
@@ -51,18 +52,25 @@
             require('controller/loginCtrl.php');
             $ctrl = new loginCtrl();
             break;
+
         case 'area':
             require('controller/areaCtrl.php');
             $ctrl = new areaCtrl();
             break;
+
         case 'modelo':
             require('controller/modeloCtrl.php');
             $ctrl = new modeloCtrl();
-            break;	
+            break;
+
+        case 'cliente':
+            require('controller/clienteMdl.php');
+            $ctrl = new clienteMdl();
+            break;
+
         default:
             //$ctrL = NULL;
-            if(!empty($_SESSION)){
-                $header = file_get_contents('view/headerLoged.html');
+            if(!empty($_SESSIinclude          $header = file_get_contents('view/headerLoged.html');
                 $array = array('{usuario}'=>$_SESSION['usuario']);
                 $header = strtr($header,$array);
                 $content = file_get_contents('view/index.html');

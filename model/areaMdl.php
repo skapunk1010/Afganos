@@ -37,7 +37,7 @@
 		 */
 		public function listar(){
 			
-			$query = "SELECT * FROM Area";			
+			$query = "SELECT idArea, area FROM Area";
 			$correcto = $this -> conexion -> query($query);
 			$array = array();
 			if($correcto){
@@ -58,7 +58,8 @@
          *@return array con los datos del área consultada. NULL en caso de no existir.
 		 */
 		public function consultar($idArea){
-			$query = "SELECT * FROM Area WHERE idArea = '".$idArea."'";
+			$query = "SELECT a.area, a.descripcion, e.nombre as encargado 
+			FROM Area AS a, Empleado AS e WHERE e.Codigo = a.Encargado_Codigo AND idArea = '".$idArea."'";
 			$resultado = $this -> conexion -> query($query);
 			$array = array();
 			if($resultado){
@@ -82,8 +83,9 @@
          *
          *@return bool TRUE si la modificación fue satisfactoria.
 		 */
-		public function modificar($idArea, $campo,$nuevoCampo){
-			$query = "UPDATE Area SET ".$campo." = '".$nuevoCampo."' WHERE idArea = '".$idArea."'";
+		public function modificar($idArea, $codigo, $area, $descripcion){
+			$query = "UPDATE Area SET Encargado_Codigo = '".$codigo."', 
+			area = '".$area."', descripcion = '".$descripcion."' WHERE idArea = '".$idArea."'";
 			$resultado = $this -> conexion ->query($query);
 			return $resultado;
 		}

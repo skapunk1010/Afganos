@@ -146,38 +146,25 @@
          */
         public function modificar(){
             require('controller/validadorCtrl.php');
-            $idArea = $_POST['idArea'];
-            $nuevoCampo = strtoupper($_POST['nuevoCampo']);
-            $aModificar = $_POST['campo'];
-            $campo = "";
-
-            switch ($aModificar) {
-                case 'empleado':
-                    $campo = "Encargado_Codigo";
-                    if(!validadorCtrl::validarNumero($nuevoCampo)){
-                        die("formato de empleado incorrecto");
-                    }
-                    break;
-                case 'area':
-                    $campo = "area";
-                    if(!validadorCtrl::validarTexto($nuevoCampo)){
-                        die("formato de empleado incorrecto");
-                    }
-                    break;
-                case 'descripcion':
-                    $campo = "descripcion";
-                    break;
-                
-                default:break;
-            }
-            $resultado  = $this -> modelo -> modificar($idArea,$campo,$nuevoCampo);           
             
-            if($resultado){
-                require('view/areaModificada.php'); #cambiar a html
+            $idArea = $_POST['idArea'];
+            $codigoEmpleado = $_POST['codigo'];
+            $area = strtoupper($_POST['area']);
+            $descripcion = strtoupper($_POST['descripcion']);
+
+            if(validadorCtrl::validarCodigoEmpleado($codigoEmpleado)){
+                $resultado = $this -> modelo -> modificar($idArea,$codigoEmpleado,$area,$descripcion);
+                if($resultado){
+                    require('view/areaModificada.php'); #cambiar a html
+                }
+                else{
+                    require('view/errorAreaModificada.php'); #cambiar a html
+                }
             }
-            else{
-                require('view/errorAreaModificada.php'); #cambiar a html
-            }
+            else
+            {
+                echo "error en el formato de código de empleado."
+            }            
         }
     }
 

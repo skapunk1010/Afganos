@@ -69,18 +69,6 @@ class vehiculoCtrl extends CtrlEstandar{
                     }
 				break;
 
-			case "eliminar":
-				if($this->estaLogeado() && ($this->esUsuario() || $this->esAdmin() )){
-                        $this -> eliminar();
-                    }else{
-                        if(!$this->estaLogeado()){
-                            header('Location: index.php?ctrl=login&accion=iniciarSesion');
-                        }else{
-                            require('view/errorAcceso.php');
-                        }
-                    }
-				break;
-
 			default: 
 				require('view/error.php');
 		}
@@ -198,45 +186,21 @@ class vehiculoCtrl extends CtrlEstandar{
 	public function modificar(){
 
 		require('controller/validadorCtrl.php');
-		if(validadorCtrl::validarVin($_POST['vin'])){
-			$vin = $_POST['vin'];
-			$campoModificar = $_POST['aModificar'];
-			$nuevoCampo = $_POST['nuevo'];
-			switch ($campoModificar) {
-				case 'modelo':
-					$campoModificar = "Modelo_idModelo";
-					if(!validadorCtrl::validarNumero($nuevoCampo)){
-						echo "Error idModelo-Modificar";
-					}
-					break;
-				case 'color':
-					if(!validadorCtrl::validarTexto($nuevoCampo)){
-						echo "Error color-Modificar";
-					}
-					break;
-				case 'cilindraje':
-					if(!validadorCtrl::validarNumero($nuevoCampo)){
-						echo "Error cilindraje-Modificar";
-					}
-					break;
-				case 'transmision':
-					if(!validadorCtrl::validarTexto($nuevoCampo)){
-						echo "Error transmision-Modificar";
-					}
-					break;
-				case 'anho':
-					if(!validadorCtrl::validarNumero($nuevoCampo)){
-						echo "Error anho-Modificar";
-					}
-					break;
-				case 'numeroPuertas':
-					if(!validadorCtrl::validarNumero($nuevoCampo)){
-						echo "Error nPuertas-Modificar";
-					}
-					break;
-				default:break;
-			}
-			$resultado = $this -> modelo -> modificar($vin,$campoModificar,$nuevoCampo);
+
+		$vin = $_GET['vin'];
+		$modelo = $_POST['modelo']; 
+		$color = $_POST['color'];
+		$transmision = $_POST['transmision'];
+		$cilindraje = $_POST['cilindraje'];
+		$anho = $_POST['anho'];
+		$numeroPuertas = $_POST['numeroPuertas'];
+		$cliente = $_POST['cliente'];
+
+		if(validadorCtrl::validarTexto($color) && validadorCtrl::validarTexto($transmision) &&
+			validadorCtrl::validarNumero($cilindraje) && validadorCtrl::validarNumero($anho) &&
+			validadorCtrl::validarNumero($numeroPuertas) && validadorCtrl::validarNumero($cliente))
+		{
+			$resultado = $this -> modelo -> modificar($vin,$modelo,$color,$transmision,$cilindraje,$anho,$numeroPuertas,$cliente);
 			if($resultado){
             	require('view/vehiculoModificado.php'); #cambiar a html
 	        }
@@ -244,29 +208,12 @@ class vehiculoCtrl extends CtrlEstandar{
 	        else{
 	            require('view/errorVehiculoModificado.php'); #cambiar a html
 	        }
+
 		}
 
 		else{
-			echo "formato de VIn incorrecto para modificar";
+			echo "error en formato de elementos a modificar el vehiculo";
 		}
-	}
-
-	/**
-	*A través del modelo y del VIN se cambia status del vehículo.
-	*/
-	public function eliminar(){
-
-		require('controller/validadorCtrl.php');
-		$vin = validadorCtrl::validarVin($_REQUEST['vin']);
-		$resultado = $this -> modelo -> eliminar($vin);
-            
-        if($resultado){    
-            require('view/vehiculoEliminado.php'); #cambiar a html
-        }
-            
-        else{     
-            require('view/errorVehiculoEliminado.php'); #cambiar a html
-        }
 	}
 
 	/**
