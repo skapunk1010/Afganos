@@ -8,9 +8,9 @@
 		*Constructor
 		*/
 		function __construct(){
-			require('model/Ubicacion.php');
-			require('controller/ConexionBaseDeDatos.php');
-			$this -> conexion = ConexionBaseDeDatos::getInstace();
+			require_once('model/Ubicacion.php');
+			require_once('controller/ConexionBaseDeDatos.php');
+			$this -> conexion = ConexionBaseDeDatos::getInstance();
 		}
 		
 		/** 
@@ -41,20 +41,24 @@
 
 		/**
 		 *Consulta a la base de datos ubicaciones disponibles de determinada área
-		 *@param int $Area_idArea
-		 *
+		 *@param int $Area_idArea ID del área a la que pertenece la ubicación
+		 *@param String $secccion Sección de la cual se buscarán los campos.
 		 *@return Array de resultados si la consulta fue satisfactoria.
 		 */
-		public function buscar($Area_idArea){
-
-			$query = "SELECT idUbicacion, numero, seccion FROM Ubicacion WHERE Area_idArea = '".$Area_idArea."' AND status = TRUE";
-			
+		public function buscar($Area_idArea, $seccion){
+			$Area_idArea = $this -> conexion -> real_escape_string($Area_idArea);
+			$seccion 	 = $this -> conexion -> real_escape_string($seccion);
+			$query = "SELECT idUbicacion, numero FROM Ubicacion WHERE seccion = '".$seccion."' AND Area_idArea IS NULL  AND status = false";
 			$resultado = $this -> conexion -> query($query);
 			if($this -> conexion -> error){
-				return FALSE;
+				return NULL;
 			}
 			else{
-				return $resultado -> fetch_assoc();
+				$ubicaciones = array();
+				while ($row = $resultado->fetch_assoc()) {
+					$ubicaciones[] = $row;
+				}
+				return $ubicaciones;
 			}
 		}
 

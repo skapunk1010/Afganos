@@ -79,28 +79,36 @@
          *Inserta un área en la que se trabajará dentro del sistema.
          */
         public function insertar(){
-        
-            require('controller/validadorCtrl.php');
-                     
-            if(validadorCtrl::validarTexto($_POST['area']) && 
-                validadorCtrl::validarNumero($_POST['encargado']) && 
-                validadorCtrl::validarTexto($_POST['descripcion'])){
-                $Area = strtoupper($_POST['area']);
-                $Encargado_Cod  = $_POST['encargado'];
-                $descripcion = strtoupper($_POST['descripcion']);
+            if(empty($_POST)){
+                $header     = file_get_contents('view/headerLoged.html');
+                $contenido  = file_get_contents('view/areaInsertar.html');
+                $footer     = file_get_contents('view/footer.html');
 
-                $resultado = $this -> modelo -> insertar($Encargado_Cod,$Area,$descripcion);
-                if($resultado){
-                    require('view/areaInsertada.php'); #cambiar a html
-                } 
-                else{  
-                    require('view/errorAreaInsertada.php'); #cambiar a html
-                } 
+                $header = str_replace('{usuario}', $_SESSION['usuario'], $header);
 
+                echo $header.$contenido.$footer;
+            }else{
+                require('controller/validadorCtrl.php');    
+                if(validadorCtrl::validarTexto($_POST['area']) && 
+                    validadorCtrl::validarCodigoEmpleado($_POST['codigoEncargado']) && 
+                    validadorCtrl::validarTexto($_POST['descripcion'])){
+                    $Area = strtoupper($_POST['area']);
+                    $Encargado_Cod  = $_POST['codigoEncargado'];
+                    $descripcion = strtoupper($_POST['descripcion']);
+
+                    $resultado = $this -> modelo -> insertar($Encargado_Cod,$Area,$descripcion);
+                    if($resultado){
+                        #require('view/areaInsertada.php'); #cambiar a html
+                        echo 'Exito';
+                    } 
+                    else{  
+                        require('view/errorAreaInsertada.php'); #cambiar a html
+                    } 
+                }
+                else{
+                    echo "formato de área inválido";
+                } 
             }
-            else{
-                echo "formato de área inválido";
-            } 
         }
 
 
@@ -111,8 +119,27 @@
             $resultado  = $this -> modelo ->listar();
 
             if($resultado!=NULL){
-                var_dump($resultado);
-                require('view/areaConsultar.php'); #cambiar a html
+                #Se guardan archivos en variables
+                $header     = file_get_contents('view/headerLoged.html');
+                $contenido  = file_get_contents('view/areaListar.html');
+                $footer     = file_get_contents('view/footer.html');
+                
+                $inicio_fila    = strpos($contenido,'{inicioFila}');
+                $fin_fila       = strpos($contenido,'{finFila}')+9;
+                $filaTabla      = substr($contenido, $inicio_fila,$fin_fila-$inicio_fila);
+
+                $filas = "";
+                foreach ($resultado as $area) {
+                    $new_fila = $filaTabla;
+                    //Reemplazo con un diccionario
+                    $diccionario = array('{area}' => $area['area'],'{idArea}' => $area['idArea'],'{inicioFila}'=> '','{finFila}'=>'');
+                    $new_fila = strtr($new_fila,$diccionario);
+                    $filas .= $new_fila;
+                }
+                
+                $header = str_replace('{usuario}', $_SESSION['usuario'], $header);
+                $contenido = str_replace($filaTabla, $filas, $contenido);
+                echo $header.$contenido.$footer;
             }
             else{
                 require('view/errorAreaConsultar.php'); #cambiar a html
@@ -124,20 +151,55 @@
          */
 
         public function consultar(){
-            require('controller/validadorCtrl.php');
-            if(validadorCtrl::validarNumero($_POST['idArea'])){
-                $idArea = $_POST['idArea'];
-                $resultado  = $this -> modelo ->consultar($idArea);
-                 if($resultado){
-                    var_dump($resultado);
-                    require('view/areaConsultar.php'); #cambiar a html
+            if(isset($_GET['id']) && !empty($_GET['id'])){
+                require('controller/validadorCtrl.php');
+                if(validadorCtrl::validarNumero($_GET['id'])){
+                    $idArea = $_GET['id'];
+                    $resultado  = $this -> modelo ->consultar($idArea);
+                    if($resultado){
+                        $header     = file_get_contents('view/headerLoged.html');
+                        $contenido  = file_get_contents('view/areaConsultar.html');
+                        $footer     = file_get_contents('view/footer.html');
+
+                        $inicioFila = strpos($contenido, '{inicioFilaUbicacion}');
+                        $finFila    = strpos($contenido, '{finFilaUbicacion}')+18;
+                        $fila       = substr($contenido, $inicioFila, $finFila-$inicioFila);
+
+                        $filas = "";
+                        if(isset($resultado[0]['idUbicacion'])){
+                            foreach ($resultado as $ubicacion){
+                                $nuevaFila = $fila;
+                                $diccionario = array(   '{seccion}'   =>$ubicacion['seccion'],
+                                                        '{numero}'      =>$ubicacion['numero'],
+                                                        '{idUbicacion}' =>$ubicacion['idUbicacion'],
+                                                        '{inicioFilaUbicacion}'  =>'',
+                                                        '{finFilaUbicacion}'     =>'');
+                                $nuevaFila = strtr($nuevaFila,$diccionario);
+                                $filas .= $nuevaFila;
+                            }
+                        }
+
+                        $nombreCompleto =  $resultado[0]["nombre"]." ".$resultado[0]['apellidoMaterno']." ".$resultado[0]['apellidoPaterno'];
+                        $diccionario = array('{idArea}'=> $resultado[0]['idArea'], 
+                                            '{area}'=> $resultado[0]['area'],
+                                            '{descripcion}'=> $resultado[0]['descripcion'],
+                                            '{codigoEncargado}'=> $resultado[0]['Codigo'],
+                                            '{nombreEncargado}'=> $nombreCompleto);
+                        
+                        $header     = str_replace('{usuario}', $_SESSION['usuario'], $header);
+                        $contenido  = str_replace($fila, $filas, $contenido);
+                        $contenido  = strtr($contenido,$diccionario);
+
+                        echo $header.$contenido.$footer;
+                    }else{
+
+                    }
                 }
                 else{
-                    require('view/errorAreaConsultar.php'); #cambiar a html
-                } 
-            }
-            else{
-                echo "verifique formato de id;";
+                    echo "verifique formato de id;";
+                }
+            }else{
+                #Error
             }
         }
         
@@ -145,38 +207,65 @@
          * Modifica el area señalada. Se reciben sus datos actualizados .
          */
         public function modificar(){
-            require('controller/validadorCtrl.php');
-            $idArea = $_POST['idArea'];
-            $nuevoCampo = strtoupper($_POST['nuevoCampo']);
-            $aModificar = $_POST['campo'];
-            $campo = "";
-
-            switch ($aModificar) {
-                case 'empleado':
-                    $campo = "Encargado_Codigo";
-                    if(!validadorCtrl::validarNumero($nuevoCampo)){
-                        die("formato de empleado incorrecto");
-                    }
-                    break;
-                case 'area':
-                    $campo = "area";
-                    if(!validadorCtrl::validarTexto($nuevoCampo)){
-                        die("formato de empleado incorrecto");
-                    }
-                    break;
-                case 'descripcion':
-                    $campo = "descripcion";
-                    break;
+            if( (!isset($_GET['id']) && empty($_GET['id'])) || empty($_POST) ){
+                require_once('controller/validadorCtrl.php');
+                $idArea =  (validadorCtrl::validarNumero($_GET['id'])) ? (int)$_GET['id'] : "" ;
+                $resultado  = $this -> modelo -> consultar($idArea);           
                 
-                default:break;
-            }
-            $resultado  = $this -> modelo -> modificar($idArea,$campo,$nuevoCampo);           
-            
-            if($resultado){
-                require('view/areaModificada.php'); #cambiar a html
-            }
-            else{
-                require('view/errorAreaModificada.php'); #cambiar a html
+                if($resultado){
+                    $header     = file_get_contents('view/headerLoged.html');
+                    $contenido  = file_get_contents('view/areaModificar.html');
+                    $footer     = file_get_contents('view/footer.html');
+
+                    $inicioFila = strpos($contenido, '{inicioFilaUbicacion}');
+                    $finFila    = strpos($contenido, '{finFilaUbicacion}')+18;
+                    $fila       = substr($contenido, $inicioFila, $finFila-$inicioFila);
+
+                    $filas = "";
+                    if(isset($resultado[0]['idUbicacion'])){
+                        foreach ($resultado as $ubicacion){
+                            $nuevaFila = $fila;
+                            $diccionario = array(   '{seccion}'   =>$ubicacion['seccion'],
+                                                    '{numero}'      =>$ubicacion['numero'],
+                                                    '{idUbicacion}' =>$ubicacion['idUbicacion'],
+                                                    '{inicioFilaUbicacion}'  =>'',
+                                                    '{finFilaUbicacion}'     =>'');
+                            $nuevaFila = strtr($nuevaFila,$diccionario);
+                            $filas .= $nuevaFila;
+                        }
+                    }
+
+                    $nombreCompleto = $resultado[0]['nombre']." ".$resultado[0]['apellidoPaterno']." ".$resultado[0]['apellidoMaterno'];
+                    $diccionario= array('{usuario}'=>$_SESSION['usuario'],
+                                        '{idArea}' => $resultado[0]['idArea'],
+                                        '{area}'=>$resultado[0]['area'],
+                                        '{descripcion}'=>$resultado[0]['descripcion'],
+                                        '{codigoEncargado}' => $resultado[0]['Codigo'],
+                                        '{nombreEncargado}' => $nombreCompleto
+                                        );
+                    $contenido  = strtr($contenido,$diccionario);
+                    $header     = strtr($header,$diccionario);
+                    $contenido  = str_replace($fila, $filas, $contenido);
+                    echo $header.$contenido.$footer;
+                }
+                else{
+                    require('view/errorAreaModificada.php'); #cambiar a html
+                }
+            }else{
+                require_once('controller/validadorCtrl.php');
+                $idArea = (validadorCtrl::validarNumero($_GET['id'])) ? (int)$_GET['id'] : "";
+                $area   = (validadorCtrl::validarTexto($_POST['area'])) ? strtoupper($_POST['area']) : "";
+                $descripcion = (validadorCtrl::validarTexto($_POST['descripcion'])) ? strtoupper($_POST['descripcion']) : "";
+                $codigoEncargado = (validadorCtrl::validarCodigoEmpleado($_POST['codigoEncargado'])) ? $_POST['codigoEncargado'] : "";
+
+                $resultado = $this -> modelo -> modificar($idArea,$area, $descripcion, $codigoEncargado);
+
+                if($resultado){
+                    echo 'Exito';
+                    var_dump($resultado);
+                }else{
+                    require('view/html/errores/errorMarcaModificar.html');
+                }
             }
         }
     }

@@ -1,0 +1,21 @@
+<section class="container">
+	<a href="index.php?ctrl=index.php" class="btn btn-default pull-left">Regresar</a>
+	<a href="index.php?ctrl=area&accion=insertar" class="btn btn-default pull-right">Nuevo área</a>
+	<table class="table table-hover">
+		<thead>
+			<th>Nombre del área</th>
+			<th>&nbsp;</th>
+			<th>&nbsp;</th>
+		</thead>
+		<tbody>
+			{inicioFila}
+			<tr>
+				<td><a href="index.php?ctrl=area&accion=consultar&id={idArea}">{area}</a></td>
+				<td><a href="index.php?ctrl=area&accion=consultar&id={idArea}">Consultar</a></td>
+				<td><a href="index.php?ctrl=area&accion=modificar&id={idArea}">Modificar</a></td>
+			</tr>
+			{finFila}
+		</tbody>
+	</table>
+	</div>
+</section>

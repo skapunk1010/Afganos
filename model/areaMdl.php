@@ -23,7 +23,7 @@
 		public function insertar($Encargado_Cod, $Area, $descripcion){
 			$areaESC = $this -> conexion -> real_escape_string($Area);
 			$descripcionESC = $this -> conexion -> real_escape_string($descripcion);
-			$query = "INSERT INTO Area (Encargado_Codigo, area, descripcion) 
+			$query = "INSERT INTO Area (codigoEncargado, area, descripcion) 
 			VALUES ('".$Encargado_Cod."','".$areaESC."','".$descripcionESC."')";
 			
 			$correcto = $this -> conexion -> query($query);
@@ -58,15 +58,15 @@
          *@return array con los datos del área consultada. NULL en caso de no existir.
 		 */
 		public function consultar($idArea){
-			$query = "SELECT * FROM Area WHERE idArea = '".$idArea."'";
+			$idArea = $this -> conexion -> real_escape_string($idArea);
+			$query 	= "Call ConsultarArea(".$idArea.");";
 			$resultado = $this -> conexion -> query($query);
 			$array = array();
 			if($resultado){
 				$i = 0;
-
-				while ($fila = $resultado->fetch_assoc()) {
-        			$array[$i++] = $fila;
-  			  }
+				while(($fila = $resultado->fetch_assoc())){
+					$array[$i++] = $fila;
+				}
 			}
 			else $array = NULL;
 			$this -> conexion -> close();
@@ -82,8 +82,13 @@
          *
          *@return bool TRUE si la modificación fue satisfactoria.
 		 */
-		public function modificar($idArea, $campo,$nuevoCampo){
-			$query = "UPDATE Area SET ".$campo." = '".$nuevoCampo."' WHERE idArea = '".$idArea."'";
+		public function modificar($idArea, $area, $descripcion, $codigoEncargado){
+			$idArea 	= $this-> conexion -> real_escape_string($idArea);
+			$area 		= $this -> conexion -> real_escape_string($area);
+			$descripcion= $this -> conexion -> real_escape_string($descripcion);
+			$codigoEncargado = $this -> conexion -> real_escape_string($codigoEncargado);
+
+			$query = "UPDATE Area SET  area = '".$area."', descripcion = '".$descripcion."', codigoEncargado = '".$codigoEncargado."' WHERE idArea = '".$idArea."'";
 			$resultado = $this -> conexion ->query($query);
 			return $resultado;
 		}

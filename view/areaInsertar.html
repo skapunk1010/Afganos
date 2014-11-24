@@ -1,0 +1,32 @@
+<section class="container">
+	<form method="POST" action="index.php?ctrl=area&accion=insertar">
+	<a href="index.php?ctrl=area&accion=listar" class="btn btn-default pull-left">Regresar</a>
+	<br/><br/>
+		<h1>Capturar los datos del la nueva área</h1>
+		<div class="panel panel-default">
+			<div class="panel-heading">Datos del área</div>
+			<div class="panel-body">
+
+				<div class="form-group col-sm-6">
+					<label for="area">Nombre del área</label>
+					<input type="text" class="form-control" id="area" name="area" placeholder="Área" required/>
+				</div>
+				<div class="form-group col-sm-6">
+					<label for="codigoEncargado">Codigo del Encargado</label>
+					<input type="text" class="form-control" id="codigoEncargado" name="codigoEncargado" placeholder="Código del encargado" required/>
+				</div>
+				<div class="form-group col-sm-6">
+					<label for="descripcion">Descripcion</label>
+					<textarea type="textarea" class="form-control" id="descripcion" name="descripcion" placeholder="Descripcion"></textarea>
+				</div>
+				<div class="form-group col-sm-6">
+					<label for="nombreEncargado">Nombre del encargado</label>
+					<input type="text" class="form-control" id="nombreEncargado" name="nombreEncargado" placeholder="Nombre encargado" readonly="" />
+				</div>
+				<div class="form-group col-sm-6">
+					<button type="submit" class="btn btn-default pull-right">Aceptar</button>
+				</div>
+			</div>
+		</div>
+	</form>
+</section>

@@ -26,7 +26,7 @@
                     }
 					break;
 				case 'buscar':
-					if($this->estaLogeado && ($this->esUsuario() || $this->esAdmin() )){
+					if($this->estaLogeado() && ($this->esUsuario() || $this->esAdmin() )){
                         $this -> buscar();
                     }else{
                         if(!$this->estaLogeado()){
@@ -46,6 +46,17 @@
                             require('view/errorAcceso.php');
                         }
                     }
+					break;
+				case 'eliminar':
+					if( $this->estaLogeado() && $this->esAdmin() ){
+						$this->eliminar();
+					}else{
+						if(!$this->estaLogeado()){
+							header('Location: index.php?ctrl=login&accion=iniciarSesion');
+						}else{
+							require('Error en controler');
+						}
+					}
 					break;
 				default: break;
 			}
@@ -83,14 +94,16 @@
 		}
 
 		public function buscar(){
-			if( isset($_REQUEST['idUbicacion'])){
-				$idUbicacion = $_REQUEST['idUbicacion'];
-				$resultado = $this -> modelo -> buscar($idUbicacion);
+			if( !empty($_POST)){
+				require_once('controller/validadorCtrl.php');
+				$seccion = (validadorCtrl::validarTexto($_POST['seccion']))?$_POST['seccion'] : "";
+				$idArea  = (validadorCtrl::validarNumero($_POST['idArea']))? (int)$_POST['idArea'] : "";
+				$resultado = $this -> modelo -> buscar($idArea, $seccion);
 				if($resultado){
-					var_dump($resultado);
+					echo json_encode($resultado);
 				}
 				else{
-					require('view/errorConsultarUbicacion.php');
+					echo 'aqui';#require('view/errorConsultarUbicacion.php');
 				}
 			}
 			else{
