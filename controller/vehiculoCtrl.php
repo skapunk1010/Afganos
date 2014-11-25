@@ -93,7 +93,7 @@ class vehiculoCtrl extends CtrlEstandar{
 				$dropMarcas .= "<option value='".$marca['idMarca']."'>".$marca['Marca']."</option>";
 				$modelos = $modeloMdl->buscarPorMarca($marca['idMarca']);
 				foreach ($modelos as $modelo) {
-					$dropModelos .= "<option value='".$marca['idMarca']."-".$modelo['idModelo']."'>".$modelo['Modelo']."</option>";
+					$dropModelos .= "<option value='".$modelo['idModelo']."'>".$modelo['Modelo']."</option>";
 				}
 			}
 
@@ -106,27 +106,127 @@ class vehiculoCtrl extends CtrlEstandar{
             echo $header.$contenido.$footer;
 		}else{
 			require('controller/validadorCtrl.php');
-			if(validadorCtrl::validarVin($_POST['vin']) && validadorCtrl::validarNumero($_POST['idmodelo'])
-				&& validadorCtrl::validarAnho($_POST['anho']) && validadorCtrl::validarTexto($_POST['color'])
-				&& validadorCtrl::validarNumero($_POST['cilindraje']) && validadorCtrl::validarTexto($_POST['transmision'])
-				&& validadorCtrl::validarTexto($_POST['nPuertas'])){
-
-				$vin 		= $_POST['vin'];
-				$modelo 	= $_POST['idmodelo'];
-				$anho 		= $_POST['anho'];
-				$color 		= $_POST['color'];
+			if(!empty($_POST)){
+				require_once('controller/validadorCtrl.php');
+				#Datos del vehículo
+				$vin 		= (validadorCtrl::validarVIN($_POST['vin'])) ? $_POST['vin'] : "";
+				$modelo 	= (validadorCtrl::validarNumero((int)$_POST['idModelo'])) ? (int)$_POST['idModelo'] : 0;
+				$anho 		= (validadorCtrl::validarAnho($_POST['anho'])) ? $_POST['anho'] : "";
+				$color 		= (validadorCtrl::validarTexto($_POST['color'])) ? strtoupper($_POST['color']) : "";
 				$cilindraje = $_POST['cilindraje'];
-				$transmision= $_POST['transmision'];
-				$nPuertas 	= $_POST['nPuertas'];
+				$transmision= (validadorCtrl::validarTexto($_POST['transmision'])) ? strtoupper($_POST['transmision']) : "";
+				$nPuertas 	= (validadorCtrl::validarNumero((int)$_POST['numeroPuertas'])) ? (int)$_POST['numeroPuertas'] : 0;
+				$idCliente 	= (validadorCtrl::validarNumero((int)$_POST['idCliente'])) ? (int) $_POST['idCliente'] : 0;
 
-				$resultado = $this -> modelo -> insertar($vin,$modelo,$anho,$color,$cilindraje,$transmision,$nPuertas);
+				#Checklist
+				$placaNumero 		= strtoupper($_POST['placaNumero']);
+				$kilometraje		= (validadorCtrl::validarNumero((int) $_POST['kilometraje'])) ? (int)$_POST['kilometraje'] : 0;
+				$gasolinaCantidad	= $_POST['gasolinaCantidad'];
+				$cantidadCinturones = (validadorCtrl::validarNumero((int)$_POST['cantidadCinturones'])) ? (int) $_POST['cantidadCinturones'] : 0;
+				$extintor			= (isset($_POST['extintor'])) ? (($_POST['extintor'] === 'on') ? true : false) : false  ;
+				$tableroDetalle		= (validadorCtrl::validarTexto($_POST['tableroDetalle'])) ? $_POST['tableroDetalle'] : "";
+				$asientosCantidad	= (validadorCtrl::validarNumero((int)$_POST['asientosCantidad'])) ? (int)$_POST['asientosCantidad'] : 0;
+				$asientosDetalle	= (validadorCtrl::validarTexto($_POST['asientosDetalle'])) ? $_POST['asientosDetalle'] : "";
+
+				$espejoIzquierdo	= (isset($_POST['espejoIzquierdo'])) ? (($_POST['espejoIzquierdo'] === 'on') ? true : false) : false  ;
+				$espejoRetrovisor	= (isset($_POST['espejoRetrovisor'])) ? (($_POST['espejoRetrovisor'] === 'on') ? true : false) : false  ;
+				$espejoDerecho		= (isset($_POST['espejoDerecho'])) ? (($_POST['espejoDerecho'] === 'on') ? true : false) : false  ;
+				$faroDelanteroDerecho	= (isset($_POST['faroDelanteroDerecho'])) ? (($_POST['faroDelanteroDerecho'] === 'on') ? true : false) : false  ;
+				$faroDelanteroIzquierdo	= (isset($_POST['faroDelanteroIzquierdo'])) ? (($_POST['faroDelanteroIzquierdo'] === 'on') ? true : false) : false  ;
+				$faroTraseroDerecho		= (isset($_POST['faroTraseroDerecho'])) ? (($_POST['faroTraseroDerecho'] === 'on') ? true : false) : false  ;
+				$faroTraseroIzquierdo	= (isset($_POST['faroTraseroIzquierdo'])) ? (($_POST['faroTraseroIzquierdo'] === 'on') ? true : false) : false  ;
+				$farosDetalle		= (validadorCtrl::validarTexto($_POST['farosDetalle'])) ? $_POST['farosDetalle'] : "";
+
+				$direccionalDelanteraDerecha	= (isset($_POST['direccionalDelanteraDerecha'])) ? (($_POST['direccionalDelanteraDerecha'] === 'on') ? true : false) : false  ;
+				$direccionalDelanteraIzquierda	= (isset($_POST['direccionalDelanteraIzquierda'])) ? (($_POST['direccionalDelanteraIzquierda'] === 'on') ? true : false) : false  ;
+				$direccionalTraseraDerecha		= (isset($_POST['direccionalTraseraDerecha'])) ? (($_POST['direccionalTraseraDerecha'] === 'on') ? true : false) : false  ;
+				$direccionalTraseraIzquierda	= (isset($_POST['direccionalTraseraIzquierda'])) ? (($_POST['direccionalTraseraIzquierda'] === 'on') ? true : false) : false  ;
+				$direccionalDetalle = (validadorCtrl::validarTexto($_POST['direccionalDetalle'])) ? $_POST['direccionalDetalle'] : "";
+
+				$defensaDelantera	= (isset($_POST['defensaDelantera'])) ? (($_POST['defensaDelantera'] === 'on') ? true : false) : false  ;
+				$defensaTrasera		= (isset($_POST['defensaTrasera'])) ? (($_POST['defensaTrasera'] === 'on') ? true : false) : false  ;
+				
+				$defensaDetalle		= (validadorCtrl::validarTexto($_POST['defensaDetalle'])) ? $_POST['defensaDetalle'] : "";
+
+				$llantaRefaccion	= (isset($_POST['llantaRefaccion'])) ? (($_POST['llantaRefaccion'] === 'on') ? true : false) : false  ;
+				$llantasDetalle		= (validadorCtrl::validarTexto($_POST['llantasDetalle'])) ? $_POST['llantasDetalle'] : "";
+
+				$parabrisasDelantero	= (isset($_POST['parabrisasDelantero'])) ? (($_POST['parabrisasDelantero'] === 'on') ? true : false) : false  ;
+				$parabrisasTrasero		= (isset($_POST['parabrisasTrasero'])) ? (($_POST['parabrisasTrasero'] === 'on') ? true : false) : false  ;
+				$parabrisasDetalle		= (validadorCtrl::validarTexto($_POST['vidriosDetalle'])) ? $_POST['parabrisasDetalle'] : "";
+
+				$placaDelantera		= (isset($_POST['placaDelantera'])) ? (($_POST['placaDelantera'] === 'on') ? true : false) : false  ;
+				$placaTrasera		= (isset($_POST['placaTrasera'])) ? (($_POST['placaTrasera'] === 'on') ? true : false) : false  ;
+
+				$puertasDetalle		= (validadorCtrl::validarTexto($_POST['puertasDetalle'])) ? $_POST['puertasDetalle'] : "";
+				$cofreDetalle		= (validadorCtrl::validarTexto($_POST['cofreDetalle'])) ? $_POST['cofreDetalle'] : "";
+				$cajuelaDetalle		= (validadorCtrl::validarTexto($_POST['cajuelaDetalle'])) ? $_POST['cajuelaDetalle'] : "";
+				$techoDetalle		= (validadorCtrl::validarTexto($_POST['techoDetalle'])) ? $_POST['techoDetalle'] : "";
+				$vidriosDetalle		= (validadorCtrl::validarTexto($_POST['vidriosDetalle'])) ? $_POST['vidriosDetalle'] : "";
+
+				#Insertamos en el modelo de vehiculo
+				$resultado = $this -> modelo -> insertar($vin,
+														$modelo,
+														$anho,
+														$color,
+														$cilindraje,
+														$transmision,
+														$nPuertas,
+														$idCliente,
+														#Checklist
+														$placaNumero,
+														$kilometraje,
+														$gasolinaCantidad,
+														$cantidadCinturones,
+														$extintor,
+														$tableroDetalle,
+														$asientosCantidad,
+														$asientosDetalle,
+
+														$espejoIzquierdo,
+														$espejoRetrovisor,
+														$espejoDerecho,
+
+														$faroDelanteroDerecho,
+														$faroDelanteroIzquierdo,
+														$faroTraseroDerecho,
+														$faroTraseroIzquierdo,
+														$farosDetalle,
+
+														$direccionalDelanteraDerecha,
+														$direccionalDelanteraIzquierda,
+														$direccionalTraseraDerecha,
+														$direccionalTraseraIzquierda,
+														$direccionalDetalle,
+
+														$defensaDelantera,
+														$defensaTrasera,
+														$defensaDetalle,
+
+														$llantaRefaccion,
+														$llantasDetalle,
+														$parabrisasDelantero,
+														$parabrisasTrasero,
+														$parabrisasDetalle,
+
+														$placaDelantera,
+														$placaTrasera,
+
+														$puertasDetalle,
+														$cofreDetalle,
+														$cajuelaDetalle,
+														$techoDetalle,
+														$vidriosDetalle
+												);
 	            
 		        if($resultado){
-		            require('view/html/exitos/vehiculoInsertar.html'); #cambiar a html
+		            #require('view/html/exitos/vehiculoInsertar.html'); #cambiar a html
+		            echo 'Insertados';
 		        }
 		            
 		        else{                
-		           require('view/html/errores/errorVehiculoInsertar.html'); #cambiar a html
+		           #require('view/html/errores/errorVehiculoInsertar.html'); #cambiar a html
+		        	echo 'Error';
 		        }
 			}
 			else{

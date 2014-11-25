@@ -7,7 +7,7 @@
 			<div class="panel-body">
 				<div class="form-group col-sm-6">
 					<label for="vin">VIN</label>
-					<input type="text" class="form-control" id="vin" name="vin" placeholder="VIN" required maxlength="16" />
+					<input type="text" class="form-control" id="vin" name="vin" placeholder="VIN" required maxlength="16" min="16"/>
 				</div>
 
 				<div class="form-group col-sm-6">
@@ -25,10 +25,16 @@
 				</div>
 				<div class="form-group col-sm-6">
 					<label for="modelo">Modelo</label>
-					<select class="form-control" id="modelo" name="modelo">
+					<select class="form-control" id="idModelo" name="idModelo">
 						{modelos}
 					</select>
 				</div>
+
+				<div class="form-group col-sm-6">
+					<label for="anho">Año del vehículo:</label>
+					<input type="number" class="form-control" id="anho" name="anho" placeholder="Año del vehículo" min="0" max="2050" />
+				</div>
+
 				<div class="form-group col-sm-6">
 					<label for="color">Color</label>
 					<select class="form-control" id="color" name="color">
@@ -168,18 +174,18 @@
 									<div class="panel-body">
 										
 									    <div class="form-group col-sm-4 col-md-4">
-									        <label for="espejoIzquierdo">Retrovisor izquierdo</label>
-											<input type="checkbox" id="espejoIzquierdo" name="espejoIzquierdo" class="checkboxSwitch" required checked/>
+									        <label for="espejoIzquierdo" class="col-xs-6 col-sm-6 col-md-7">Retrovisor izquierdo</label>
+											<input type="checkbox" id="espejoIzquierdo" name="espejoIzquierdo" class="checkboxSwitch" checked/>
 									    </div>
 
 									    <div class="form-group col-sm-4 col-md-4">
-									        <label for="espejoRetrovisor">Retrovisor central</label>
-											<input type="checkbox" id="espejoRetrovisor" name="espejoRetrovisor" class="checkboxSwitch" required checked/>
+									        <label for="espejoRetrovisor" class="col-xs-6 col-sm-6 col-md-7">Retrovisor central</label>
+											<input type="checkbox" id="espejoRetrovisor" name="espejoRetrovisor" class="checkboxSwitch" checked/>
 									    </div>
 
 									    <div class="form-group col-sm-4 col-md-4">
-									        <label for="espejoDerecho">Retrovisor derecho</label>
-											<input type="checkbox" id="espejoDerecho" name="espejoDerecho" class="checkboxSwitch" required checked/>
+									        <label for="espejoDerecho" class="col-xs-6 col-sm-6 col-md-7">Retrovisor derecho</label>
+											<input type="checkbox" id="espejoDerecho" name="espejoDerecho" class="checkboxSwitch" checked/>
 									    </div>
 
 									</div>
@@ -201,23 +207,23 @@
 									<div class="panel-body">
 
 								       	<div class="form-group">
-									        <label for="faroDelanteroDerecho">Delantero derecho</label>
-											<input type="checkbox" id="faroDelanteroDerecho" name="faroDelanteroDerecho" class="checkboxSwitch" required checked/>
+									        <label for="faroDelanteroDerecho" class="col-xs-6 col-sm-6 col-md-7">Delantero derecho</label>
+											<input type="checkbox" id="faroDelanteroDerecho" name="faroDelanteroDerecho" class="checkboxSwitch" checked/>
 									    </div>
 
 										<div class="form-group">
-											<label for="faroDelanteroIzquierdo">Delantero izquierdo</label>
-											<input type="checkbox" id="faroDelanteroIzquierdo" name="faroDelanteroIzquierdo" required class="checkboxSwitch" checked/>
+											<label for="faroDelanteroIzquierdo" class="col-xs-6 col-sm-6 col-md-7">Delantero izquierdo</label>
+											<input type="checkbox" id="faroDelanteroIzquierdo" name="faroDelanteroIzquierdo" class="checkboxSwitch" checked/>
 										</div>
 
 										<div class="form-group">
-											<label for="faroTraseroDerecho">Trasero derecho</label>
-											<input type="checkbox" id="faroTraseroDerecho" name="faroTraseroDerecho" class="checkboxSwitch" required checked/>
+											<label for="faroTraseroDerecho" class="col-xs-6 col-sm-6 col-md-7">Trasero derecho</label>
+											<input type="checkbox" id="faroTraseroDerecho" name="faroTraseroDerecho" class="checkboxSwitch" checked/>
 										</div>
 
 										<div class="form-group">
-											<label for="faroTraseroIzquierdo">Trasero izquierdo</label>
-											<input type="checkbox" id="faroTraseroIzquierdo" name="faroTraseroIzquierdo" class="checkboxSwitch" required checked/>
+											<label for="faroTraseroIzquierdo" class="col-xs-6 col-sm-6 col-md-7">Trasero izquierdo</label>
+											<input type="checkbox" id="faroTraseroIzquierdo" name="faroTraseroIzquierdo" class="checkboxSwitch" checked/>
 										</div>
 										<div class="form-group">
 											<label for="farosDetalle">Detalles sobre faros:</label>
@@ -235,23 +241,23 @@
 									<div class="panel-body">
 
 								       	<div class="form-group">
-									        <label for="direccionalDelanteraDerecha">Delantero derecha</label>
-											<input type="checkbox" id="direccionalDelanteraDerecha" name="direccionalDelanteraDerecha" class="checkboxSwitch" required checked/>
+									        <label for="direccionalDelanteraDerecha" class="col-xs-6 col-sm-6 col-md-7">Delantero derecha</label>
+											<input type="checkbox" id="direccionalDelanteraDerecha" name="direccionalDelanteraDerecha" class="checkboxSwitch" checked/>
 									    </div>
 
 										<div class="form-group">
-											<label for="direccionalDelanteraIzquierda">Delantero izquierda</label>
-											<input type="checkbox" id="direccionalDelanteraIzquierda" name="direccionalDelanteraIzquierda" required class="checkboxSwitch"checked/>
+											<label for="direccionalDelanteraIzquierda" class="col-xs-6 col-sm-6 col-md-7">Delantero izquierda</label>
+											<input type="checkbox" id="direccionalDelanteraIzquierda" name="direccionalDelanteraIzquierda" class="checkboxSwitch"checked/>
 										</div>
 
 										<div class="form-group">
-											<label for="direccionalTraseraDerecha">Trasera derecha</label>
-											<input type="checkbox" id="direccionalTraseraDerecha" name="direccionalTraseraDerecha" class="checkboxSwitch" required checked/>
+											<label for="direccionalTraseraDerecha" class="col-xs-6 col-sm-6 col-md-7">Trasera derecha</label>
+											<input type="checkbox" id="direccionalTraseraDerecha" name="direccionalTraseraDerecha" class="checkboxSwitch" checked/>
 										</div>
 
 										<div class="form-group">
-											<label for="direccionalTraseraIzquierda">Trasera izquierda</label>
-											<input type="checkbox" id="direccionalTraseraIzquierda" name="direccionalTraseraIzquierda" class="checkboxSwitch" required checked/>
+											<label for="direccionalTraseraIzquierda" class="col-xs-6 col-sm-6 col-md-7">Trasera izquierda</label>
+											<input type="checkbox" id="direccionalTraseraIzquierda" name="direccionalTraseraIzquierda" class="checkboxSwitch" checked/>
 										</div>
 										<div class="form-group">
 											<label for="direccionalDetalle">Detalles sobre faros:</label>
@@ -268,13 +274,13 @@
 									<div class="panel-body">
 
 								       	<div class="form-group">
-									        <label for="defensaDelantera">Delantera</label>
-											<input type="checkbox" id="defensaDelantera" name="defensaDelantera" class="checkboxSwitch" required checked/>
+									        <label for="defensaDelantera" class="col-xs-6 col-sm-6 col-md-7">Delantera</label>
+											<input type="checkbox" id="defensaDelantera" name="defensaDelantera" class="checkboxSwitch" checked/>
 									    </div>
 
 										<div class="form-group">
-											<label for="defensaTrasera">Trasera</label>
-											<input type="checkbox" id="defensaTrasera" name="defensaTrasera" required class="checkboxSwitch"checked/>
+											<label for="defensaTrasera" class="col-xs-6 col-sm-6 col-md-7">Trasera</label>
+											<input type="checkbox" id="defensaTrasera" name="defensaTrasera" class="checkboxSwitch"checked/>
 										</div>
 
 										<div class="form-group">
@@ -292,8 +298,8 @@
 									<div class="panel-body">
 
 								       	<div class="form-group">
-									        <label for="llantaRefaccion">Llanta de refacción</label>
-											<input type="checkbox" id="llantaRefaccion" name="llantaRefaccion" class="checkboxSwitch" required checked/>
+									        <label for="llantaRefaccion" class="col-xs-6 col-sm-6 col-md-7">Llanta de refacción</label>
+											<input type="checkbox" id="llantaRefaccion" name="llantaRefaccion" class="checkboxSwitch" checked/>
 									    </div>
 
 										<div class="form-group">
@@ -311,18 +317,18 @@
 									<div class="panel-body">
 
 								       	<div class="form-group">
-									        <label for="parabrisasDelantero">Parabrisas delantero</label>
-											<input type="checkbox" id="parabrisasDelantero" name="parabrisasDelantero" class="checkboxSwitch" required checked/>
+									        <label for="parabrisasDelantero" class="col-xs-6 col-sm-6 col-md-7">Parabrisas delantero</label>
+											<input type="checkbox" id="parabrisasDelantero" name="parabrisasDelantero" class="checkboxSwitch" checked/>
 									    </div>
 
 								       	<div class="form-group">
-									        <label for="parabrisasTrasero">Parabrisas trasero</label>
-											<input type="checkbox" id="parabrisasTrasero" name="parabrisasTrasero" class="checkboxSwitch" required checked/>
+									        <label for="parabrisasTrasero" class="col-xs-6 col-sm-6 col-md-7">Parabrisas trasero</label>
+											<input type="checkbox" id="parabrisasTrasero" name="parabrisasTrasero" class="checkboxSwitch" checked/>
 									    </div>
 
 										<div class="form-group">
-											<label for="vidriosDetalle">Detalles sobre parabrisas y vidrios:</label>
-											<textarea class="form-control" name="vidriosDetalle" id="vidriosDetalle" rows="7">
+											<label for="parabrisasDetalle" class="col-xs-6 col-sm-6 col-md-7">Detalles sobre parabrisas y vidrios:</label>
+											<textarea class="form-control" name="parabrisasDetalle" id="parabrisasDetalle" rows="7">
 											</textarea>
 										</div>
 									</div>
@@ -335,13 +341,13 @@
 									<div class="panel-body">
 
 										<div class="form-group">
-									        <label for="placaDelantera">Placa delantera</label>
-											<input type="checkbox" id="placaDelantera" name="placaDelantera" class="checkboxSwitch" required checked/>
+									        <label for="placaDelantera" class="col-xs-6 col-sm-6 col-md-7">Placa delantera</label>
+											<input type="checkbox" id="placaDelantera" name="placaDelantera" class="checkboxSwitch" checked/>
 									    </div>
 
 									    <div class="form-group">
-									        <label for="placaTrasera">Placa trasera</label>
-											<input type="checkbox" id="placaTrasera" name="placaTrasera" class="checkboxSwitch" required checked/>
+									        <label for="placaTrasera" class="col-xs-6 col-sm-6 col-md-7">Placa trasera</label>
+											<input type="checkbox" id="placaTrasera" name="placaTrasera" class="checkboxSwitch" checked/>
 									    </div>
 
 									</div>
