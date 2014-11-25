@@ -284,35 +284,53 @@ class vehiculoCtrl extends CtrlEstandar{
 	*Se valida el VIN y se manda a modificar.
 	*/
 	public function modificar(){
-
-		require('controller/validadorCtrl.php');
-
-		$vin = $_GET['vin'];
-		$modelo = $_POST['modelo']; 
-		$color = $_POST['color'];
-		$transmision = $_POST['transmision'];
-		$cilindraje = $_POST['cilindraje'];
-		$anho = $_POST['anho'];
-		$numeroPuertas = $_POST['numeroPuertas'];
-		$cliente = $_POST['cliente'];
-
-		if(validadorCtrl::validarTexto($color) && validadorCtrl::validarTexto($transmision) &&
-			validadorCtrl::validarNumero($cilindraje) && validadorCtrl::validarNumero($anho) &&
-			validadorCtrl::validarNumero($numeroPuertas) && validadorCtrl::validarNumero($cliente))
-		{
-			$resultado = $this -> modelo -> modificar($vin,$modelo,$color,$transmision,$cilindraje,$anho,$numeroPuertas,$cliente);
+		require_once('controller/validadorCtrl.php');
+		if( (!isset($_GET['vin']) && empty($_GET['vin'])) || empty($_POST)){
+			$header 	= file_get_contents('view/headerLoged.html');
+			$contenido 	= file_get_contents('view/vehiculoModificar.html');
+			$footer 	= file_get_contents('view/footer.html');
+			
+			$VIN 		= (validadorCtrl::validarVin($_GET['vin'])) ? $_GET['vin'] : "";
+			$resultado 	= $this->modelo->consultar($VIN);
+			
 			if($resultado){
-            	require('view/vehiculoModificado.php'); #cambiar a html
+				$diccionario = array(
+				'{VIN}'=>$resultado[0]['VIN'],
+				'{transmision}'=>$resultado[0]['transmision'],
+				'{marca}'=>$resultado[0]['Marca'],
+				'{modelo}'=>$resultado[0]['idModelo'],
+				'{Color}'=>$resultado[0]['color'],
+				'{cilindraje}'=>$resultado[0]['cilindraje'],
+				'{numeroPuertas}'=>$resultado[0]['numeroPuertas'],
+				'{anho}'=>$resultado[0]['anho'],
+				);
+				$header 	= str_replace('{usuario}', $_SESSION['usuario'], $header);
+				$contenido 	= strtr($contenido,$diccionario);
+
+				echo $header.$contenido.$footer;
+			}else{
+				#Not found
+				echo 'Not found';
+			}
+		}else{
+			$vin 		= (validadorCtrl::validarVin($_GET['vin'])) ? $_GET['vin'] : "";
+			$modelo 	= (validadorCtrl::validarTexto($_POST['modelo'])) ? $_POST['modelo'] : ""; 
+			$color 		= (validadorCtrl::validarTexto($_POST['color'])) ? $_POST['color'] : "";
+			$transmision = (validadorCtrl::validarTexto($_POST['transmision'])) ? $_POST['transmision'] : "";
+			$cilindraje = (validadorCtrl::validarNumero((int)$_POST['cilindraje'])) ? (int)$_POST['cilindraje'] : "";
+			$anho 		= (validadorCtrl::validarAnho($_POST['anho'])) ? $_POST['anho'] : "";
+			$numeroPuertas = (validadorCtrl::validarNumero($_POST['numeroPuertas'])) ? $_POST['numeroPuertas'] : "";
+			#$cliente 	= (validadorCtrl::validar)$_POST['cliente'];
+			
+			$resultado = $this -> modelo -> modificar($vin,$modelo,$color,$transmision,$cilindraje,$anho,$numeroPuertas);
+			if($resultado){
+            	#require('view/vehiculoModificado.php'); #cambiar a html
+            	echo 'Exito';
 	        }
 	            
 	        else{
 	            require('view/errorVehiculoModificado.php'); #cambiar a html
 	        }
-
-		}
-
-		else{
-			echo "error en formato de elementos a modificar el vehiculo";
 		}
 	}
 
