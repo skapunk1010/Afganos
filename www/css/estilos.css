@@ -16,3 +16,10 @@
 #panelAsignarUbicacion{
 	display: none;
 }
+
+header{
+  margin: 0px;
+}
+.item img{
+  height: 100%;
+}

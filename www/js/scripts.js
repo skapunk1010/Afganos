@@ -4,11 +4,11 @@ $(document).ready(function(){
         $('#panelAsignarUbicacion').slideToggle("slow");
     });
 
-
     var headerheight = $('header').height();
+    $('header').css('margin','0');
     var footerheight = $('footer').height();
     var windowheight = $(window).height();
-    $('.main').css('min-height', windowheight - headerheight - footerheight);
+    $('.main').css('min-height', windowheight - headerheight - footerheight-20);
     $("[class='checkboxSwitch']").bootstrapSwitch();
 });
 
