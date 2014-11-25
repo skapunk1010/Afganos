@@ -1,0 +1,102 @@
+<section class="container main">
+	<a href="index.php?ctrl=empleado&accion=listar" class="btn btn-default">Regresar</a>
+	<br/>
+	<br/>
+	<div class="panel panel-default">
+		<div class="panel-heading">Datos del empleado</div>
+		<div class="panel-body">
+			<div class="form-group col-sm-6">
+				<label for="nombre">Nombre(s)</label>
+				<input type="text" class="form-control" id="nombre" name="nombre" value="{nombre}"  disabled/>
+			</div>
+			<div class="form-group col-sm-6">
+				<label for="apellidoPaterno">Apellido Paterno</label>
+				<input type="text" class="form-control" id="apellidoPaterno" name="apellidoPaterno" value="{apellidoPaterno}" disabled/>
+			</div>
+			<div class="form-group col-sm-6">
+				<label for="apellidoMaterno">Apellido Materno</label>
+				<input type="text" class="form-control" id="apellidoMaterno" name="apellidoMaterno" value="{apellidoMaterno}" disabled/>
+			</div>
+			<div class="form-group col-sm-6">
+				<label for="fechaNacimiento">Fecha de Nacimiento</label>
+				<input type="date" class="form-control" id="fechaNacimiento" name="fechaNacimiento" value="{fechaNacimiento}" disabled/>
+			</div>
+			<div class="form-group col-sm-6">
+				<label for="rfc">R.F.C</label>
+				<input type="text" class="form-control" id="rfc" name="rfc" value="{rfc}" disabled/>
+			</div>
+			<div class="form-group col-sm-6">
+				<label for="nss">Número de Seguridad Social(N.S.S.)</label>
+				<input type="text" class="form-control" id="nss" name="nss" value="{nss}" disabled/>
+			</div>
+			<div class="form-group col-sm-6">
+				<label for="email">E-mail</label>
+				<input type="email" class="form-control" id="email" name="email" value="{email}" disabled/>
+			</div>
+
+		</div>
+	</div>
+	<div class="panel panel-default">
+		<div class="panel-heading">Domicilio del empleado</div>
+		<div class="panel-body">
+			<div class="form-group col-sm-6">
+				<label for="calle">Calle</label>
+				<input type="text" class="form-control" id="calle" name="calle" value="{calle}" disabled/>
+			</div>
+			<div class="form-group col-sm-6">
+				<label for="numeroExterior">Número Exterior</label>
+				<input type="text" class="form-control" id="numeroExterior" name="numeroExterior" value="{numeroExt}" disabled/>
+			</div>
+			<div class="form-group col-sm-6">
+				<label for="numeroInterior">Número Interior</label>
+				<input type="text" class="form-control" id="numeroInterior" name="numeroInterior" value="{numeroInt}" disabled />
+			</div>
+			<div class="form-group col-sm-6">
+				<label for="codigoPostal">Código Postal</label>
+				<input type="number" class="form-control" id="codigoPostal" name="codigoPostal" min="10000" value="{codigoPostal}" disabled/>
+			</div>
+			<div class="form-group col-sm-6">
+				<label for="colonia">Colonia</label>
+				<input type="text" class="form-control" id="colonia" name="colonia" value="{colonia}" disabled/>
+			</div>
+			<div class="form-group col-sm-6">
+				<label for="ciudad">Ciudad</label>
+				<input type="text" class="form-control" id="ciudad" name="ciudad" value="{ciudad}" disabled/>
+			</div>
+			<div class="form-group col-sm-6">
+				<label for="estado">Estado</label>
+				<input type="text" class="form-control" id="estado" name="estado" value="{estado}" disabled />
+			</div>
+
+		</div>
+	</div>
+
+	<div class="panel panel-default">
+		<div class="panel-heading">Telefono del empleado</div>
+		<div class="panel-body">
+			{inicioTelefono}
+			<div class="form-group col-sm-12">
+				<label for="telefono" class="col-sm-1 control-label">Telefono</label>
+				<div class="col-sm-5">
+					<input type="tel" class="form-control" id="telefono" name="telefono"  value="{telefono}" disabled />
+				</div>
+
+				<label for="telefono" class="col-sm-1 control-label">Tipo de telefono</label>
+				<div class="col-sm-5">
+					<input type="tel" class="form-control" id="text" name="tipoTelefono" value="{tipoTelefono}" disabled/>
+				</div><br>
+			</div>
+			{finTelefono}
+		</div>
+	</div>
+
+	<div class="panel panel-default">
+		<div class="panel-heading">Usuario del empleado</div>
+		<div class="panel-body">
+			<div class="form-group col-sm-12">
+				<label for="usuario">Usuario</label>
+				<input type="text" class="form-control" id="usuario" name="usuario" value="{usuario}" disabled/>
+			</div>
+		</div>
+	</div>
+</section>

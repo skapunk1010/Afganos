@@ -1,0 +1,38 @@
+<section class="container main">
+	<a href="index.php?ctrl=marca&accion=listar" class="btn btn-default pull">Regresar</a>
+	<a href="index.php?ctrl=modelo&accion=insertar&idMarca={idMarca}" class="btn btn-default pull-right">Nuevo modelo</a>
+	<br><br>
+	<div class="panel panel-default">
+		<div class="panel-heading">Datos de la marca</div>
+		<div class="panel-body">
+			<div class="form-group col-sm-12">
+				<label for="marca">Nombre</label>
+				<input type="text" class="form-control" id="marca" name="marca" value="{nombreMarca}" disabled/>
+			</div>
+		</div>
+	</div>
+
+	<div class="panel panel-default">
+		<div class="panel-heading">Modelos</div>
+		<div class="panel-body">
+			<table class="table table-hover">
+				<thead>
+					<th>Nombre</th>
+					<!--<th>&nbsp;</th>-->
+					<th>&nbsp;</th>
+					<th>&nbsp;</th>
+				</thead>
+				<tbody>
+					{inicioFila}
+					<tr>
+						<td>{nombreModelo}</td>
+						<!--<td><a href="index.php?ctrl=modelo&accion=consultar&modelo={idModelo}">Consultar</a></td>-->
+						<td><a href="index.php?ctrl=modelo&accion=modificar&modelo={idModelo}&nombre={nombreModelo}">Modificar</a></td>
+						<td><a href="index.php?ctrl=modelo&accion=eliminar&modelo={idModelo}">Eliminar</a></td>
+					</tr>
+					{finFila}
+				</tbody>
+			</table>
+		</div>
+	</div>
+</section>
