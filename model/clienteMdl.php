@@ -16,7 +16,7 @@
 		*@param String $email recibe una cadena de email nuevo
 		*@return bool dependiendo de su validez.
 		*/
-		public function insertar($nombre,$apellidoPaterno,$apellidoMaterno,$email)
+		public function insertar($nombre,$apellidoPaterno,$apellidoMaterno,$email){
 			$status = "1";
 			$query = "INSERT INTO Cliente (nombre, apellidoPaterno, apellidoMaterno, email, status) 
 			VALUES ('".$nombre."','".$apellidoPaterno."','".$apellidoMaterno."','".$email."','".$status."')";

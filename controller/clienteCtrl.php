@@ -175,7 +175,7 @@
         {
             $resultado = $this -> modelo -> listar();
             if($resultado!=NULL){
-                var_dump($resultado)
+                var_dump($resultado);
             }
             else
             {

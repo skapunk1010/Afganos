@@ -64,8 +64,8 @@
             break;
 
         case 'cliente':
-            require('controller/clienteMdl.php');
-            $ctrl = new clienteMdl();
+            require('controller/clienteCtrl.php');
+            $ctrl = new clienteCtrl();
             break;
 
         default:
