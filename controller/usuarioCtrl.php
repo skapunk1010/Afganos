@@ -31,7 +31,11 @@
                         if(!$this->estaLogeado()){
                             header('Location: index.php?ctrl=login&accion=iniciarSesion');
                         }else{
-                            require('view/errorAcceso.php');
+                            $header     = file_get_contents('view/headerLoged.html');
+                            $contenido  = file_get_contents('view/errorAcceso.html');
+                            $footer     = file_get_contents('view/footer.html');
+                            $header     = str_replace('{usuario}', $_SESSION['usuario'], $header);
+                            echo $header.$contenido.$footer;
                         }
                     }
                     break;
@@ -43,7 +47,11 @@
                         if(!$this->estaLogeado()){
                             header('Location: index.php?ctrl=login&accion=iniciarSesion');
                         }else{
-                            require('view/errorAcceso.php');
+                            $header     = file_get_contents('view/headerLoged.html');
+                            $contenido  = file_get_contents('view/errorAcceso.html');
+                            $footer     = file_get_contents('view/footer.html');
+                            $header     = str_replace('{usuario}', $_SESSION['usuario'], $header);
+                            echo $header.$contenido.$footer;
                         }
                     }
                     break;
@@ -54,7 +62,11 @@
                         if(!$this->estaLogeado()){
                             header('Location: index.php?ctrl=login&accion=iniciarSesion');
                         }else{
-                            require('view/errorAcceso.php');
+                            $header     = file_get_contents('view/headerLoged.html');
+                            $contenido  = file_get_contents('view/errorAcceso.html');
+                            $footer     = file_get_contents('view/footer.html');
+                            $header     = str_replace('{usuario}', $_SESSION['usuario'], $header);
+                            echo $header.$contenido.$footer;require('view/errorAcceso.php');
                         }
                     }
                     break;
@@ -66,7 +78,11 @@
                         if(!$this->estaLogeado()){
                             header('Location: index.php?ctrl=login&accion=iniciarSesion');
                         }else{
-                            require('view/errorAcceso.php');
+                            $header     = file_get_contents('view/headerLoged.html');
+                            $contenido  = file_get_contents('view/errorAcceso.html');
+                            $footer     = file_get_contents('view/footer.html');
+                            $header     = str_replace('{usuario}', $_SESSION['usuario'], $header);
+                            echo $header.$contenido.$footer;
                         }
                     }
                     break;
@@ -78,13 +94,22 @@
                         if(!$this->estaLogeado()){
                             header('Location: index.php?ctrl=login&accion=iniciarSesion');
                         }else{
-                            require('view/errorAcceso.php');
+                            $header     = file_get_contents('view/headerLoged.html');
+                            $contenido  = file_get_contents('view/errorAcceso.html');
+                            $footer     = file_get_contents('view/footer.html');
+                            $header     = str_replace('{usuario}', $_SESSION['usuario'], $header);
+                            echo $header.$contenido.$footer;
                         }
                     }
                     break;
 
                 default: 
-                    require('view/error.php');
+                    $header     = file_get_contents('view/headerLoged.html');
+                    $contenido  = file_get_contents('view/errorAcceso.html');
+                    $footer     = file_get_contents('view/footer.html');
+                    $header     = str_replace('{usuario}', $_SESSION['usuario'], $header);
+                    echo $header.$contenido.$footer;
+                    break;
             }
         }
         
