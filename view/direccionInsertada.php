@@ -1,3 +1,0 @@
-<?php
-echo "DIRECCIÓN INSERTADA CON ÉXITO";
-?>

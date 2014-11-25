@@ -1,3 +1,0 @@
-<?php
-echo "ERROR AL ELIMINAR UN TELÉFONO.";
-?>
