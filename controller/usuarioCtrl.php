@@ -94,7 +94,7 @@
         public function insertar()
         {
             require('controller/validadorCtrl.php');
-            if(validadorCtrl::validarTexto($_POST['usuario']) &&
+            if(validadorCtrl::validarUsuario($_POST['usuario']) &&
                 validadorCtrl::validarContrasenha($_POST['password']) &&
                 validadorCtrl::validarTexto($_POST['privilegios']) &&
                         validadorCtrl::validarCodigoEmpleado($_POST['codigo']))

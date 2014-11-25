@@ -21,7 +21,7 @@
 								$transmision,
 								$numeroPuertas,
 								$idCliente,
-								#Checklist
+								
 								$placaNumero,
 								$kilometraje,
 								$gasolinaCantidad,
