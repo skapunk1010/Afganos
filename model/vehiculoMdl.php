@@ -21,7 +21,7 @@
 								$transmision,
 								$numeroPuertas,
 								$idCliente,
-								#Checklist
+								
 								$placaNumero,
 								$kilometraje,
 								$gasolinaCantidad,
@@ -123,7 +123,7 @@
 
 						'".$placaNumero."',
 						'".$gasolinaCantidad."', 
-						".$kilometraje.", '
+						".$kilometraje.",
 						".$cantidadCinturones.", 
 						".$extintor.", 
 						'".$tableroDetalle."', 

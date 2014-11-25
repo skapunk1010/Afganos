@@ -32,5 +32,16 @@
 				return true;
 			return false;
 		}
+
+		/**
+		 * Verifica que el usuario que ha iniciado sesión sea un cliente.
+		 * @return bool Regresa True si el usuario que ha iniciado sesión es de tipo cliente.
+		 * False, en caso de que no lo sea.
+		 */
+		protected function esCliente(){
+			if( isset($_SESSION['tipoUsuario']) && $_SESSION['tipoUsuario'] == 'cliente' )
+				return true;
+			return false;
+		}
 	}
 ?>
