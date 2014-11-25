@@ -1,10 +1,15 @@
 $(document).ready(function(){
 
-    //$('section.container').css('height',$(window).height()-($('footer.footer').height()+$('header').height()) * 1.15);
-
     $('#btnAsignarUbicacion').click(function(){
         $('#panelAsignarUbicacion').slideToggle("slow");
     });
+
+
+    var headerheight = $('header').height();
+    var footerheight = $('footer').height();
+    var windowheight = $(window).height();
+    $('.main').css('min-height', windowheight - headerheight - footerheight);
+    $("[class='checkboxSwitch']").bootstrapSwitch();
 });
 
 function actualizarNumeroUbicacion(dropSeccion){
@@ -14,14 +19,18 @@ function actualizarNumeroUbicacion(dropSeccion){
         $.ajax({
                 type: 'POST',
                 data: {seccion:valor},
-                //url: 'index.php?ctrl=ubicacion&accion=buscar',
-                url: 'view/areaConsultar.html',
+                url: 'index.php?ctrl=ubicacion&accion=buscar',
+                //url: 'view/areaConsultar.html',
                 dataType: 'json',
                 success: function(json){
                     console.log(json);
                 },
-                error:function(){
-                    alert('falló');
+                error:function(json){
+                    //alert('falló');
+                    for(i in json){
+                        console.log(json[i]);
+                    }
+
                 }
         });
     }
