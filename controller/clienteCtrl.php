@@ -102,7 +102,7 @@
                 $nombre = (validadorCtrl::validarNombre($_POST['nombre']))? $_POST['nombre'] : "";
                 $apellidoPaterno = (validadorCtrl::validarNombre($_POST['apellidoPaterno']))? $_POST['apellidoPaterno'] : "";
                 $apellidoMaterno = (validadorCtrl::validarNombre($_POST['apellidoMaterno']))? $_POST['apellidoMaterno'] : "";
-                $email = (validadorCtrl::validarNombre($_POST['email']))? $_POST['email'] : "";
+                $email = (validadorCtrl::validarEmail($_POST['email']))? $_POST['email'] : "";
 
                 $resultado = $this -> modelo -> insertar($nombre,$apellidoPaterno,$apellidoMaterno,$email);
                 if($resultado){
@@ -137,10 +137,10 @@
                 {
                     $resultado = $this -> modelo -> modificar($idCliente,$nombre,$apellidoPaterno,$apellidoMaterno,$email);
                     if($resultado){
-                        echo "Cliente insertado.";
+                        echo "Cliente modificado.";
                     }
                     else{
-                        echo "Error cliente insertado.";
+                        echo "Error cliente modificado.";
                     }
                 }
             }  
@@ -149,7 +149,8 @@
         /**
         *Cambia status del cliente
         */
-        public function eliminar(){
+        public function eliminar()
+        {
             require('controller/validadorCtrl.php');
             if( (!isset($_GET['id']) && empty($_GET['id'])) || empty($_POST)){
                 #regresa

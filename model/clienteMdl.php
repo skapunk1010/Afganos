@@ -58,6 +58,7 @@
 			$query = "SELECT * FROM Cliente";
 			$existe = $this->conexion->query($query);
 			$array = array();
+			$this->conexion->close();
 			if($existe){
 				while($fila = $existe->fetch_assoc()){
 					$array[] = $fila;
@@ -79,12 +80,16 @@
 			$query = "SELECT * FROM Vehiculo WHERE Cliente_idCliente = '".$idCliente."'";
 			$resultado = $this->conexion->query($query);
 			$this->conexion->close();
+			$array = array();
 			if($resultado){
-				return $resultado->fetch_assoc();
+				while($fila = $resultado->fetch_assoc()){
+					$array[] = $fila;
+				}
 			}
 			else {
-				return NULL;
+				$array = NULL;
 			}
+			return $array;
 		}
 	}
 ?>

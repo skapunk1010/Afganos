@@ -18,7 +18,6 @@
             break;
 
         case 'marca':
-        echo "*******";
             require('controller/marcaCtrl.php');
             $ctrl = new marcaCtrl();
             break;
