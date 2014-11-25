@@ -266,11 +266,7 @@
                 }else{
                     require('view/html/errores/errorMarcaModificar.html');
                 }
-            }
-            else
-            {
-                echo "error en el formato de código de empleado."
-            }            
+            }        
         }
     }
 

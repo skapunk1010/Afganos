@@ -70,7 +70,8 @@
 
         default:
             //$ctrL = NULL;
-            if(!empty($_SESSIinclude          $header = file_get_contents('view/headerLoged.html');
+            if(!empty($_SESSION)){
+                $header = file_get_contents('view/headerLoged.html');
                 $array = array('{usuario}'=>$_SESSION['usuario']);
                 $header = strtr($header,$array);
                 $content = file_get_contents('view/index.html');

@@ -41,12 +41,10 @@
 
 		/**
 		 *Consulta a la base de datos ubicaciones disponibles de determinada área
-		 *@param int $Area_idArea ID del área a la que pertenece la ubicación
 		 *@param String $secccion Sección de la cual se buscarán los campos.
 		 *@return Array de resultados si la consulta fue satisfactoria.
 		 */
-		public function buscar($Area_idArea, $seccion){
-			$Area_idArea = $this -> conexion -> real_escape_string($Area_idArea);
+		public function buscar($seccion){
 			$seccion 	 = $this -> conexion -> real_escape_string($seccion);
 			$query = "SELECT idUbicacion, numero FROM Ubicacion WHERE seccion = '".$seccion."' AND Area_idArea IS NULL  AND status = false";
 			$resultado = $this -> conexion -> query($query);

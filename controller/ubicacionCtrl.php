@@ -97,8 +97,8 @@
 			if( !empty($_POST)){
 				require_once('controller/validadorCtrl.php');
 				$seccion = (validadorCtrl::validarTexto($_POST['seccion']))?$_POST['seccion'] : "";
-				$idArea  = (validadorCtrl::validarNumero($_POST['idArea']))? (int)$_POST['idArea'] : "";
-				$resultado = $this -> modelo -> buscar($idArea, $seccion);
+				//$idArea  = (validadorCtrl::validarNumero($_POST['idArea']))? (int)$_POST['idArea'] : "";
+				$resultado = $this -> modelo -> buscar($seccion);
 				if($resultado){
 					echo json_encode($resultado);
 				}
