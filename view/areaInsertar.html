@@ -2,22 +2,22 @@
 	<form method="POST" action="index.php?ctrl=area&accion=insertar">
 	<a href="index.php?ctrl=area&accion=listar" class="btn btn-default pull-left">Regresar</a>
 	<br/><br/>
-		<h1>Capturar los datos del la nueva área</h1>
+		<h1>Capturar los datos del la nueva &aacute;rea</h1>
 		<div class="panel panel-default">
-			<div class="panel-heading">Datos del área</div>
+			<div class="panel-heading">Datos del &aacute;rea</div>
 			<div class="panel-body">
 
 				<div class="form-group col-sm-6">
-					<label for="area">Nombre del área</label>
-					<input type="text" class="form-control" id="area" name="area" placeholder="Área" required/>
+					<label for="area">Nombre del &aacute;rea</label>
+					<input type="text" class="form-control" id="area" name="area" placeholder="Área" pattern="^(\w|\W)+" required/>
 				</div>
 				<div class="form-group col-sm-6">
-					<label for="codigoEncargado">Codigo del Encargado</label>
-					<input type="text" class="form-control" id="codigoEncargado" name="codigoEncargado" placeholder="Código del encargado" required/>
+					<label for="codigoEncargado">C&oacute;digo del Encargado</label>
+					<input type="text" class="form-control" id="codigoEncargado" name="codigoEncargado" placeholder="Código del encargado"  pattern="^1[\d]{5}" title="C&oacute;digo de empleado es de 6 d&iacute;gitos comenzando con '1'." required/>
 				</div>
 				<div class="form-group col-sm-6">
-					<label for="descripcion">Descripcion</label>
-					<textarea type="textarea" class="form-control" id="descripcion" name="descripcion" placeholder="Descripcion"></textarea>
+					<label for="descripcion">Descripci&oacute;n</label>
+					<textarea type="textarea" class="form-control" id="descripción" name="descripcion" placeholder="Descripcion" pattern="^(\w|\W)+" ></textarea>
 				</div>
 				<div class="form-group col-sm-6">
 					<label for="nombreEncargado">Nombre del encargado</label>

@@ -1,4 +1,5 @@
 <section class="container">
+	<a href="index.php?ctrl=index.php" class="btn btn-default pull-left">Regresar</a>
 	<form role="form" class="form" method="POST" action="index.php?ctrl=empleado&accion=insertar">
 		<button type="submit" class="btn btn-default pull-right">Aceptar</button>
 		<br/><br/>
@@ -7,31 +8,32 @@
 			<div class="panel-body">
 				<div class="form-group col-sm-6">
 					<label for="nombre">Nombre(s)</label>
-					<input type="text" class="form-control" id="nombre" name="nombre" placeholder="Nombre(s)" required/>
+					<input type="text" class="form-control" id="nombre" name="nombre" placeholder="Nombre(s)" 
+					pattern ="[a-zA-Z ]+" onblur="this.value=this.value.toUpperCase();" required/>
 				</div>
 				<div class="form-group col-sm-6">
 					<label for="apellidoPat">Apellido Paterno</label>
-					<input type="text" class="form-control" id="apellidoPat" name="apellidoPat" placeholder="Apellido Paterno" required/>
+					<input type="text" class="form-control" id="apellidoPat" name="apellidoPat" placeholder="Apellido Paterno" pattern ="[a-zA-Z ]+" onblur="this.value=this.value.toUpperCase();" required/>
 				</div>
 				<div class="form-group col-sm-6">
 					<label for="apellidoMat">Apellido Materno</label>
-					<input type="text" class="form-control" id="apellidoMat" name="apellidoMat" placeholder="Apellido Materno" required/>
+					<input type="text" class="form-control" id="apellidoMat" name="apellidoMat" placeholder="Apellido Materno" pattern ="[a-zA-Z ]+" onblur="this.value=this.value.toUpperCase();" required/>
 				</div>
 				<div class="form-group col-sm-6">
 					<label for="fechaNac">Fecha de Nacimiento</label>
 					<input type="date" class="form-control" id="fechaNac" name="fechaNac" required/>
 				</div>
 				<div class="form-group col-sm-6">
-					<label for="rfc">R.F.C</label>
-					<input type="text" class="form-control" id="rfc" name="rfc" placeholder="R.F.C."/>
+					<label for="rfc">R.F.C.</label>
+					<input type="text" class="form-control" id="rfc" name="rfc" placeholder="R.F.C." pattern="([A-Z]{4})([\d]{2})(0[1-9]|1[012])(0[1-9]|[12][\d]|3[01])([A-Z]{3})" onblur="this.value=this.value.toUpperCase();"/>
 				</div>
 				<div class="form-group col-sm-6">
-					<label for="nss">Número de Seguridad Social(N.S.S.)</label>
-					<input type="text" class="form-control" id="nss" name="nss" placeholder="Número de Seguridad Social"/>
+					<label for="nss">N&uacute;mero de Seguridad Social(N.S.S.)</label>
+					<input type="text" class="form-control" id="nss" name="nss" placeholder="Número de Seguridad Social" pattern="[\d]{11}" title="Formato de NSS es de 11 dígitos."/>
 				</div>
 				<div class="form-group col-sm-6">
 					<label for="email">E-mail</label>
-					<input type="email" class="form-control" id="email" name="email" placeholder="E-mail"/>
+					<input type="email" class="form-control" id="email" name="email" placeholder="E-mail" pattern="[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,3})" onblur="this.value=this.value.toLowerCase();"/>
 				</div>
 
 			</div>
@@ -41,43 +43,44 @@
 			<div class="panel-body">
 				<div class="form-group col-sm-6">
 					<label for="calle">Calle</label>
-					<input type="text" class="form-control" id="calle" name="calle" placeholder="Calle" required/>
+					<input type="text" class="form-control" id="calle" name="calle" placeholder="Calle" pattern="(\w|\W)+" required/>
 				</div>
 				<div class="form-group col-sm-6">
-					<label for="numeroExterior">Número Exterior</label>
-					<input type="text" class="form-control" id="numeroExterior" name="numeroExterior" placeholder="Número Exterior" required/>
+					<label for="numeroExterior">N&uacute;mero Exterior</label>
+					<input type="text" class="form-control" id="numeroExterior" name="numeroExterior" placeholder="Número Exterior" 
+					pattern="[0-9]+" required/>
 				</div>
 				<div class="form-group col-sm-6">
-					<label for="numeroInterior">Número Interior</label>
-					<input type="text" class="form-control" id="numeroInterior" name="numeroInterior" placeholder="Número Interior"/>
+					<label for="numeroInterior">N&uacute;mero Interior</label>
+					<input type="text" class="form-control" id="numeroInterior" name="numeroInterior" placeholder="Número Interior" pattern="(\w|\W)+"/>
 				</div>
 				<div class="form-group col-sm-6">
-					<label for="codigoPostal">Código Postal</label>
-					<input type="number" class="form-control" id="codigoPostal" name="codigoPostal" placeholder="Código Postal" min="10000"/>
+					<label for="codigoPostal">C&oacute;digo Postal</label>
+					<input type="number" class="form-control" id="codigoPostal" name="codigoPostal" placeholder="Código Postal" min="10000" pattern="[\d]{3,10}"/>
 				</div>
 				<div class="form-group col-sm-6">
 					<label for="colonia">Colonia</label>
-					<input type="text" class="form-control" id="colonia" name="colonia" placeholder="Colonia" required/>
+					<input type="text" class="form-control" id="colonia" name="colonia" placeholder="Colonia" pattern="(\w|\W)+" required/>
 				</div>
 				<div class="form-group col-sm-6">
 					<label for="ciudad">Ciudad</label>
-					<input type="text" class="form-control" id="ciudad" name="ciudad" placeholder="Ciudad" required/>
+					<input type="text" class="form-control" id="ciudad" name="ciudad" placeholder="Ciudad" pattern="(\w|\W)+" required/>
 				</div>
 				<div class="form-group col-sm-6">
 					<label for="estado">Estado</label>
-					<input type="text" class="form-control" id="estado" name="estado" placeholder="Estado" required/>
+					<input type="text" class="form-control" id="estado" name="estado" placeholder="Estado" pattern="(\w|\W)+" required/>
 				</div>
 
 			</div>
 		</div>
 
 		<div class="panel panel-default">
-			<div class="panel-heading">Telefono del empleado</div>
+			<div class="panel-heading">Tel&eacute;fono del empleado</div>
 			<div class="panel-body">
 				<div class="form-group">
-					<label for="telefono" class="col-sm-1 control-label">Telefono</label>
+					<label for="telefono" class="col-sm-1 control-label">Tel&eacute;fono</label>
 					<div class="col-sm-7">
-						<input type="tel" class="form-control" id="telefono" name="telefono" placeholder="Telefono"/>
+						<input type="tel" class="form-control" id="telefono" name="telefono" placeholder="Telefono" pattern="[\d]{8,16}"/>
 					</div>
 					<div class="col-sm-2">
 						<select class="form-control" id="tipoTelefono" name="tipoTelefono">
@@ -98,11 +101,11 @@
 			<div class="panel-body">
 				<div class="form-group col-sm-12">
 					<label for="usuario">Usuario</label>
-					<input type="text" class="form-control" id="usuario" name="usuario" placeholder="Usuario"/>
+					<input type="text" class="form-control" id="usuario" name="usuario" placeholder="Usuario" pattern="[a-z0-9_-]{5,20}" title="El usuario debe contener una letra minúscula, números, guión bajo y/o guión medio." onblur="this.value=this.value.toLowerCase();"/>
 				</div>
 				<div class="form-group col-sm-12">
 					<label for="password">Contraseña</label>
-					<input type="password" class="form-control" id="password" name="password" placeholder="Contraseña"/>
+					<input type="password" class="form-control" id="password" name="password" placeholder="Contraseña" pattern="(?=.*\d)(?=.*\W)(?=.*[a-z])(?=.*[A-Z]).{5,20}" title="La contraseña debe contener un número, una letra minúscula, una letra mayúscula, un caracter especial y debe tener una longitud entre 5 y 20." maxlength="20"/>
 				</div>
 			</div>
 		</div>
