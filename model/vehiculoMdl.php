@@ -66,6 +66,7 @@
 								$techoDetalle,
 								$vidriosDetalle
 						){
+
 			$VIN 			= $this -> conexion -> real_escape_string($VIN);
 			$idModelo 		= $this -> conexion -> real_escape_string($idModelo);
 			$anho			= $this -> conexion -> real_escape_string($anho);
@@ -123,7 +124,7 @@
 
 						'".$placaNumero."',
 						'".$gasolinaCantidad."', 
-						".$kilometraje.", 
+						".$kilometraje.",
 						".$cantidadCinturones.", 
 						".$extintor.", 
 						'".$tableroDetalle."', 
@@ -197,22 +198,14 @@
 		*@param String $cilindraje recibe el cilindraje de un auto a modificar
 		*@param String $anho recibe el año de un auto a modificar
 		*@param String $numeroPuertas recibe el número de puertas de un auto a modificar
+		*@param String $cliente recibe el cliente de un auto a modificar
 		*@return bool según sea su validez.
 		*/
-		public function modificar($vin,$modelo,$color,$transmision,$cilindraje,$anho,$numeroPuertas)
-		{	
-			$vin 		= $this->conexion->real_escape_string($vin);
-			$modelo 	= $this->conexion->real_escape_string($modelo);
-			$color 	 	= $this->conexion->real_escape_string($color);
-			$transmision 	= $this->conexion->real_escape_string($transmision);
-			$cilindraje 	= $this->conexion->real_escape_string($cilindraje);
-			$anho 			= $this->conexion->real_escape_string($anho);
-			$numeroPuertas 	= $this->conexion->real_escape_string($numeroPuertas);
-
+		public function modificar($vin,$modelo,$color,$transmision,$cilindraje,$anho,$numeroPuertas,$cliente)
+		{
 			$query = "UPDATE Vehiculo SET Modelo_idModelo = '".$modelo."', color = '".$color."', transmision = '".$transmision."', cilindraje = '".$cilindraje."',
-			anho = '".$anho."', numeroPuertas = '".$numeroPuertas."' WHERE VIN = '".$vin."'";
+			anho = '".$anho."', numeroPuertas = '".$numeroPuertas."', Cliente_idCliente = '".$cliente."' WHERE VIN = '".$vin."'";
 			$correcto = $this -> conexion -> query($query);
-			echo $this->conexion->error;
 			return $correcto;
 		}
 
@@ -223,32 +216,8 @@
 		 * en caso de no encontrarse, regresa null.
 		 */
 		public function consultar($vin){
-			$vin 	= $this->conexion->real_escape_string($vin);
-			$query = "SELECT * FROM Vehiculo AS V, Marca AS M, Modelo AS O WHERE V.Modelo_idModelo = O.idModelo AND O.Marca_idMarca = M.idMarca AND V.VIN = '".$vin."'";
-			$correcto = $this -> conexion -> query($query);
-			$array = array();
-			if($correcto){
-				while ($fila = $correcto->fetch_assoc()) {
-        			$array[] = $fila;
-  			  	}
-			}
-			else $array = NULL;
-			$this -> conexion -> close();
-			return $array; 
-		}
-
-		/**
-		 * Busca el vehiculo en la base de datos por cliente.
-		 * @param String $vin Vin del vehiculo que se va a consular
-		 * @param String $idCliente ID del cliente de que se buscarán los vehículos.
-		 * @return Array $resultado Registro del vehiculo consultado.
-		 * en caso de no encontrarse, regresa null.
-		 */
-		public function consultarPorCliente($vin, $idCliente){
-			$vin 	= $this->conexion->real_escape_string($vin);
-			$idCliente = $this->conexion->real_escape_string($idCliente);
+			
 			$query = "SELECT * FROM Vehiculo AS v, Cliente AS c WHERE v.Cliente_idCliente = c.idCliente AND v.VIN = '".$vin."'";
-			echo $query;
 			$correcto = $this -> conexion -> query($query);
 			$array = array();
 			if($correcto){

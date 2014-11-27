@@ -144,40 +144,41 @@ class vehiculoCtrl extends CtrlEstandar{
 				$kilometraje		= (validadorCtrl::validarNumero((int) $_POST['kilometraje'])) ? (int)$_POST['kilometraje'] : 0;
 				$gasolinaCantidad	= $_POST['gasolinaCantidad'];
 				$cantidadCinturones = (validadorCtrl::validarNumero((int)$_POST['cantidadCinturones'])) ? (int) $_POST['cantidadCinturones'] : 0;
-				$extintor			= (isset($_POST['extintor'])) ? (($_POST['extintor'] === 'on') ? true : false) : false  ;
+				$extintor			= (isset($_POST['extintor'])) ? (($_POST['extintor'] == 'on') ? 1 : 0) : 0;
 				$tableroDetalle		= (validadorCtrl::validarTexto($_POST['tableroDetalle'])) ? $_POST['tableroDetalle'] : "";
 				$asientosCantidad	= (validadorCtrl::validarNumero((int)$_POST['asientosCantidad'])) ? (int)$_POST['asientosCantidad'] : 0;
 				$asientosDetalle	= (validadorCtrl::validarTexto($_POST['asientosDetalle'])) ? $_POST['asientosDetalle'] : "";
 
-				$espejoIzquierdo	= (isset($_POST['espejoIzquierdo'])) ? (($_POST['espejoIzquierdo'] === 'on') ? true : false) : false  ;
-				$espejoRetrovisor	= (isset($_POST['espejoRetrovisor'])) ? (($_POST['espejoRetrovisor'] === 'on') ? true : false) : false  ;
-				$espejoDerecho		= (isset($_POST['espejoDerecho'])) ? (($_POST['espejoDerecho'] === 'on') ? true : false) : false  ;
-				$faroDelanteroDerecho	= (isset($_POST['faroDelanteroDerecho'])) ? (($_POST['faroDelanteroDerecho'] === 'on') ? true : false) : false  ;
-				$faroDelanteroIzquierdo	= (isset($_POST['faroDelanteroIzquierdo'])) ? (($_POST['faroDelanteroIzquierdo'] === 'on') ? true : false) : false  ;
-				$faroTraseroDerecho		= (isset($_POST['faroTraseroDerecho'])) ? (($_POST['faroTraseroDerecho'] === 'on') ? true : false) : false  ;
-				$faroTraseroIzquierdo	= (isset($_POST['faroTraseroIzquierdo'])) ? (($_POST['faroTraseroIzquierdo'] === 'on') ? true : false) : false  ;
+				$espejoIzquierdo	= (isset($_POST['espejoIzquierdo'])) ? (($_POST['espejoIzquierdo'] == 'on') ? 1 : 0) : 0  ;
+				$espejoRetrovisor	= (isset($_POST['espejoRetrovisor'])) ? (($_POST['espejoRetrovisor'] == 'on') ? 1 : 0) : 0  ;
+				$espejoDerecho		= (isset($_POST['espejoDerecho'])) ? (($_POST['espejoDerecho'] == 'on') ? 1 : 0) : 0  ;
+				
+				$faroDelanteroDerecho	= (isset($_POST['faroDelanteroDerecho'])) ? (($_POST['faroDelanteroDerecho'] == 'on') ? 1 : 0) : 0  ;
+				$faroDelanteroIzquierdo	= (isset($_POST['faroDelanteroIzquierdo'])) ? (($_POST['faroDelanteroIzquierdo'] == 'on') ? 1 : 0) : 0  ;
+				$faroTraseroDerecho		= (isset($_POST['faroTraseroDerecho'])) ? (($_POST['faroTraseroDerecho'] == 'on') ? 1 : 0) : 0  ;
+				$faroTraseroIzquierdo	= (isset($_POST['faroTraseroIzquierdo'])) ? (($_POST['faroTraseroIzquierdo'] == 'on') ? 1 : 0) : 0  ;
 				$farosDetalle		= (validadorCtrl::validarTexto($_POST['farosDetalle'])) ? $_POST['farosDetalle'] : "";
 
-				$direccionalDelanteraDerecha	= (isset($_POST['direccionalDelanteraDerecha'])) ? (($_POST['direccionalDelanteraDerecha'] === 'on') ? true : false) : false  ;
-				$direccionalDelanteraIzquierda	= (isset($_POST['direccionalDelanteraIzquierda'])) ? (($_POST['direccionalDelanteraIzquierda'] === 'on') ? true : false) : false  ;
-				$direccionalTraseraDerecha		= (isset($_POST['direccionalTraseraDerecha'])) ? (($_POST['direccionalTraseraDerecha'] === 'on') ? true : false) : false  ;
-				$direccionalTraseraIzquierda	= (isset($_POST['direccionalTraseraIzquierda'])) ? (($_POST['direccionalTraseraIzquierda'] === 'on') ? true : false) : false  ;
+				$direccionalDelanteraDerecha	= (isset($_POST['direccionalDelanteraDerecha'])) ? (($_POST['direccionalDelanteraDerecha'] == 'on') ? 1 : 0) : 0  ;
+				$direccionalDelanteraIzquierda	= (isset($_POST['direccionalDelanteraIzquierda'])) ? (($_POST['direccionalDelanteraIzquierda'] == 'on') ? 1 : 0) : 0  ;
+				$direccionalTraseraDerecha		= (isset($_POST['direccionalTraseraDerecha'])) ? (($_POST['direccionalTraseraDerecha'] == 'on') ? 1 : 0) : 0  ;
+				$direccionalTraseraIzquierda	= (isset($_POST['direccionalTraseraIzquierda'])) ? (($_POST['direccionalTraseraIzquierda'] == 'on') ? 1 : 0) : 0  ;
 				$direccionalDetalle = (validadorCtrl::validarTexto($_POST['direccionalDetalle'])) ? $_POST['direccionalDetalle'] : "";
 
-				$defensaDelantera	= (isset($_POST['defensaDelantera'])) ? (($_POST['defensaDelantera'] === 'on') ? true : false) : false  ;
-				$defensaTrasera		= (isset($_POST['defensaTrasera'])) ? (($_POST['defensaTrasera'] === 'on') ? true : false) : false  ;
+				$defensaDelantera	= (isset($_POST['defensaDelantera'])) ? (($_POST['defensaDelantera'] == 'on') ? 1 : 0) : 0  ;
+				$defensaTrasera		= (isset($_POST['defensaTrasera'])) ? (($_POST['defensaTrasera'] == 'on') ? 1 : 0) : 0  ;
 				
 				$defensaDetalle		= (validadorCtrl::validarTexto($_POST['defensaDetalle'])) ? $_POST['defensaDetalle'] : "";
 
-				$llantaRefaccion	= (isset($_POST['llantaRefaccion'])) ? (($_POST['llantaRefaccion'] === 'on') ? true : false) : false  ;
+				$llantaRefaccion	= (isset($_POST['llantaRefaccion'])) ? (($_POST['llantaRefaccion'] == 'on') ? 1 : 0) : 0  ;
 				$llantasDetalle		= (validadorCtrl::validarTexto($_POST['llantasDetalle'])) ? $_POST['llantasDetalle'] : "";
 
-				$parabrisasDelantero	= (isset($_POST['parabrisasDelantero'])) ? (($_POST['parabrisasDelantero'] === 'on') ? true : false) : false  ;
-				$parabrisasTrasero		= (isset($_POST['parabrisasTrasero'])) ? (($_POST['parabrisasTrasero'] === 'on') ? true : false) : false  ;
-				$parabrisasDetalle		= (validadorCtrl::validarTexto($_POST['vidriosDetalle'])) ? $_POST['parabrisasDetalle'] : "";
+				$parabrisasDelantero	= (isset($_POST['parabrisasDelantero'])) ? (($_POST['parabrisasDelantero'] == 'on') ? 1 : 0) : 0  ;
+				$parabrisasTrasero		= (isset($_POST['parabrisasTrasero'])) ? (($_POST['parabrisasTrasero'] == 'on') ? 1 : 0) : 0  ;
+				$parabrisasDetalle		= (validadorCtrl::validarTexto($_POST['parabrisasDetalle'])) ? $_POST['parabrisasDetalle'] : "";
 
-				$placaDelantera		= (isset($_POST['placaDelantera'])) ? (($_POST['placaDelantera'] === 'on') ? true : false) : false  ;
-				$placaTrasera		= (isset($_POST['placaTrasera'])) ? (($_POST['placaTrasera'] === 'on') ? true : false) : false  ;
+				$placaDelantera		= (isset($_POST['placaDelantera'])) ? (($_POST['placaDelantera'] == 'on') ? 1 : 0) : 0  ;
+				$placaTrasera		= (isset($_POST['placaTrasera'])) ? (($_POST['placaTrasera'] == 'on') ? 1 : 0) : 0  ;
 
 				$puertasDetalle		= (validadorCtrl::validarTexto($_POST['puertasDetalle'])) ? $_POST['puertasDetalle'] : "";
 				$cofreDetalle		= (validadorCtrl::validarTexto($_POST['cofreDetalle'])) ? $_POST['cofreDetalle'] : "";
