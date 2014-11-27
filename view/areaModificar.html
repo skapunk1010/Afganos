@@ -54,12 +54,12 @@
 						</div>
 						<label for="numeroUbicacion" class="col-xs-1 col-sm-1 col-md-1">Número</label>
 						<div class="col-sm-4 col-md-4 col-xs-11">
-							<select class="form-control" id="numeroUbicacion" name="numeroUbicacion" onchange="actualizarNumeroUbicacion(this);">
+							<select class="form-control" id="numeroUbicacion" name="numeroUbicacion">
 								<option value="" selected></option>
 							</select>
 						</div>
 						<div class="col-xs-12 col-sm-1 col-md-1">
-							<button type="button" class="btn btn-default">+</button>
+							<button type="button" class="btn btn-default" id="aceptarAsignacion">+</button>
 						</div>
 					</div>
 				</div>
@@ -73,12 +73,14 @@
 				<thead>
 					<th>Sección</th>
 					<th>Número</th>
+					<th>&nbsp;</th>
 				</thead>
 				<tbody>
 					{inicioFilaUbicacion}
 					<tr>
 						<td>{seccion}</td>
 						<td>{numero}</td>
+						<td><a href="index.php?ctrl=ubicacion&accion=eliminar&id={idUbicacion}" class="btn btn-danger">Eliminar</a></td>
 					</tr>
 					{finFilaUbicacion}
 				</tbody>
