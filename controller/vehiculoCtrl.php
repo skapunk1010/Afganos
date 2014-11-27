@@ -360,12 +360,12 @@ class vehiculoCtrl extends CtrlEstandar{
 	 * Consulta de vehiculo almacenado.
 	 */
 	public function consultar(){
-		if(!isset($_GET['vin']) && empty($_GET['vin'])){
+		if((!isset($_REQUEST['vin']) && empty($_REQUEST['vin'])) ){
 			header('Location: index.php?ctrl=vehiculo&accion=listar');
 		}else{
 			require('controller/validadorCtrl.php');
-			if(validadorCtrl::validarVin($_GET['vin'])){
-				$vin = $_GET['vin'];
+			if(validadorCtrl::validarVin($_REQUEST['vin'])){
+				$vin = $_REQUEST['vin'];
 				$resultado = $this->modelo->consultar($vin);
 				if($resultado!=NULL){
 					$header 	= file_get_contents('view/headerLoged.html');

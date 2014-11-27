@@ -217,7 +217,7 @@
 		 */
 		public function consultar($vin){
 			
-			$query = "SELECT * FROM Vehiculo AS v, Cliente AS c WHERE v.Cliente_idCliente = c.idCliente AND v.VIN = '".$vin."'";
+			$query = "SELECT * FROM Vehiculo AS v, Cliente AS c,Marca AS M, Modelo as O WHERE v.Cliente_idCliente = c.idCliente AND v.VIN = '".$vin."' AND v.Modelo_idModelo = O.idModelo AND O.Marca_idMarca= M.idMarca";
 			$correcto = $this -> conexion -> query($query);
 			$array = array();
 			if($correcto){
