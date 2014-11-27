@@ -133,14 +133,29 @@
                 if(validadorCtrl::validarTexto($marca)){
                     $resultado = $this -> modelo -> insertar($marca); 
                     if($resultado){
-                        require("view/html/exitos/marcaInsertar.html");
+                        $header     = file_get_contents('view/headerLoged.html');
+                        $contenido  = file_get_contents('view/mensajeConfirmacion.html');
+                        $footer     = file_get_contents('view/footer.html');
+                        $contenido  = str_replace('{mensaje}', 'Marca insertada!', $contenido); 
+                        $contenido  = str_replace('{url}', 'ctrl=marca&accion=listar', $contenido);
+                        echo $header.$contenido.$footer;
                     }   
                     else{
-                        require("view/html/errores/errorMarcaInsertar.html");
+                        $header     = file_get_contents('view/headerLoged.html');
+                        $contenido  = file_get_contents('view/mensajeConfirmacion.html');
+                        $footer     = file_get_contents('view/footer.html');
+                        $contenido  = str_replace('{mensaje}', '¡Lo sentimos, error al insertar una nueva marca!', $contenido); 
+                        $contenido  = str_replace('{url}', 'ctrl=marca&accion=listar', $contenido);
+                        echo $header.$contenido.$footer;
                     }
                 }
                 else{
-                    die('Cadena de marca inválida');
+                    $header     = file_get_contents('view/headerLoged.html');
+                    $contenido  = file_get_contents('view/mensajeConfirmacion.html');
+                    $footer     = file_get_contents('view/footer.html');
+                    $contenido  = str_replace('{mensaje}', '¡Lo sentimos, error en el formato de marca!', $contenido);
+                    $contenido  = str_replace('{url}', 'ctrl=marca&accion=listar', $contenido);
+                    echo $header.$contenido.$footer;
                 }
             }
         }

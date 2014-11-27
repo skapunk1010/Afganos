@@ -141,6 +141,7 @@
                 echo $header.$contenido.$footer;
 
             }else{
+                echo "else";
                 require('controller/validadorCtrl.php');
                 $idMarca = $_GET['idMarca'];
                 $modelo = strtoupper($_POST['modelo']);
@@ -149,10 +150,12 @@
                     $resultado = $this -> modelo -> insertar($idMarca,$modelo);
                     var_dump($resultado);
                     if($resultado){
-                        require('view/html/exitos/modeloInsertar.html');
+                        #require('view/html/exitos/modeloInsertar.html');
+                        echo "modelo insertado";
                     } 
                     else{  
-                        require('view/html/errores/errorModeloInsertar.html');
+                        echo "modelo no insertao";
+                        #require('view/html/errores/errorModeloInsertar.html');
                     }     
                 }else{
                     die('Formato de idMarca inválido.');

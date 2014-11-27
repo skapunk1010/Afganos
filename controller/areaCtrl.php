@@ -138,7 +138,7 @@
                         $header     = file_get_contents('view/headerLoged.html');
                         $contenido  = file_get_contents('view/mensajeConfirmacion.html');
                         $footer     = file_get_contents('view/footer.html');
-                        $contenido  = str_replace('{mensaje}', '¡Area insertada!', $contenido); #Pones el mensaje que quieras
+                        $contenido  = str_replace('{mensaje}', '¡Area insertada!', $contenido); 
                         $contenido  = str_replace('{url}', 'ctrl=area&accion=listar', $contenido);
                         echo $header.$contenido.$footer;
                     } 
@@ -146,7 +146,7 @@
                         $header     = file_get_contents('view/headerLoged.html');
                         $contenido  = file_get_contents('view/mensajeConfirmacion.html');
                         $footer     = file_get_contents('view/footer.html');
-                        $contenido  = str_replace('{mensaje}', 'Hubo un error al insertar.Intenta de nuevo', $contenido); #Pones el mensaje que quieras
+                        $contenido  = str_replace('{mensaje}', 'Hubo un error al insertar.Intenta de nuevo', $contenido); 
                         $contenido  = str_replace('{url}', 'ctrl=area&accion=insertar', $contenido);
                         echo $header.$contenido.$footer;
                     } 
@@ -155,7 +155,7 @@
                     $header     = file_get_contents('view/headerLoged.html');
                     $contenido  = file_get_contents('view/mensajeConfirmacion.html');
                     $footer     = file_get_contents('view/footer.html');
-                    $contenido  = str_replace('{mensaje}', 'El formato del área no es válido.', $contenido); #Pones el mensaje que quieras
+                    $contenido  = str_replace('{mensaje}', 'El formato del área no es válido.', $contenido);
                     $contenido  = str_replace('{url}', 'ctrl=area&accion=insertar', $contenido);
                     echo $header.$contenido.$footer;
                 } 
