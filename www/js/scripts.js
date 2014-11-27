@@ -53,6 +53,57 @@ $(document).ready(function(){
             });
         }
     });
+
+    $('#marca').change(function(){
+        var idMarca = $(this).val();
+        alert(idMarca);
+        $.ajax({
+                type: 'POST',
+                data: {idMarca:idMarca},
+                url: 'index.php?ctrl=modelo&accion=buscarPorMarcaAjax',
+                dataType: 'json',
+                success: function(json){
+                    alert('exito');
+                },
+                error:function(json){
+                    $('#nombreEncargado').val('');
+                    alert('no exito');
+                    //Mensaje no se encontraron ubicaciones para dicha sección
+                }
+        });
+    });
+
+    $('#btnCambiarArea').click(function(){
+        $('#panelCambiarArea').slideToggle("slow");
+        $('#area').empty();
+        $.ajax({
+                type: 'POST',
+                url: 'index.php?ctrl=area&accion=listarAjax',
+                dataType: 'json',
+                success: function(json){
+                    console.log(json);
+                    for(i in json){
+                        $('#area').append('<option value='+json[i].idArea+'>'+json[i].area+'</option>');
+                    }
+                },
+                error:function(json){
+                    //Mensaje no se encontraron ubicaciones para dicha sección
+                }
+        });
+        /*$('#marca').empty();
+        $.ajax({
+                type: 'POST',
+                url: 'index.php?ctrl=marca&accion=listarAjax',
+                dataType: 'json',
+                success: function(json){
+                    $('#area').append('<option value='+json[i].idMarca+'>'+json[i].Marca+'</option>');
+                },
+                error:function(json){
+                    //Mensaje no se encontraron ubicaciones para dicha sección
+                }
+        });*/////////Sirve para marca
+    });
+
 });
 
 function actualizarNumeroUbicacion(dropSeccion){

@@ -97,6 +97,21 @@
                         }
                     }
                     break;
+                case 'listarAjax':
+                    if($this->estaLogeado() && ($this->esAdmin() || $this->esUsuario())){
+                        $this->listarAjax();
+                    }else{
+                        if(!$this->estaLogeado()){
+                            header('Location: index.php?ctrl=login&accion=iniciarSesion');
+                        }else{
+                            $header     = file_get_contents('view/headerLoged.html');
+                            $contenido  = file_get_contents('view/errorAcceso.html');
+                            $footer     = file_get_contents('view/footer.html');
+                            $header     = str_replace('{usuario}', $_SESSION['usuario'], $header);
+                            echo $header.$contenido.$footer;
+                        }
+                    }
+                    break;
                 default: 
                     require('view/error.php');
             }
@@ -255,6 +270,17 @@
             }
             else{
                 require('view/html/errores/errorMarcaListar.html');
+            }
+        }
+
+         /**
+         * Muestra todas las marcas almacenadas en la base de datos.
+         */
+        public function listarAjax(){
+            $resultado = $this->modelo->listarAjax();
+
+            if($resultado){
+                echo json_encode($resultado);
             }
         }
     }

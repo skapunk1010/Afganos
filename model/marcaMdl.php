@@ -108,5 +108,25 @@
 				return NULL;
 			}
 		}
+
+		/**
+		 * Muestra todas las marcas almacenadas en la base de datos.
+		 */
+		public function listarAjax(){
+			$query = "SELECT * FROM Marca WHERE status=1 ORDER BY Marca";
+			$resultado = $this -> conexion -> query($query);
+			#$this -> conexion -> close();
+
+			if($resultado->num_rows > 0){
+				$marcas = array();
+				while(($fila = $resultado->fetch_assoc())){
+					$marcas[] = $fila;
+				}
+				return $marcas;
+			}
+			else{
+				return NULL;
+			}
+		}
 	}
 ?>

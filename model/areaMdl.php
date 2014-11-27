@@ -93,5 +93,24 @@
 			$resultado = $this -> conexion ->query($query);
 			return $resultado;
 		}
+
+		/**
+		 *Consulta a la base de datos del área especificada x el IdArea
+		 *@return array con listado de áreas o NULL si no hay áreas que mostrar.
+		 */
+		public function listarAjax(){
+			
+			$query = "SELECT idArea, area FROM Area";
+			$correcto = $this -> conexion -> query($query);
+			$array = array();
+			if($correcto){
+				while ($fila = $correcto->fetch_assoc()) {
+        			$array[] = $fila;
+  			  }
+			}
+			else $array = NULL;
+			$this -> conexion -> close();
+			return $array; 
+		}
 	}
 ?>
