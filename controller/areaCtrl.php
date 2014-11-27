@@ -119,8 +119,12 @@
 
                     $resultado = $this -> modelo -> insertar($Encargado_Cod,$Area,$descripcion);
                     if($resultado){
-                        #require('view/areaInsertada.php'); #cambiar a html
-                        echo 'Exito';
+                        $header     = file_get_contents('view/headerLoged.html');
+                        $contenido  = file_get_contents('view/mensajeConfirmacion.html');
+                        $footer     = file_get_contents('view/footer.html');
+                        $contenido  = str_replace('{mensaje}', '¡Area insertada!', $contenido); #Pones el mensaje que quieras
+                        $contenido  = str_replace('{url}', 'ctrl=area&accion=listar', $contenido);
+                        echo $header.$contenido.$footer;
                     } 
                     else{  
                         require('view/errorAreaInsertada.php'); #cambiar a html
