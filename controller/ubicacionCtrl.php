@@ -1,4 +1,4 @@
-<?php
+	<?php
 	require('controller/CtrlEstandar.php');
 	class ubicacionCtrl extends CtrlEstandar{
 
@@ -15,7 +15,7 @@
 		function run(){
 			switch ($_REQUEST['accion']) {
 				case 'insertar':
-					if($this->estaLogeado && ($this->esUsuario() || $this->esAdmin() )){
+					if($this->estaLogeado &&  $this->esAdmin() ){
                         $this -> insertar();
                     }else{
                         if(!$this->estaLogeado()){
@@ -88,25 +88,20 @@
 		*/
 		public function insertar(){
 
-			if( isset($_REQUEST['Area_idArea']) && isset($_REQUEST['seccion']) && isset($_REQUEST['numero']) && isset($_REQUEST['status']) ){
-				
+			if( isset($_POST['idArea']) && isset($_POST['idUbicacion'])){
 				require('controller/validadorCtrl.php');
-				$Area_idArea = $_REQUEST['Area_idArea'];
-				$seccion = $_REQUEST['seccion'];
-				$numero = $_REQUEST['numero'];
-				$status = $_REQUEST['status'];
+				$Area_idArea = $_POST['idArea'];
+				$idUbicacion = $_POST['idUbicacion'];
 
-				$Area_idArea = (validadorCtrl::validarNumero($Area_idArea))? $Area_idArea: die('Número de área no válido');
-				$seccion = (validadorCtrl::validarCaracter($seccion))? $seccion: die('sección de área no válido');
-				$numero = (validadorCtrl::validarNumero($numero))? $numero: die('Número de área no válido');
-				$status = (validadorCtrl::validarStatus($status))? $status: die('status de área no válido');
+				$Area_idArea = (validadorCtrl::validarNumero($Area_idArea))? (int)$Area_idArea : 0; 
+				$idUbicacion = (validadorCtrl::validarNumero($idUbicacion))? (int)$idUbicacion : 0;
 
-				$resultado = $this -> modelo -> insertar($Area_idArea, $seccion, $numero, $status);
+				$resultado = $this -> modelo -> insertar($Area_idArea, $idUbicacion);
 				if($resultado){
-					require('view/ubicacionInsertada.php');
-				}
-				else{
-					require('view/errorUbicacionInsertada.php');
+					//require('view/ubicacionInsertada.php');
+					echo json_encode('ubicacion asignada');
+				}else{
+					echo json_encode('aqui');
 				}
 
 			}

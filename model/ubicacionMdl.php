@@ -15,27 +15,19 @@
 		
 		/** 
 		 *Hace la inserción de una nueva ubicación
+		 *@param String $Area_idArea
          *@param String $idUbicacion
-         *@param String $Area_idArea
-		 *@param String $seccion
-		 *@param String $numero
-		 *@param String $status
-		 *
          *@return bool TRUE si la inserción a la BD fue exitosa.
 		 */
-		public function insertar($Area_idArea, $seccion, $numero, $status){
+		public function insertar($Area_idArea, $idUbicacion){
+			$Area_idArea = $this -> conexion -> real_escape_string($Area_idArea);
+			$idUbicacion = $this -> conexion -> real_escape_string($idUbicacion);
 
-			$ubicacion = new Ubicacion($Area_idArea, $seccion, $numero, $status);
 			$query = "INSERT INTO Ubicacion (Area_idArea, seccion, numero, status) VALUES ('".$Area_idArea."','".$seccion."','".$numero."','".$status."')";
-			
+			$query = "UPDATE Ubicacion SET Area_idArea = '".$Area_idArea."' WHERE idUbicacion = '".$idUbicacion."'";
+
 			$resultado = $this -> conexion -> query($query);
-			if($resultado){
-				$ubicacion -> setIdUbicacion($this -> conexion -> insert_id);
-			}
-			else{
-				$ubicacion = NULL;
-			}
-			$this -> conexion -> close();
+
 			return $resultado;
 		}
 

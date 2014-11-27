@@ -95,6 +95,23 @@
 						}
 					}
 					break;
+
+				case 'consultarAjax':
+                    if( $this->estaLogeado() && $this->esAdmin() ){
+                        $this -> consultarAjax();
+                    }else{
+                        if(!$this->estaLogeado()){
+                            header('Location: index.php?ctrl=login&accion=iniciarSesion');
+                        }else{
+                            $header     = file_get_contents('view/headerLoged.html');
+                            $contenido  = file_get_contents('view/errorAcceso.html');
+                            $footer     = file_get_contents('view/footer.html');
+                            $header     = str_replace('{usuario}', $_SESSION['usuario'], $header);
+                            echo $header.$contenido.$footer;
+                        }
+                    }
+                    break;
+
 				default:
 					$header 	= file_get_contents('view/headerLoged.html');
 					$contenido 	= file_get_contents('view/errorAcceso.html');
@@ -232,7 +249,7 @@
 					$header 	= str_replace('{usuario}', $_SESSION['usuario'], $header);
 					$contenido 	= strtr($contenido,$diccionario);
 					$contenido	= str_replace($filaTelefono, $filas, $contenido);
-
+					echo json_encode($resultado);
 					echo $header.$contenido.$footer;
 				}else{
 					require('view/errorEmpleadoBuscar.php');
@@ -410,5 +427,20 @@
 				}
 			}
 		}
+
+
+        public function consultarAjax(){
+            if(!empty($_POST)){
+            	//echo 'primer if ';
+                if(isset($_POST['codigoEmpleado']) & !empty($_POST['codigoEmpleado'])){
+                	//echo 'segundo if ';
+                    $codigoEmpleado = $_POST['codigoEmpleado'];
+                    $resultado = $this -> modelo -> consultar($codigoEmpleado);
+                    if($resultado){
+                        echo json_encode($resultado);
+                    }
+                }
+            }
+        }
 	}
 ?>
