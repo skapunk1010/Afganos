@@ -127,11 +127,21 @@
                         echo $header.$contenido.$footer;
                     } 
                     else{  
-                        require('view/errorAreaInsertada.php'); #cambiar a html
+                        $header     = file_get_contents('view/headerLoged.html');
+                        $contenido  = file_get_contents('view/mensajeConfirmacion.html');
+                        $footer     = file_get_contents('view/footer.html');
+                        $contenido  = str_replace('{mensaje}', 'Hubo un error al insertar.Intenta de nuevo', $contenido); #Pones el mensaje que quieras
+                        $contenido  = str_replace('{url}', 'ctrl=area&accion=insertar', $contenido);
+                        echo $header.$contenido.$footer;
                     } 
                 }
                 else{
-                    echo "formato de área inválido";
+                    $header     = file_get_contents('view/headerLoged.html');
+                    $contenido  = file_get_contents('view/mensajeConfirmacion.html');
+                    $footer     = file_get_contents('view/footer.html');
+                    $contenido  = str_replace('{mensaje}', 'El formato del área no es válido.', $contenido); #Pones el mensaje que quieras
+                    $contenido  = str_replace('{url}', 'ctrl=area&accion=insertar', $contenido);
+                    echo $header.$contenido.$footer;
                 } 
             }
         }
