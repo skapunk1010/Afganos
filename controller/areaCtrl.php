@@ -193,7 +193,12 @@
                 echo $header.$contenido.$footer;
             }
             else{
-                require('view/errorAreaConsultar.php'); #cambiar a html
+                $header     = file_get_contents('view/headerLoged.html');
+                $contenido  = file_get_contents('view/mensajeConfirmacion.html');
+                $footer     = file_get_contents('view/footer.html');
+                $contenido  = str_replace('{mensaje}', 'Hubo un error al listar las áreas.Intenta de nuevo', $contenido); 
+                $contenido  = str_replace('{url}', 'ctrl=area&accion=insertar', $contenido);
+                echo $header.$contenido.$footer;
             }   
         }
 
@@ -243,14 +248,29 @@
 
                         echo $header.$contenido.$footer;
                     }else{
-
+                        $header     = file_get_contents('view/headerLoged.html');
+                        $contenido  = file_get_contents('view/mensajeConfirmacion.html');
+                        $footer     = file_get_contents('view/footer.html');
+                        $contenido  = str_replace('{mensaje}', 'No hubo resultados', $contenido); 
+                        $contenido  = str_replace('{url}', 'ctrl=area&accion=insertar', $contenido);
+                        echo $header.$contenido.$footer;
                     }
                 }
                 else{
-                    echo "verifique formato de id;";
+                    $header     = file_get_contents('view/headerLoged.html');
+                    $contenido  = file_get_contents('view/mensajeConfirmacion.html');
+                    $footer     = file_get_contents('view/footer.html');
+                    $contenido  = str_replace('{mensaje}', 'Favor de verificar el Id del área', $contenido); 
+                    $contenido  = str_replace('{url}', 'ctrl=area&accion=insertar', $contenido);
+                    echo $header.$contenido.$footer;
                 }
             }else{
-                #Error
+                $header     = file_get_contents('view/headerLoged.html');
+                $contenido  = file_get_contents('view/mensajeConfirmacion.html');
+                $footer     = file_get_contents('view/footer.html');
+                $contenido  = str_replace('{mensaje}', 'Es necesario el Id del área', $contenido); 
+                $contenido  = str_replace('{url}', 'ctrl=area&accion=insertar', $contenido);
+                echo $header.$contenido.$footer;
             }
         }
         
@@ -300,7 +320,12 @@
                     echo $header.$contenido.$footer;
                 }
                 else{
-                    require('view/errorAreaModificada.php'); #cambiar a html
+                    $header     = file_get_contents('view/headerLoged.html');
+                    $contenido  = file_get_contents('view/mensajeConfirmacion.html');
+                    $footer     = file_get_contents('view/footer.html');
+                    $contenido  = str_replace('{mensaje}', 'No hubo resultados', $contenido); 
+                    $contenido  = str_replace('{url}', 'ctrl=area&accion=insertar', $contenido);
+                    echo $header.$contenido.$footer;
                 }
             }else{
                 require_once('controller/validadorCtrl.php');
@@ -312,10 +337,19 @@
                 $resultado = $this -> modelo -> modificar($idArea,$area, $descripcion, $codigoEncargado);
 
                 if($resultado){
-                    echo 'Exito';
-                    var_dump($resultado);
+                    $header     = file_get_contents('view/headerLoged.html');
+                    $contenido  = file_get_contents('view/mensajeConfirmacion.html');
+                    $footer     = file_get_contents('view/footer.html');
+                    $contenido  = str_replace('{mensaje}', '¡Modificación exitos!', $contenido); 
+                    $contenido  = str_replace('{url}', 'ctrl=area&accion=insertar', $contenido);
+                    echo $header.$contenido.$footer;
                 }else{
-                    require('view/html/errores/errorMarcaModificar.html');
+                    $header     = file_get_contents('view/headerLoged.html');
+                    $contenido  = file_get_contents('view/mensajeConfirmacion.html');
+                    $footer     = file_get_contents('view/footer.html');
+                    $contenido  = str_replace('{mensaje}', 'Hubo un error al modificar.Intenta de nuevo', $contenido); 
+                    $contenido  = str_replace('{url}', 'ctrl=area&accion=insertar', $contenido);
+                    echo $header.$contenido.$footer;
                 }
             }        
         }

@@ -271,10 +271,22 @@
 					echo json_encode($resultado);
 					echo $header.$contenido.$footer;
 				}else{
-					require('view/errorEmpleadoBuscar.php');
+					$header     = file_get_contents('view/headerLoged.html');
+	                $contenido  = file_get_contents('view/mensajeConfirmacion.html');
+	                $footer     = file_get_contents('view/footer.html');
+	                $header  = str_replace('{usuario}', $_SESSION['usuario'], $header);
+	                $contenido  = str_replace('{mensaje}', 'No hubo resultados.', $contenido); 
+	                $contenido  = str_replace('{url}', 'ctrl=empleado&accion=listar', $contenido);
+	                echo $header.$contenido.$footer;
 				}
 			}else{
-				#Codigo de empleado no se introdujo.
+				$header     = file_get_contents('view/headerLoged.html');
+                $contenido  = file_get_contents('view/mensajeConfirmacion.html');
+                $footer     = file_get_contents('view/footer.html');
+                $header  = str_replace('{usuario}', $_SESSION['usuario'], $header);
+                $contenido  = str_replace('{mensaje}', 'Favor de introducir el código del empleado', $contenido); 
+                $contenido  = str_replace('{url}', 'ctrl=empleado&accion=listar', $contenido);
+                echo $header.$contenido.$footer;
 			}
 		}
 
@@ -310,7 +322,13 @@
 				echo $header.$contenido.$footer;
 				
 			}else{
-				require('view/errorEmpleado.php');
+				$header     = file_get_contents('view/headerLoged.html');
+                $contenido  = file_get_contents('view/mensajeConfirmacion.html');
+                $footer     = file_get_contents('view/footer.html');
+                $header  = str_replace('{usuario}', $_SESSION['usuario'], $header);
+                $contenido  = str_replace('{mensaje}', 'Error al listar empleados.', $contenido); 
+                $contenido  = str_replace('{url}', 'ctrl=empleado&accion=listar', $contenido);
+                echo $header.$contenido.$footer;
 			}
 		}
 
@@ -320,6 +338,12 @@
 		public function modificar(){
 			
 			if( (isset($_GET['codigo']) && !empty($_GET['codigo'])) && !empty($_POST) ) {
+				$header     = file_get_contents('view/headerLoged.html');
+                $contenido  = file_get_contents('view/mensajeConfirmacion.html');
+                $footer     = file_get_contents('view/footer.html');
+                $header  = str_replace('{usuario}', $_SESSION['usuario'], $header);
+                $contenido  = str_replace('{url}', 'ctrl=empleado&accion=listar', $contenido);
+                
 				require_once('controller/validadorCtrl.php');
 				$codigoEmpleado = $_GET['codigo'];
 				$nombre			= $_POST['nombre'];
@@ -362,17 +386,18 @@
 						$resultadoTelefono = $modeloTelefono -> modificar($codigoEmpleado,$telefono,$tipoTelefono);
 
 						if($resultadoTelefono){
-							echo 'Empleado modificado con exito';
+							$contenido  = str_replace('{mensaje}', 'Empleado modificado con éxito.', $contenido); 
 
 						}else{
-							echo 'Error al insertar telefono'; #Cambiar por vista
+							$contenido  = str_replace('{mensaje}', 'Error al insertar el teléfono.', $contenido); 
 						}
 					}else{
-						echo 'Error al insertar direccion'; #Cambiar por vista
+						$contenido  = str_replace('{mensaje}', 'Error al insertar la dirección', $contenido); 
 					}
 				}else{
-					echo 'Error al insertar empleado'; #Cambiar por vista
+					$contenido  = str_replace('{mensaje}', 'Error al insertar el empleado.', $contenido); 
 				}
+				echo $header.$contenido.$footer;
 			}else{
 				$codigo = $_GET['codigo'];
 
@@ -433,17 +458,24 @@
 				header('Location: index.php?ctrl=empleado&accion=listar');
 			}else{
 				require('controller/validadorCtrl.php');
+				$header     = file_get_contents('view/headerLoged.html');
+                $contenido  = file_get_contents('view/mensajeConfirmacion.html');
+                $footer     = file_get_contents('view/footer.html');
+                $header  = str_replace('{usuario}', $_SESSION['usuario'], $header);
+                $contenido  = str_replace('{url}', 'ctrl=empleado&accion=listar', $contenido);
+
 				$codigoEmpleado = $_GET['codigo'];
 				if(validadorCtrl::validarCodigoEmpleado($codigoEmpleado)){
 					$resultado = $this->modelo->eliminar($codigoEmpleado);
 					if($resultado){
-						echo 'Empleado eliminado con éxito'; #Aquí  va vista de confirmación
+						$contenido  = str_replace('{mensaje}', '¡Empleado eliminado con éxito!.', $contenido); 
 					}else{
-						echo 'Error al eliminar empleado';
+						$contenido  = str_replace('{mensaje}', 'Error al eliminar empleado.', $contenido); 
 					}
 				}else{
-					#Formato del codigo erroneo
+					$contenido  = str_replace('{mensaje}', 'Formato del código del empleado no valido.', $contenido); 
 				}
+				echo $header.$contenido.$footer;
 			}
 		}
 

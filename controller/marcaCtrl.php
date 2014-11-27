@@ -201,7 +201,12 @@
                     echo $header.$contenido.$footer;
                 }
                 else{
-                    die('Cadena de marca inválida');
+                    $header     = file_get_contents('view/headerLoged.html');
+                    $contenido  = file_get_contents('view/mensajeConfirmacion.html');
+                    $footer     = file_get_contents('view/footer.html');
+                    $contenido  = str_replace('{mensaje}', 'La referencia de la marca no es válida.', $contenido); 
+                    $contenido  = str_replace('{url}', 'ctrl=marca&accion=listar', $contenido);
+                    echo $header.$contenido.$footer;
                 }  
             }
         }
@@ -223,10 +228,19 @@
                 $nombre  = (validadorCtrl::validarTexto($_POST['marca']))? $_POST['marca']: '';
                 $resultado = $this -> modelo -> modificar($idMarca,$nombre); 
                 if($resultado){
-                    echo 'Exito';
-                    var_dump($resultado);
+                    $header     = file_get_contents('view/headerLoged.html');
+                    $contenido  = file_get_contents('view/mensajeConfirmacion.html');
+                    $footer     = file_get_contents('view/footer.html');
+                    $contenido  = str_replace('{mensaje}', '¡Marca modificada con éxito!.', $contenido); 
+                    $contenido  = str_replace('{url}', 'ctrl=marca&accion=listar', $contenido);
+                    echo $header.$contenido.$footer;
                 }else{
-                    require('view/html/errores/errorMarcaModificar.html');
+                    $header     = file_get_contents('view/headerLoged.html');
+                    $contenido  = file_get_contents('view/mensajeConfirmacion.html');
+                    $footer     = file_get_contents('view/footer.html');
+                    $contenido  = str_replace('{mensaje}', 'Hubo algún error al modificar la marca.', $contenido); 
+                    $contenido  = str_replace('{url}', 'ctrl=marca&accion=listar', $contenido);
+                    echo $header.$contenido.$footer;
                 }
             }
         }
@@ -243,14 +257,29 @@
 
                 if(validadorCtrl::validarNumero($idMarca)){
                     $resultado = $this -> modelo -> eliminar($idMarca); 
-                    if($resultado)
-                        #require('view/marcaModificar.php');
-                        echo 'Marca eliminada'; #Va vista aquí
-                    else
-                        require('view/errorMarcaModificar.php');
+                    if($resultado){
+                        $header     = file_get_contents('view/headerLoged.html');
+                        $contenido  = file_get_contents('view/mensajeConfirmacion.html');
+                        $footer     = file_get_contents('view/footer.html');
+                        $contenido  = str_replace('{mensaje}', '¡Marca eliminada con éxito!.', $contenido); 
+                        $contenido  = str_replace('{url}', 'ctrl=marca&accion=listar', $contenido);
+                        echo $header.$contenido.$footer;
+                    }else{
+                        $header     = file_get_contents('view/headerLoged.html');
+                        $contenido  = file_get_contents('view/mensajeConfirmacion.html');
+                        $footer     = file_get_contents('view/footer.html');
+                        $contenido  = str_replace('{mensaje}', 'Hubo algún error al modificar la marca.', $contenido); 
+                        $contenido  = str_replace('{url}', 'ctrl=marca&accion=listar', $contenido);
+                        echo $header.$contenido.$footer;
+                    }
                 }
                 else{
-                    die('Cadena de marca inválida');
+                    $header     = file_get_contents('view/headerLoged.html');
+                    $contenido  = file_get_contents('view/mensajeConfirmacion.html');
+                    $footer     = file_get_contents('view/footer.html');
+                    $contenido  = str_replace('{mensaje}', 'La referencia de la marca no es válida.', $contenido); 
+                    $contenido  = str_replace('{url}', 'ctrl=marca&accion=listar', $contenido);
+                    echo $header.$contenido.$footer;
                 }
             }
         }
@@ -281,10 +310,14 @@
                 $header     = str_replace('{usuario}', $_SESSION['usuario'], $header);
                 $contenido  = str_replace($filaTabla, $filas, $contenido);
                 echo $header.$contenido.$footer;
-                //require('view/html/exitos/marcaListar.html');
             }
             else{
-                require('view/html/errores/errorMarcaListar.html');
+                $header     = file_get_contents('view/headerLoged.html');
+                $contenido  = file_get_contents('view/mensajeConfirmacion.html');
+                $footer     = file_get_contents('view/footer.html');
+                $contenido  = str_replace('{mensaje}', 'Hubi algún error al listar las marcas..', $contenido); 
+                $contenido  = str_replace('{url}', 'ctrl=marca&accion=listar', $contenido);
+                echo $header.$contenido.$footer;
             }
         }
 

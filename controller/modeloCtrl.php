@@ -150,12 +150,22 @@
                     $resultado = $this -> modelo -> insertar($idMarca,$modelo);
                     var_dump($resultado);
                     if($resultado){
-                        #require('view/html/exitos/modeloInsertar.html');
-                        echo "modelo insertado";
+                        $header     = file_get_contents('view/headerLoged.html');
+                        $contenido  = file_get_contents('view/mensajeConfirmacion.html');
+                        $footer     = file_get_contents('view/footer.html');
+                        $header  = str_replace('{usuario}', $_SESSION['usuario'], $header);
+                        $contenido  = str_replace('{mensaje}', '¡Modelo insertado con éxito!.', $contenido); 
+                        $contenido  = str_replace('{url}', 'ctrl=marca&accion=listar', $contenido);
+                        echo $header.$contenido.$footer;
                     } 
                     else{  
-                        echo "modelo no insertao";
-                        #require('view/html/errores/errorModeloInsertar.html');
+                        $header     = file_get_contents('view/headerLoged.html');
+                        $contenido  = file_get_contents('view/mensajeConfirmacion.html');
+                        $footer     = file_get_contents('view/footer.html');
+                        $header  = str_replace('{usuario}', $_SESSION['usuario'], $header);
+                        $contenido  = str_replace('{mensaje}', 'Hubo un error al insertar el modelo.', $contenido); 
+                        $contenido  = str_replace('{url}', 'ctrl=marca&accion=listar', $contenido);
+                        echo $header.$contenido.$footer;
                     }     
                 }else{
                     die('Formato de idMarca inválido.');
@@ -218,12 +228,30 @@
                 if( validadorCtrl::validarTexto($nuevoModelo) & validadorCtrl::validarNumero($idModelo)){
                     $resultado = $this -> modelo -> modificar($idModelo,$nuevoModelo);
                     if($resultado){
-                        require('view/html/exitos/modeloModificar.html');
+                        $header     = file_get_contents('view/headerLoged.html');
+                        $contenido  = file_get_contents('view/mensajeConfirmacion.html');
+                        $footer     = file_get_contents('view/footer.html');
+                        $header  = str_replace('{usuario}', $_SESSION['usuario'], $header);
+                        $contenido  = str_replace('{mensaje}', '¡Modelo actualizado con éxito!.', $contenido); 
+                        $contenido  = str_replace('{url}', 'ctrl=marca&accion=listar', $contenido);
+                        echo $header.$contenido.$footer;
                     } else {
-                        require('view/html/errores/errorModeloModificar.html');
+                        $header     = file_get_contents('view/headerLoged.html');
+                        $contenido  = file_get_contents('view/mensajeConfirmacion.html');
+                        $footer     = file_get_contents('view/footer.html');
+                        $header  = str_replace('{usuario}', $_SESSION['usuario'], $header);
+                        $contenido  = str_replace('{mensaje}', 'Hubo .', $contenido); 
+                        $contenido  = str_replace('{url}', 'ctrl=marca&accion=listar', $contenido);
+                        echo $header.$contenido.$footer;
                     }
                 }else{
-
+                    $header     = file_get_contents('view/headerLoged.html');
+                    $contenido  = file_get_contents('view/mensajeConfirmacion.html');
+                    $footer     = file_get_contents('view/footer.html');
+                    $header  = str_replace('{usuario}', $_SESSION['usuario'], $header);
+                    $contenido  = str_replace('{mensaje}', 'La referencia del modelo no es válida.', $contenido); 
+                    $contenido  = str_replace('{url}', 'ctrl=marca&accion=listar', $contenido);
+                    echo $header.$contenido.$footer;
                 }
             }
         }
@@ -235,18 +263,26 @@
             if(!isset($_GET['modelo']) && empty($_GET['modelo'])){
                 //header('Location: index.php?ctrl=');
             }else{
+                $header     = file_get_contents('view/headerLoged.html');
+                $contenido  = file_get_contents('view/mensajeConfirmacion.html');
+                $footer     = file_get_contents('view/footer.html');
+                $header  = str_replace('{usuario}', $_SESSION['usuario'], $header);
+                $contenido  = str_replace('{mensaje}', 'La referencia del modelo no es válida.', $contenido); 
+                $contenido  = str_replace('{url}', 'ctrl=marca&accion=listar', $contenido);
+                
                 require('controller/validadorCtrl.php');
                 $idModelo = (int)$_GET['modelo'];
                 if(validadorCtrl::validarNumero($idModelo)){
                     $resultado = $this -> modelo -> eliminar($idModelo); 
                     if($resultado)
-                        echo 'Modelo eliminado'; #Va vista aquí
+                        $contenido  = str_replace('{mensaje}', 'Modelo eliminado.', $contenido); 
                     else
-                        require('view/error.php');
+                        $contenido  = str_replace('{mensaje}', 'Error al eliminar el modelo.', $contenido); 
                 }
                 else{
-                    die('Cadena de modelo inválida');
+                    $contenido  = str_replace('{mensaje}', 'La entrada del modelo no es válida.', $contenido); 
                 }
+                echo $header.$contenido.$footer;
             }
         }
 

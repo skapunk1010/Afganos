@@ -103,6 +103,22 @@
                     }
                     break;
 
+                case 'consultarAjax':
+                   if( $this->estaLogeado() && ($this->esAdmin() ||$this->esUsuario())){
+                        $this -> consultarAjax();
+                    }else{
+                        if(!$this->estaLogeado()){
+                            header('Location: index.php?ctrl=login&accion=iniciarSesion');
+                        }else{
+                            $header     = file_get_contents('view/headerLoged.html');
+                            $contenido  = file_get_contents('view/errorAcceso.html');
+                            $footer     = file_get_contents('view/footer.html');
+                            $header     = str_replace('{usuario}', $_SESSION['usuario'], $header);
+                            echo $header.$contenido.$footer;
+                        }
+                    }
+                    break;
+
                 default: 
                     $header     = file_get_contents('view/headerLoged.html');
                     $contenido  = file_get_contents('view/errorAcceso.html');
@@ -231,6 +247,26 @@
                 }
                 else{
                     echo "error en el formato de idCliente.";
+                }
+            }
+        }
+
+        /*
+        *Consultar un cliente en específico
+        */
+        public function consultarAjax(){
+            require('controller/validadorCtrl.php');
+            if( isset($_POST['id']) && !empty($_POST['id'])  ){
+                $idCliente = $_POST['id'];
+                if(validadorCtrl::validarNumero($idCliente)){
+                    $resultado = $this -> modelo -> consultarAjax($idCliente);
+                    if($resultado!=NULL){
+                        echo json_encode($resultado);
+                    }else{
+                        echo '3';
+                    }
+                }else{
+                    echo '2';
                 }
             }
         }

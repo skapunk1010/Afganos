@@ -143,7 +143,6 @@
 			else{
 				#no se encontró datos para buscar
 			}
-
 		}
 	}
 ?>
