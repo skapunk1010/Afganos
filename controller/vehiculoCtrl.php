@@ -242,17 +242,30 @@ class vehiculoCtrl extends CtrlEstandar{
 												);
 	            
 		        if($resultado){
-		            #require('view/html/exitos/vehiculoInsertar.html'); #cambiar a html
-		            echo 'Insertados';
+		            $header     = file_get_contents('view/headerLoged.html');
+                    $contenido  = file_get_contents('view/mensajeConfirmacion.html');
+                    $footer     = file_get_contents('view/footer.html');
+                    $contenido  = str_replace('{mensaje}', '¡Vehículo insertado con éxito!', $contenido);
+                    $contenido  = str_replace('{url}', 'ctrl=vehiculo&accion=listar', $contenido);
+                    echo $header.$contenido.$footer;
 		        }
 		            
 		        else{                
-		           #require('view/html/errores/errorVehiculoInsertar.html'); #cambiar a html
-		        	echo 'Error';
+		          $header     = file_get_contents('view/headerLoged.html');
+                    $contenido  = file_get_contents('view/mensajeConfirmacion.html');
+                    $footer     = file_get_contents('view/footer.html');
+                    $contenido  = str_replace('{mensaje}', '¡Lo sentimos, error al insertar vehículo!', $contenido);
+                    $contenido  = str_replace('{url}', 'ctrl=vehiculo&accion=listar', $contenido);
+                    echo $header.$contenido.$footer;
 		        }
 			}
 			else{
-				echo "formato de insercion de vehiculo incorrecto";
+				$header     = file_get_contents('view/headerLoged.html');
+                $contenido  = file_get_contents('view/mensajeConfirmacion.html');
+                $footer     = file_get_contents('view/footer.html');
+                $contenido  = str_replace('{mensaje}', '¡Formato de vehículo incorrecto, inténtelo de nuevo!', $contenido);
+                $contenido  = str_replace('{url}', 'ctrl=vehiculo&accion=listar', $contenido);
+                echo $header.$contenido.$footer;
 			}
 		}
 	}

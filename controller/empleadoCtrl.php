@@ -184,16 +184,35 @@
 						$resultadoTelefono = $modeloTelefono->insertar($resultadoEmpleado['CodigoEmpleado'],$telefono, $tipoTelefono);
 						//echo 'resultadoTelefono:'.var_dump($resultadoTelefono).'<br>';
 						if($resultadoTelefono > 0){
-							//require('view/empleadoInsertado.php');
-							echo 'Insertado con exito!'; #Vista confirmacion
+							$header     = file_get_contents('view/headerLoged.html');
+	                        $contenido  = file_get_contents('view/mensajeConfirmacion.html');
+	                        $footer     = file_get_contents('view/footer.html');
+	                        $contenido  = str_replace('{mensaje}', '¡Empleado registrado con éxito!', $contenido); 
+	                        $contenido  = str_replace('{url}', 'ctrl=empleado&accion=listar', $contenido);
+	                        echo $header.$contenido.$footer;
 						}else{
-							echo 'Erro al insertar telefono';#require('view/errorEmpleadoInsertado.php');
+							$header     = file_get_contents('view/headerLoged.html');
+	                        $contenido  = file_get_contents('view/mensajeConfirmacion.html');
+	                        $footer     = file_get_contents('view/footer.html');
+	                        $contenido  = str_replace('{mensaje}', '¡Error al insertar teléfono de empleado!', $contenido); 
+	                        $contenido  = str_replace('{url}', 'ctrl=empleado&accion=listar', $contenido);
+	                        echo $header.$contenido.$footer;
 						}
 					}else{	
-						echo 'Error al insertar direccion';
+						$header     = file_get_contents('view/headerLoged.html');
+                        $contenido  = file_get_contents('view/mensajeConfirmacion.html');
+                        $footer     = file_get_contents('view/footer.html');
+                        $contenido  = str_replace('{mensaje}', '¡Error al insertar dirección de empleado!', $contenido); 
+                        $contenido  = str_replace('{url}', 'ctrl=empleado&accion=listar', $contenido);
+                        echo $header.$contenido.$footer;
 					}
 				}else{
-					echo 'Error al insertar datos empleado';
+					$header     = file_get_contents('view/headerLoged.html');
+                    $contenido  = file_get_contents('view/mensajeConfirmacion.html');
+                    $footer     = file_get_contents('view/footer.html');
+                    $contenido  = str_replace('{mensaje}', '¡Error al insertar empleado!', $contenido);
+                    $contenido  = str_replace('{url}', 'ctrl=empleado&accion=listar', $contenido);
+                    echo $header.$contenido.$footer;
 				}
 			}
 		}
