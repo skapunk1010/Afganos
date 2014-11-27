@@ -13,7 +13,7 @@
 	padding: 15px;
 }
 
-#panelAsignarUbicacion{
+#panelAsignarUbicacion,#panelCambiarArea{
 	display: none;
 }
 

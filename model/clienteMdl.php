@@ -91,5 +91,27 @@
 			}
 			return $array;
 		}
+
+		/**
+		*Consulta el cliente especificado
+		*@param String $idCliente del cliente a consultar
+		*@return array con datos especificados, NULL en caso contrario.
+		*/
+		public function consultarAjax($idCliente)
+		{
+			$query = "SELECT * FROM Cliente WHERE idCliente = '".$idCliente."'";
+			$resultado = $this->conexion->query($query);
+			$this->conexion->close();
+			$array = array();
+			if($resultado){
+				while($fila = $resultado->fetch_assoc()){
+					$array[] = $fila;
+				}
+			}
+			else {
+				$array = NULL;
+			}
+			return $array;
+		}
 	}
 ?>

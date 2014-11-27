@@ -87,6 +87,7 @@ $(document).ready(function(){
                     }
                 },
                 error:function(json){
+                    console.log(json);
                     //Mensaje no se encontraron ubicaciones para dicha sección
                 }
         });
@@ -102,6 +103,27 @@ $(document).ready(function(){
                     //Mensaje no se encontraron ubicaciones para dicha sección
                 }
         });*/////////Sirve para marca
+    });
+    
+    $('#nombreCliente').blur(function(){
+        var codigoCliente = $(this).val();
+        $.ajax({
+                type: 'POST',
+                data: {codigoEmpleado:codigoEmpleado},
+                url: 'index.php?ctrl=empleado&accion=consultarAjax',
+                dataType: 'json',
+                success: function(json){
+                    console.log(json);
+                    var nombre = json[0].nombre + " ";
+                    nombre += json[0].apellidoMaterno + " ";
+                    nombre += json[0].apellidoPaterno;
+                    $('#nombreEncargado').val(nombre);
+                },
+                error:function(json){
+                    $('#nombreEncargado').val('');
+                    //Mensaje no se encontraron ubicaciones para dicha sección
+                }
+        });
     });
 
 });
